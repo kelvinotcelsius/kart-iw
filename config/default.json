@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://kelvinotcelsius:grQA0sHwVniB4g2F@kart.0tc4x.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://kelvinotcelsius:grQA0sHwVniB4g2F@kart.0tc4x.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "UpFqdPwkRg28rcPwmAC4"
 }

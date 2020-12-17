@@ -7,12 +7,16 @@ const app = express();
 // Connect DB
 connectDB();
 
+// Middleware for parsing incoming requests containing JSON payloads
+app.use(express.json({ extended: false }));
+
 // create a single endpoint to test
 app.get('/', (req, res) => res.send('API Running'));
 
 // Define routes
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/suppliers', require('./routes/api/suppliers'));
 app.use('/api/products', require('./routes/api/products'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/shopping', require('./routes/api/shopping'));
