@@ -65,7 +65,7 @@ router.post(
 // @access  Public
 router.get('/all', async (req, res) => {
   try {
-    const products = await Products.find();
+    const products = await Product.find();
     res.json(products);
   } catch (err) {
     console.error(err.message);

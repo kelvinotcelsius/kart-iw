@@ -1,0 +1,54 @@
+/* Register and login forms */
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.modal-subtitle {
+  font-size: 13px;
+  color: var(--wet-rock);
+}
+
+#login #register {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-field-wrapper {
+  margin: 15px 0;
+  width: 100%;
+}
+
+.form-field {
+  padding: 0.5em 10px;
+  width: 80%;
+  font-size: 14px;
+  color: var(--black);
+  border: 1px solid var(--moonstone);
+}
+
+.form-btn {
+  padding: 10px 10px;
+  width: 80%;
+  background-color: var(--passion);
+  border: none;
+  font-size: 14px;
+  color: var(--white);
+}
+
+/* Modal */
+.popup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 40%;
+  padding: 5px;
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0px;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  z-index: 999;
+}

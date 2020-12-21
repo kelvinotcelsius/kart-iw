@@ -1,0 +1,112 @@
+/* NAVBAR */
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  position: sticky;
+}
+
+/* Nav links */
+
+.logo a {
+  text-decoration: none;
+  color: var(--black);
+}
+
+.navbar-left-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+}
+
+.nav-items {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+}
+
+.nav-item {
+  padding: 10px;
+  position: relative;
+  display: inline-block;
+}
+
+.nav-primary-link {
+  text-decoration: none;
+  color: var(--black);
+  font-weight: 600;
+}
+
+.nav-secondary-menu {
+  display: none;
+  position: absolute;
+  /* box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); */
+  z-index: 1;
+  margin: auto;
+  height: 100%;
+  padding-top: 10px;
+}
+
+.nav-secondary-link {
+  color: var(--wet-rock);
+  padding: 0em 1.5em;
+  text-decoration: none;
+  top: 50%;
+}
+
+/* Show the dropdown menu on hover */
+.nav-item:hover .nav-secondary-menu {
+  display: flex;
+  align-items: center;
+  /* min-height: 100%; */
+}
+
+/* Change color of dropdown links on hover */
+.nav-secondary-menu a:hover {
+  color: var(--passion);
+  font-weight: 500;
+}
+
+/* Display red underline under hovered link */
+.nav-item:hover .nav-primary-link {
+  border-bottom: 2px solid var(--passion);
+  padding-bottom: 5px;
+}
+
+/* Log in */
+.navbar-right-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+}
+
+.nav-btn-wrapper {
+  margin: auto;
+}
+
+.nav-btn {
+  padding: 10px 30px;
+  width: 150px;
+  height: 50px;
+  background-color: var(--passion);
+  border: none;
+  border-radius: 10px;
+  font-size: var(--subheader);
+  color: var(--white);
+}
+
+/* ALERTS */
+.alert {
+  padding: 0.8rem;
+  margin: 1rem 0;
+  opacity: 0.9;
+  background: var(--light-color);
+  color: #333;
+}
+
+.alert-danger {
+  background: var(--danger-color);
+  color: #fff;
+}
