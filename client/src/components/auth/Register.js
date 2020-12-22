@@ -1,4 +1,5 @@
-import React, { useState, Fragment, Redirect } from 'react';
+import React, { useState, Fragment } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
@@ -24,7 +25,7 @@ const Register = ({ changeModal, register, isAuthenticated }) => {
 
   // Redirect if logged in
   if (isAuthenticated) {
-    return <h1>HI</h1>;
+    return <Redirect to='/finish-registration' />;
   }
 
   return (
@@ -64,9 +65,9 @@ const Register = ({ changeModal, register, isAuthenticated }) => {
 };
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired, //ptfr shortcut
+  isAuthenticated: PropTypes.bool,
+  changeModal: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool, // ptb shortcut
 };
 
 // see reducers/auth.js for isAuthenticated field in the auth redux field
@@ -76,4 +77,4 @@ const mapStateToProps = (state) => ({
 
 // connect takes in 2 arguments, the first is any state we want to map, and an object with any objects we want to use (props)
 // By passing in setAlert as the 2nd argument, we can now call props.setAlert. Pass in props to Register function (see line 6)
-export default connect(mapStateToProps, { setAlert, register })(Register);
+export default connect(mapStateToProps, { register })(Register);

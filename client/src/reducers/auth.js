@@ -6,6 +6,8 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
+  USER_ERROR,
+  REGISTRATION_FINISHED,
   // ACCOUNT_DELETED,
 } from '../actions/types';
 
@@ -20,6 +22,7 @@ export default function auth(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case USER_LOADED:
+    case REGISTRATION_FINISHED:
       return {
         ...state,
         isAuthenticated: true,
@@ -37,6 +40,7 @@ export default function auth(state = initialState, action) {
       };
 
     case AUTH_ERROR:
+    case USER_ERROR:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case LOGOUT:

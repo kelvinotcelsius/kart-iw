@@ -8,10 +8,14 @@ import store from './store';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
-// Components
+// Layout
 import Landing from './components/layout/Landing';
 import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
+
+// Auth
+import FinishRegistration from './components/auth/FinishRegistration';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 // Check if there's a token. If there is, put it in the global axios header
 if (localStorage.token) {
@@ -31,7 +35,12 @@ const App = () => {
             <Navbar />
             <Alert />
             <Switch>
-              <Route exact path='/' component={Landing} />
+              <Route exact path='/landing' component={Landing} />
+              <PrivateRoute
+                exact
+                path='/finish-registration'
+                component={FinishRegistration}
+              />
             </Switch>
           </div>
         </Fragment>
