@@ -4,21 +4,22 @@ import { connect } from 'react-redux';
 import { finishRegistration } from '../../actions/auth';
 
 const initialState = {
-  username: '',
-  first: '',
-  last: '',
-  birthday: '',
-  phone: '',
+  username: 'ninjawearingnike',
+  first: 'kelvin',
+  last: 'yu',
+  birthday: '1999-03-09',
+  phone: '541-403-9010',
   profile_pic: 'prof_pic_URL',
 };
 
-const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
+const FinishRegistrationForm = ({ history, finishRegistration }) => {
   const [formData, setFormData] = useState(initialState);
 
   const { username, first, last, birthday, phone, profile_pic } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +32,7 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
       <form className='form-page' onSubmit={(e) => onSubmit(e)}>
         <div className='form-row'>
           <div className='form-field-wrapper'>
-            <label for='username' className='register-label'>
+            <label htmlFor='username' className='register-label'>
               Username
             </label>
             <br />
@@ -47,8 +48,8 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
         </div>
         <div className='form-row'>
           <div className='form-field-wrapper'>
-            <label for='first' className='register-label'>
-              First
+            <label htmlFor='first' className='register-label'>
+              First name
             </label>
             <br />
             <input
@@ -60,8 +61,8 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
             />
           </div>
           <div className='form-field-wrapper'>
-            <label for='last' className='register-label'>
-              Last
+            <label htmlFor='last' className='register-label'>
+              Last name
             </label>
             <br />
             <input
@@ -73,7 +74,7 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
             />
           </div>
           <div className='form-field-wrapper'>
-            <label for='birthday' className='register-label'>
+            <label htmlFor='birthday' className='register-label'>
               Birthday
             </label>
             <br />
@@ -89,7 +90,7 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
         </div>
         <div className='form-row'>
           <div className='form-field-wrapper'>
-            <label for='phone' className='register-label'>
+            <label htmlFor='phone' className='register-label'>
               Phone
             </label>
             <br />
@@ -97,7 +98,7 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
               type='tel'
               id='phone'
               name='phone'
-              pattern='[0-9]{3}-[0-9]{2}-[0-9]{3}'
+              pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
               className='form-field'
               placeholder='Format: 541-132-0912'
               value={phone}
@@ -107,7 +108,7 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
         </div>
         <div className='form-row'>
           <div className='form-field-wrapper'>
-            <label for='profile_pic' className='register-label'>
+            <label htmlFor='profile_pic' className='register-label'>
               Profile picture
             </label>
             <br />
@@ -120,20 +121,20 @@ const FinishRegistration = ({ auth: user, history, finishRegistration }) => {
               onChange={(e) => onChange(e)}
             />
           </div>
+          <input type='submit' className='form-btn' value='Start earning' />
         </div>
       </form>
     </Fragment>
   );
 };
 
-FinishRegistration.propTypes = {
-  auth: PropTypes.object.isRequired,
+FinishRegistrationForm.propTypes = {
+  //   auth: PropTypes.object.isRequired,
+  finishRegistration: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
+// const mapStateToProps = (state) => ({
+//   auth: state.auth,
+// });
 
-export default connect(mapStateToProps, { finishRegistration })(
-  FinishRegistration
-);
+export default connect(null, { finishRegistration })(FinishRegistrationForm);

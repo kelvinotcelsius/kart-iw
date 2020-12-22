@@ -37,7 +37,7 @@
   color: var(--white);
 }
 
-/* Modal */
+/* Sign up and login modals */
 .popup-content {
   margin: auto;
   background: rgb(255, 255, 255);

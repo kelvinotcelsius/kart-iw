@@ -1,13 +1,13 @@
 import React, { useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setAlert } from '../../actions/alert';
+// import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
 import './Auth.css';
 
-const Register = ({ changeModal, register, isAuthenticated }) => {
+const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -20,11 +20,12 @@ const Register = ({ changeModal, register, isAuthenticated }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    register({ email, password });
+    register(formData);
   };
 
   // Redirect if logged in
   if (isAuthenticated) {
+    closeModal();
     return <Redirect to='/finish-registration' />;
   }
 
@@ -67,6 +68,7 @@ const Register = ({ changeModal, register, isAuthenticated }) => {
 Register.propTypes = {
   isAuthenticated: PropTypes.bool,
   changeModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 
@@ -10,30 +10,39 @@ import './Layout.css';
 const Navbar = () => {
   const [loginModal, changeModal] = useState(true); // true = show login modal, false = show sign in modal
 
+  const [modalStatus, showModal] = useState(false); // true = show modal, false = close modal
+  const closeModal = () => showModal(false);
+
   const guestLinks = (
-    <Popup
-      modal
-      className='popup'
-      contentStyle={{
-        borderRadius: '10px',
-        height: '600px',
-        overflowY: 'auto',
-        textAlign: 'center',
-        backgroundColor: 'white',
-        border: '1px solid ',
-      }}
-      trigger={
-        <div className='nav-btn-wrapper'>
-          <button className='nav-btn'>Log in</button>
-        </div>
-      }
-    >
-      {loginModal === true ? (
-        <Login changeModal={changeModal} />
-      ) : (
-        <Register changeModal={changeModal} />
-      )}
-    </Popup>
+    <Fragment>
+      <div className='nav-btn-wrapper'>
+        <button className='nav-btn' onClick={() => showModal((o) => !o)}>
+          Log in
+        </button>
+      </div>
+      <div className='modal'>
+        <Popup
+          className='popup'
+          open={modalStatus}
+          onClose={closeModal}
+          closeOnDocumentClick
+          contentStyle={{
+            borderRadius: '10px',
+            height: '600px',
+            overflowY: 'auto',
+            textAlign: 'center',
+            backgroundColor: 'white',
+            border: '1px solid ',
+          }}
+        >
+          {loginModal === true ? (
+            <Login changeModal={changeModal} closeModal={closeModal} />
+          ) : (
+            <Register changeModal={changeModal} closeModal={closeModal} />
+          )}
+        </Popup>
+      </div>
+    </Fragment>
   );
 
   return (

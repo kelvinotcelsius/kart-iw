@@ -3,10 +3,11 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
+import FinishRegistrationForm from '../auth/FinishRegistrationForm';
 
 const PrivateRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading },
+  auth: { isAuthenticated, loading, registrationFinished },
   ...rest
 }) => (
   <Route
@@ -14,6 +15,10 @@ const PrivateRoute = ({
     render={(props) =>
       loading ? (
         <Spinner />
+      ) : !registrationFinished && isAuthenticated ? (
+        <Redirect exact to='/finish-registration' /> && (
+          <FinishRegistrationForm {...props} />
+        )
       ) : isAuthenticated ? (
         <Component {...props} />
       ) : (

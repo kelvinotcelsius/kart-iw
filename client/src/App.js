@@ -14,16 +14,16 @@ import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
 
 // Auth
-import FinishRegistration from './components/auth/FinishRegistration';
+import FinishRegistrationForm from './components/auth/FinishRegistrationForm';
 import PrivateRoute from './components/routing/PrivateRoute';
-
-// Check if there's a token. If there is, put it in the global axios header
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
 
 const App = () => {
   useEffect(() => {
+    // Check if there's a token. If there is, put it in the global axios header
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+
     store.dispatch(loadUser());
   }, []);
 
@@ -35,11 +35,12 @@ const App = () => {
             <Navbar />
             <Alert />
             <Switch>
-              <Route exact path='/landing' component={Landing} />
+              <Route exact path='/' component={Landing} />
+              <PrivateRoute exact path='/bingeable' component={Landing} />
               <PrivateRoute
                 exact
                 path='/finish-registration'
-                component={FinishRegistration}
+                component={FinishRegistrationForm}
               />
             </Switch>
           </div>

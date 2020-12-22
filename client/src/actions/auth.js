@@ -10,22 +10,16 @@ import {
   LOGOUT,
 } from './types';
 import { setAlert } from './alert';
-import setAuthToken from '../utils/setAuthToken';
 import api from '../utils/api';
-import axios from 'axios';
 
 // Load user
 export const loadUser = () => async (dispatch) => {
-  // check if there's a token. If there is, put it in a global header via setAuthToken such that it always sends the token as x-auth-token
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
   try {
-    const res = await axios.get('/api/auth');
-    // const res = await api.get('/auth');
+    const res = await api.get('/auth');
+
     dispatch({
       type: USER_LOADED,
-      payload: res.data, // res.data is the user object without the password
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
@@ -35,16 +29,9 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register user
-export const register = ({ email, password }) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  const body = JSON.stringify({ email, password });
-
+export const register = (formData) => async (dispatch) => {
   try {
-    const res = await axios.post('/api/users', body, config);
+    const res = await api.post('/users', formData);
 
     dispatch({
       type: REGISTER_SUCCESS,
@@ -66,11 +53,20 @@ export const register = ({ email, password }) => async (dispatch) => {
 };
 
 // Finish registration
-export const finishRegistration = ({ formData, history }) => async (
-  dispatch
-) => {
+export const finishRegistration = (formData, history) => async (dispatch) => {
   try {
-    const res = await api.post('/users/profile', formData);
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // };
+    // const body = JSON.stringify(formData);
+    // const res = await axios.post('/api/users/profile', body, config);
+
+    const body = JSON.stringify(formData);
+    console.log(api);
+    console.log(api.defaults.headers);
+    const res = await api.post('/users/profile', body);
 
     dispatch({
       type: REGISTRATION_FINISHED,
@@ -79,10 +75,12 @@ export const finishRegistration = ({ formData, history }) => async (
 
     dispatch(setAlert('Registration finished', 'success'));
 
+    dispatch(loadUser());
+
     history.push('/');
   } catch (err) {
+    console.log(err);
     const errors = err.response.data.errors;
-
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
