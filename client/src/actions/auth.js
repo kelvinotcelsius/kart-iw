@@ -11,6 +11,7 @@ import {
 } from './types';
 import { setAlert } from './alert';
 import api from '../utils/api';
+import apiFile from '../utils/apiFile';
 
 // Load user
 export const loadUser = () => async (dispatch) => {
@@ -40,7 +41,6 @@ export const register = (formData) => async (dispatch) => {
 
     dispatch(loadUser()); // Load user immediately after registering
   } catch (err) {
-    console.log(err);
     const errors = err.response.data.errors; // response.data contains an error array with all the errors
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
@@ -63,10 +63,9 @@ export const finishRegistration = (formData, history) => async (dispatch) => {
     // const body = JSON.stringify(formData);
     // const res = await axios.post('/api/users/profile', body, config);
 
-    const body = JSON.stringify(formData);
-    console.log(api);
-    console.log(api.defaults.headers);
-    const res = await api.post('/users/profile', body);
+    // const body = JSON.stringify(formData);
+
+    const res = await apiFile.put('/users/profile', formData);
 
     dispatch({
       type: REGISTRATION_FINISHED,
@@ -79,7 +78,6 @@ export const finishRegistration = (formData, history) => async (dispatch) => {
 
     history.push('/');
   } catch (err) {
-    console.log(err);
     const errors = err.response.data.errors;
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));

@@ -1,4 +1,6 @@
 {
-  "mongoURI": "mongodb+srv://kelvin123:cofm1029@proj1-webdev-owi4h.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "mySecretToken"
+  "mongoURI": "mongodb+srv://kelvinotcelsius:grQA0sHwVniB4g2F@kart.0tc4x.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "UpFqdPwkRg28rcPwmAC4",
+  "AWSaccessKeyId": "AKIAISVV7ZUVEHP7MPHA",
+  "AWSsecretAccessKey": "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"
 }

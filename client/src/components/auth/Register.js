@@ -25,7 +25,8 @@ const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
 
   // Redirect if logged in
   if (isAuthenticated) {
-    closeModal();
+    // closeModal();
+    console.log('hey?'); // BUG
     return <Redirect to='/finish-registration' />;
   }
 

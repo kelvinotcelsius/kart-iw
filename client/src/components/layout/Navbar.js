@@ -1,13 +1,16 @@
 import React, { useState, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Popup from 'reactjs-popup';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Login from '../auth/Login';
 import Register from '../auth/Register';
 
 import './Layout.css';
+import defaultProfPic from '../../assets/images/default.png';
 
-const Navbar = () => {
+const Navbar = ({ auth: { isAuthenticated } }) => {
   const [loginModal, changeModal] = useState(true); // true = show login modal, false = show sign in modal
 
   const [modalStatus, showModal] = useState(false); // true = show modal, false = close modal
@@ -41,6 +44,14 @@ const Navbar = () => {
             <Register changeModal={changeModal} closeModal={closeModal} />
           )}
         </Popup>
+      </div>
+    </Fragment>
+  );
+
+  const authLinks = (
+    <Fragment>
+      <div className='nav-btn-wrapper'>
+        <img id='preview' alt='default profile pic' src={defaultProfPic} />
       </div>
     </Fragment>
   );
@@ -102,9 +113,19 @@ const Navbar = () => {
           </li>
         </ul>
       </div>
-      <div className='navbar-right-wrapper'>{guestLinks}</div>
+      <div className='navbar-right-wrapper'>
+        {isAuthenticated ? authLinks : guestLinks}
+      </div>
     </nav>
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Navbar);
