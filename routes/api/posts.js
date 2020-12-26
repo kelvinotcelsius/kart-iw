@@ -2,16 +2,30 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
+const path = require('path');
 
+// Models
 const Post = require('../../models/Post');
 const Product = require('../../models/Product');
 const User = require('../../models/User');
+
+// Middleware for handling multipart/form-data
+var multer = require('multer');
+var storage = multer.memoryStorage();
+var upload = multer({ storage: storage });
+
+// AWS
+var uploadS3 = require('../../config/uploadS3');
 
 // @route   POST api/posts
 // @desc    Create a post for a product
 // @access  Private
 router.post(
   '/:productID',
+  upload.fields([
+    { name: 'videoFile', maxCount: 1 },
+    { name: 'previewFile', maxCount: 1 },
+  ]),
   [auth, [check('caption', 'A caption is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -20,18 +34,38 @@ router.post(
     }
 
     try {
-      const user = await User.findById(req.user.id);
+      const user = await User.findById(req.body.creator);
       const product = await Product.findById(req.params.productID);
 
       if (!product) {
-        return res.status(400).send('Product not found');
+        return res.status(400).json({ errors: [{ msg: 'Product not found' }] });
       }
 
+      if (!user) {
+        return res.status(400).json({ errors: [{ msg: 'User not found' }] });
+      }
+
+      const videoFile = req.files.videoFile[0];
+      const previewFile = req.files.previewFile[0];
+
+      videoFilePath = `video_${req.body.creator}${encodeURIComponent(
+        path.parse(videoFile.originalname).name
+      )}${path.parse(videoFile.originalname).ext}`;
+      previewFilePath = `preview_${req.body.creator}${encodeURIComponent(
+        path.parse(previewFile.originalname).name
+      )}${path.parse(previewFile.originalname).ext}`;
+
+      uploadS3(videoFile, videoFilePath);
+      uploadS3(previewFile, previewFilePath);
+
+      awsVideoPath = `https://kart-iw.s3.amazonaws.com/${videoFilePath}`;
+      awsPreviewPath = `https://kart-iw.s3.amazonaws.com/${previewFilePath}`;
+
       const newPost = new Post({
-        creator: user._id,
+        creator: req.body.creator,
         caption: req.body.caption,
-        video: req.body.video,
-        date: req.body.date,
+        video: awsVideoPath,
+        preview: awsPreviewPath,
         product: product._id,
       });
 

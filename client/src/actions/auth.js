@@ -18,10 +18,14 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth');
 
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
+    if (res.data.username) {
+      dispatch({ type: REGISTRATION_FINISHED, payload: res.data });
+    } else {
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
@@ -41,6 +45,7 @@ export const register = (formData) => async (dispatch) => {
 
     dispatch(loadUser()); // Load user immediately after registering
   } catch (err) {
+    console.log(err);
     const errors = err.response.data.errors; // response.data contains an error array with all the errors
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
@@ -116,6 +121,4 @@ export const login = ({ email, password }) => async (dispatch) => {
 };
 
 // Logout user
-export const logout = (dispatch) => {
-  dispatch({ type: LOGOUT });
-};
+export const logout = () => ({ type: LOGOUT });

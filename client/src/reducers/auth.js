@@ -44,7 +44,6 @@ export default function auth(state = initialState, action) {
         ...payload,
         isAuthenticated: true,
         loading: false,
-        registrationFinished: true,
       };
     case REGISTER_SUCCESS:
       // localStorage.setItem('token', payload.token); // if register is a success, the backend will send the token back and since we want the user to be logged in immediately, we'll put the token in local storage
@@ -64,7 +63,7 @@ export default function auth(state = initialState, action) {
       // localStorage.removeItem('token');
       return {
         ...state,
-        user: null, // Kelvin added this line because it doesn't make sense for the user to be still stored in the state if the above actions are called. (Not in tutorial, Delete if it causes bugs)
+        user: null,
         token: null,
         isAuthenticated: false,
         loading: false,

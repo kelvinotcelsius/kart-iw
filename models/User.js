@@ -27,6 +27,7 @@ const UserSchema = new Schema({
   },
   profile_pic: {
     type: String,
+    default: 'https://kart-iw.s3.amazonaws.com/default_prof_pic.png',
   },
   bio: {
     type: String,

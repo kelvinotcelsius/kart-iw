@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const path = require('path');
-const fs = require('fs');
 const { json } = require('express');
 
 const User = require('../../models/User');
@@ -18,7 +17,7 @@ var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
 
 // AWS
-const AWS = require('aws-sdk');
+var uploadS3 = require('../../config/uploadS3');
 
 // @route   POST api/users
 // @desc    Register user
@@ -161,28 +160,13 @@ router.put(
       if (birthday) userFields.birthday = birthday;
       if (phone) userFields.phone = phone;
 
-      profPicPath = `photo_${user._id}${path.parse(file.originalname).ext}`;
+      profPicPath = `video_${req.body.creator}${encodeURIComponent(
+        path.parse(file.originalname).name
+      )}${path.parse(file.originalname).ext}`;
+
       userFields.profile_pic = `https://kart-iw.s3.amazonaws.com/${profPicPath}`;
 
-      const S3_BUCKET = 'kart-iw';
-      const AWS_ACCESS_KEY_ID = config.get('AWSaccessKeyId');
-      const AWS_SECRET_ACCESS_KEY = config.get('AWSsecretAccessKey');
-
-      AWS.config.update({
-        accessKeyId: AWS_ACCESS_KEY_ID,
-        secretAccessKey: AWS_SECRET_ACCESS_KEY,
-      });
-
-      const s3 = new AWS.S3();
-
-      var params = {
-        Bucket: S3_BUCKET,
-        Key: profPicPath,
-        Body: file.buffer,
-      };
-      s3.upload(params, function (err, data) {
-        console.log(err, data);
-      });
+      uploadS3(file, profPicPath);
 
       user = await User.findOneAndUpdate(
         { _id: req.user.id },

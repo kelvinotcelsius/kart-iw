@@ -5,6 +5,7 @@ const PostSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
     ref: 'user',
+    required: true,
   },
   caption: {
     type: String,
@@ -14,9 +15,18 @@ const PostSchema = new Schema({
     type: String,
     required: true,
   },
+  preview: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
   product: {
     type: Schema.Types.ObjectId,
     ref: 'product',
+    required: true,
   },
   buyers: {
     type: [Schema.Types.ObjectId],

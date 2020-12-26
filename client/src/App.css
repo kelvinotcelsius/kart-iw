@@ -7,7 +7,7 @@
     url('https://fonts.google.com/specimen/Lora') format(ttf);
 }
 
-@import url('https://fonts.google.com/specimen/Lora');
+/* @import url('https://fonts.google.com/specimen/Lora'); Got a warning in the console */
 
 /* If fonts render differently on differnt computers, check out https://stackoverflow.com/questions/11737168/how-to-embed-fonts-in-css*/
 

@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
@@ -22,13 +21,6 @@ const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
     e.preventDefault();
     register(formData);
   };
-
-  // Redirect if logged in
-  if (isAuthenticated) {
-    // closeModal();
-    console.log('hey?'); // BUG
-    return <Redirect to='/finish-registration' />;
-  }
 
   return (
     <Fragment>
