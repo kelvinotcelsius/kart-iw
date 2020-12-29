@@ -15,16 +15,16 @@ var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
 
 // AWS
-var uploadS3 = require('../../config/uploadS3');
+var uploadS3 = require('../utils/uploadS3');
 
-// @route   POST api/posts
+// @route   POST api/posts/productID
 // @desc    Create a post for a product
 // @access  Private
 router.post(
   '/:productID',
   upload.fields([
-    { name: 'videoFile', maxCount: 1 },
-    { name: 'previewFile', maxCount: 1 },
+    { name: 'video', maxCount: 1 },
+    { name: 'preview', maxCount: 1 },
   ]),
   [auth, [check('caption', 'A caption is required').not().isEmpty()]],
   async (req, res) => {
@@ -32,9 +32,8 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
     try {
-      const user = await User.findById(req.body.creator);
+      const user = await User.findById(req.user.id);
       const product = await Product.findById(req.params.productID);
 
       if (!product) {
@@ -45,13 +44,37 @@ router.post(
         return res.status(400).json({ errors: [{ msg: 'User not found' }] });
       }
 
-      const videoFile = req.files.videoFile[0];
-      const previewFile = req.files.previewFile[0];
+      const videoFile = req.files.video[0];
+      const previewFile = req.files.preview[0];
 
-      videoFilePath = `video_${req.body.creator}${encodeURIComponent(
+      // See if they uploaded a valid video
+      if (!videoFile) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Please upload a video' }] });
+      }
+      if (!videoFile.mimetype.startsWith('video')) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Only video file types accepted' }] });
+      }
+
+      // See if they uploaded a valid cover iamge
+      if (!previewFile) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Please upload a cover image' }] });
+      }
+      if (!previewFile.mimetype.startsWith('image')) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Only image file types accepted' }] });
+      }
+
+      videoFilePath = `video_${req.body.creator_id}${encodeURIComponent(
         path.parse(videoFile.originalname).name
       )}${path.parse(videoFile.originalname).ext}`;
-      previewFilePath = `preview_${req.body.creator}${encodeURIComponent(
+      previewFilePath = `preview_${req.body.creator_id}${encodeURIComponent(
         path.parse(previewFile.originalname).name
       )}${path.parse(previewFile.originalname).ext}`;
 
@@ -62,11 +85,11 @@ router.post(
       awsPreviewPath = `https://kart-iw.s3.amazonaws.com/${previewFilePath}`;
 
       const newPost = new Post({
-        creator: req.body.creator,
+        creator_id: req.user.id,
         caption: req.body.caption,
         video: awsVideoPath,
         preview: awsPreviewPath,
-        product: product._id,
+        product_id: product._id,
       });
 
       // Add post to posts collection
@@ -114,7 +137,7 @@ router.delete('/:postID', auth, async (req, res) => {
 
     // checks if the user deleting the post is the user that owns the post
     // post.user is of type object id, so we need to to call .toString
-    if (post.creator.toString() !== req.user.id) {
+    if (post.creator_id.toString() !== req.user.id) {
       return res
         .status(401)
         .json({ msg: 'User not authorized to delete post' });

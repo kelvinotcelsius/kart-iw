@@ -10,6 +10,7 @@ const { json } = require('express');
 
 const User = require('../../models/User');
 const Post = require('../../models/Post');
+const Product = require('../../models/Product');
 
 // Middleware for handling multipart/form-data
 var multer = require('multer');
@@ -17,7 +18,7 @@ var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
 
 // AWS
-var uploadS3 = require('../../config/uploadS3');
+var uploadS3 = require('../utils/uploadS3');
 
 // @route   POST api/users
 // @desc    Register user
@@ -90,7 +91,7 @@ router.post(
 );
 
 // Finish creating profile
-// @route   PUT api/user/profile
+// @route   PUT api/users/profile
 // @desc    Create user profile
 // @access  Private
 router.put(
@@ -160,7 +161,7 @@ router.put(
       if (birthday) userFields.birthday = birthday;
       if (phone) userFields.phone = phone;
 
-      profPicPath = `video_${req.body.creator}${encodeURIComponent(
+      profPicPath = `video_${user._id}${encodeURIComponent(
         path.parse(file.originalname).name
       )}${path.parse(file.originalname).ext}`;
 
@@ -197,7 +198,7 @@ router.get('/all', async (req, res) => {
   }
 });
 
-// @route   GET api/user/:user_id
+// @route   GET api/users/:user_id
 // @desc    Get user by id
 // @access  Public
 router.get('/:user_id', async (req, res) => {
@@ -233,6 +234,29 @@ router.delete('/', auth, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/users/purchased_items
+// @desc    Get current user's purchased products
+// @access  Private
+router.get('/my/purchased_items', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: 'User not found' }] });
+    }
+    const purchased_items = await Product.find()
+      .where('_id')
+      .in(user.purchased_items)
+      .select('_id name')
+      .exec();
+
+    res.json(purchased_items);
+  } catch (err) {
+    console.log(err);
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 });
 

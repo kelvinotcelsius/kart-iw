@@ -10,14 +10,16 @@ import Register from '../auth/Register';
 import './Layout.css';
 import { logout } from '../../actions/auth';
 
+import uploadIcon from '../../assets/images/icons/upload.svg';
+
 const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
   const [loginModal, changeModal] = useState(true); // true = show login modal, false = show sign in modal
-
   const [modalStatus, showModal] = useState(false); // true = show modal, false = close modal
   const closeModal = () => showModal(false);
   const [profPicURL, setProfPicURL] = useState(
     'https://kart-iw.s3.amazonaws.com/default_prof_pic.png'
   );
+  const [menuState, showMenu] = useState(false);
 
   useEffect(() => {
     // Make sure the profile picure is updated
@@ -60,13 +62,26 @@ const Navbar = ({ auth: { isAuthenticated, user }, logout }) => {
 
   const authLinks = (
     <Fragment>
-      <div className='nav-profile-wrapper'>
-        <img className='profile-pic' alt='profile pic' src={profPicURL} />
-        <ul className='nav-auth-menu'>
-          <li className='nav-auth-menu-item' onClick={() => logout()}>
-            Logout
-          </li>
-        </ul>
+      <div className='icons-wrapper'>
+        <div className='upload-wrapper'>
+          <Link to='/upload'>
+            <img id='upload-icon' src={uploadIcon} alt='upload icon'></img>
+          </Link>
+          <p className='upload-caption'>Upload video</p>
+        </div>
+        <div className='nav-profile-wrapper'>
+          <img
+            className='profile-pic'
+            alt='profile pic'
+            src={profPicURL}
+            onClick={() => showMenu(!menuState)}
+          />
+          <ul className={`nav-auth-menu ${menuState ? 'show' : 'hide'}`}>
+            <li className='nav-auth-menu-item' onClick={() => logout()}>
+              Logout
+            </li>
+          </ul>
+        </div>
       </div>
     </Fragment>
   );

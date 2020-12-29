@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { finishRegistration } from '../../actions/auth';
 
-// See https://medium.com/@snrsdev/mern-stack-aws-s3-express-fileupload-objectid-based-file-upload-for-profile-post-and-comment-acf386b5bb48 for uploading profile pics to S3
-
 const initialState = {
   username: 'ninjawearingnike',
   first: 'kelvin',
@@ -16,8 +14,6 @@ const initialState = {
 
 const FinishRegistrationForm = ({ history, finishRegistration }) => {
   const [formData, setFormData] = useState(initialState);
-  // const [profilePic, setProfilePic] = useState('');
-
   const { username, first, last, birthday, phone, file } = formData;
 
   const onChange = (e) => {
@@ -25,13 +21,11 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
   };
 
   const onFileChange = (e) => {
-    // setProfilePic(e.target.files[0]);
     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // formData.append('profilePic', profilePic);
     var form_data = new FormData();
 
     for (var key in formData) {

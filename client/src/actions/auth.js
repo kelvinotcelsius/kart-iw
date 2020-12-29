@@ -68,8 +68,6 @@ export const finishRegistration = (formData, history) => async (dispatch) => {
     // const body = JSON.stringify(formData);
     // const res = await axios.post('/api/users/profile', body, config);
 
-    // const body = JSON.stringify(formData);
-
     const res = await apiFile.put('/users/profile', formData);
 
     dispatch({

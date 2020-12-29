@@ -60,15 +60,17 @@ const ProductSchema = new Schema({
     required: true,
     default: 0,
   },
-  supplier: {
+  supplier_id: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'supplier',
   },
-  posts: {
-    type: [Schema.Types.ObjectId],
-    ref: 'post',
-  },
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'post',
+    },
+  ],
 });
 
 module.exports = Product = mongoose.model('product', ProductSchema);

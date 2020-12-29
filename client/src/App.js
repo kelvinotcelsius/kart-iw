@@ -20,6 +20,9 @@ import Alert from './components/layout/Alert';
 // User
 import FinishRegistrationForm from './components/auth/FinishRegistrationForm';
 
+// Posts
+import UploadForm from './components/posts/UploadForm';
+
 const App = () => {
   useEffect(() => {
     // Check if there's a token. If there is, put it in the global axios header
@@ -39,7 +42,7 @@ const App = () => {
             <Alert />
             <Switch>
               <Route exact path='/' component={Landing} />
-              <Route exact path='/hi' component={Landing} />
+              <PrivateRoute exact path='/upload' component={UploadForm} />
               <PrivateRoute exact path='/bingeable' component={Landing} />
               <PrivateRoute
                 exact

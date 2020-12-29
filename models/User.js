@@ -60,6 +60,7 @@ const UserSchema = new Schema({
   },
   followers: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  purchased_items: [{ type: Schema.Types.ObjectId, ref: 'product' }],
   orders: [{ type: Schema.Types.ObjectId, ref: 'order' }],
   posts: [{ type: Schema.Types.ObjectId, ref: 'post' }],
   bookmarks: [{ type: Schema.Types.ObjectId, ref: 'post' }],

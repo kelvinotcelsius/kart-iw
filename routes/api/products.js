@@ -19,7 +19,7 @@ router.post(
     check('collections', 'At least one collection is required').not().isEmpty(),
     check('categories', 'At least one category is required').not().isEmpty(),
     check('picture', 'A picture is required').not().isEmpty(),
-    check('supplier', 'A supplier is required').not().isEmpty(),
+    check('supplier_id', 'A supplier ID is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -27,7 +27,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    supplier = await Supplier.findOne({ name: req.body.supplier });
+    supplier = await Supplier.findOne({ _id: req.body.supplier_id });
 
     if (!supplier) {
       return res.status(400).send('Supplier not found');
@@ -44,7 +44,7 @@ router.post(
         categories: req.body.categories,
         picture: req.body.picture,
         external_url: req.body.external_url,
-        supplier: supplier._id,
+        supplier_id: supplier._id,
       });
       const product = await newProduct.save();
 
