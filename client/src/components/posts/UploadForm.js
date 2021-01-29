@@ -39,7 +39,6 @@ const UploadForm = ({ history, addPost }) => {
   };
 
   const onSelectChange = (e) => {
-    console.log(e);
     setItem(String(e));
   };
 
@@ -54,14 +53,13 @@ const UploadForm = ({ history, addPost }) => {
     for (var key in formData) {
       form_data.append(key, formData[key]);
     }
-    console.log(selectedItemID);
     // send id as separate arg
     addPost(form_data, selectedItemID, history);
   };
 
   return (
     <Fragment>
-      <h1>Upload vido</h1>
+      <h1>Upload video</h1>
       <form
         className='form-page'
         onSubmit={(e) => onSubmit(e)}
@@ -79,6 +77,14 @@ const UploadForm = ({ history, addPost }) => {
               search
               placeholder='Select product'
             />
+            {purchases == '' ? (
+              <span style={{ fontSize: '10px' }}>
+                You can only upload videos for items you have purchased. Buy
+                your first snack <a href='/'>here</a>.
+              </span>
+            ) : (
+              <p style={{ display: 'none' }}></p>
+            )}
           </div>
         </div>
         <div className='form-row'>
@@ -90,11 +96,11 @@ const UploadForm = ({ history, addPost }) => {
             <input
               id='caption'
               className='form-field'
-              placeholder='150 chars max'
+              placeholder='75 chars max'
               name='caption'
               value={caption}
               onChange={(e) => onChange(e)}
-              maxLength='150'
+              maxLength='75'
             />
           </div>
         </div>

@@ -18,7 +18,6 @@ module.exports = function (file, path) {
     Key: path,
     Body: file.buffer,
   };
-
   s3.upload(params, function (err, data) {
     console.log(err, data);
   });

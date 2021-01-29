@@ -7,6 +7,14 @@ const PostSchema = new Schema({
     ref: 'user',
     required: true,
   },
+  creator_profile_pic: {
+    type: String,
+    required: true,
+  },
+  creator_username: {
+    type: String,
+    required: true,
+  },
   caption: {
     type: String,
     required: true,

@@ -22,6 +22,7 @@ import FinishRegistrationForm from './components/auth/FinishRegistrationForm';
 
 // Posts
 import UploadForm from './components/posts/UploadForm';
+import Post from './components/posts/Post';
 
 const App = () => {
   useEffect(() => {
@@ -42,6 +43,7 @@ const App = () => {
             <Alert />
             <Switch>
               <Route exact path='/' component={Landing} />
+              <Route exact path='/:creator_id/:post_id' component={Post} />
               <PrivateRoute exact path='/upload' component={UploadForm} />
               <PrivateRoute exact path='/bingeable' component={Landing} />
               <PrivateRoute

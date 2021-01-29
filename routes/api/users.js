@@ -161,7 +161,7 @@ router.put(
       if (birthday) userFields.birthday = birthday;
       if (phone) userFields.phone = phone;
 
-      profPicPath = `video_${user._id}${encodeURIComponent(
+      profPicPath = `profile_image_${user._id}${encodeURIComponent(
         path.parse(file.originalname).name
       )}${path.parse(file.originalname).ext}`;
 
