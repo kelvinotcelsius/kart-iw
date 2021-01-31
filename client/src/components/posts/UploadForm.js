@@ -23,7 +23,9 @@ const UploadForm = ({ history, addPost }) => {
   const getPurchases = async () => {
     const res = await api.get('/users/my/purchased_items');
     const arr = res.data;
+    console.log(arr);
     arr.forEach((obj) => renameKey(obj, '_id', 'value'));
+    console.log(arr);
     setPurchases(arr);
   };
 
@@ -77,7 +79,7 @@ const UploadForm = ({ history, addPost }) => {
               search
               placeholder='Select product'
             />
-            {purchases == '' ? (
+            {purchases === '' ? (
               <span style={{ fontSize: '10px' }}>
                 You can only upload videos for items you have purchased. Buy
                 your first snack <a href='/'>here</a>.

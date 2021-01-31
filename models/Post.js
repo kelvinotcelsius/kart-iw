@@ -36,6 +36,14 @@ const PostSchema = new Schema({
     ref: 'product',
     required: true,
   },
+  product_name: {
+    type: String,
+    required: true,
+  },
+  product_picture: {
+    type: String,
+    required: true,
+  },
   buyers: [
     {
       type: Schema.Types.ObjectId,

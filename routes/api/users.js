@@ -249,7 +249,7 @@ router.get('/my/purchased_items', auth, async (req, res) => {
     const purchased_items = await Product.find()
       .where('_id')
       .in(user.purchased_items)
-      .select('_id name')
+      .select('_id name picture')
       .exec();
 
     res.json(purchased_items);

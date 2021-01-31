@@ -30,6 +30,8 @@ const MostLikedPosts = ({ getPosts, post: { posts } }) => {
               videoURL={post.video}
               postID={post._id}
               creatorID={post.creator_id}
+              productName={post.product_name}
+              productPic={post.product_picture}
             />
           ))}
         </div>

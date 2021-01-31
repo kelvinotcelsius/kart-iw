@@ -12,6 +12,8 @@ const PostPreview = ({
   creatorID,
   previewImageURL,
   videoURL,
+  productName,
+  productPic,
 }) => {
   return (
     <Fragment>
@@ -42,8 +44,9 @@ const PostPreview = ({
           creatorID={creatorID}
           postID={postID}
         />
-        <div className='pause-btn'>
-          <button>Hi</button>
+        <div className='product-wrapper'>
+          <img className='product-image' src={productPic} />
+          <p className='product-name'>{productName}</p>
         </div>
       </div>
     </Fragment>

@@ -5,7 +5,7 @@ import './Post.css';
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
   const [muted, setMute] = useState(true);
   const [playing, setPlaying] = useState(false);
-  const videoRef = useRef(null);
+  const videoRef = useRef(false);
   const onVideoPress = () => {
     if (playing) {
       videoRef.current.pause();
@@ -18,7 +18,7 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
 
   return (
     <Fragment>
-      <div className='wrapper'>
+      <div className='preview-video-wrapper'>
         <video
           className='preview-video'
           src={videoURL}
@@ -29,14 +29,20 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
           ref={videoRef}
           onClick={() => onVideoPress()}
           poster={previewImageURL}
-          onMouseOver={(event) => event.target.play()}
-          onMouseOut={(event) => event.target.pause()}
+          onMouseOver={() => onVideoPress()}
+          onMouseOut={() => onVideoPress()}
           muted={muted}
         />
-        <div
-          class={muted ? 'mute' : 'unmuted'}
-          onClick={() => setMute(!muted)}
-        ></div>
+        <div className='video-controls-wrapper'>
+          <div
+            className={videoRef.current.paused ? 'paused' : 'playing'}
+            onClick={() => setPlaying(!playing)}
+          ></div>
+          <div
+            className={muted ? 'mute' : 'unmuted'}
+            onClick={() => setMute(!muted)}
+          ></div>
+        </div>
       </div>
     </Fragment>
   );

@@ -74,11 +74,56 @@
   cursor: pointer;
 }
 
-.wrapper {
+.product-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  align-items: center;
+}
+
+.product-image {
+  height: 40px;
+  width: 40px;
+}
+
+.product-name {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.preview-video-wrapper {
   display: table;
   width: auto;
   position: relative;
   width: 50%;
+}
+
+.playing {
+  background-image: url('../../assets/images/icons/pause.svg');
+  background-repeat: no-repeat;
+  width: 10%;
+  height: 10%;
+  position: absolute;
+  left: 10%;
+  right: 0%;
+  top: 90%;
+  bottom: 0%;
+  background-size: contain;
+  z-index: 5;
+}
+
+.paused {
+  background-image: url('../../assets/images/icons/play.svg');
+  background-repeat: no-repeat;
+  width: 10%;
+  height: 10%;
+  position: absolute;
+  left: 10%;
+  right: 0%;
+  top: 90%;
+  bottom: 0%;
+  background-size: contain;
+  z-index: 5;
 }
 
 .mute {

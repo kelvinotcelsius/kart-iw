@@ -120,6 +120,8 @@ router.post(
         video: awsVideoPath,
         preview: awsPreviewPath,
         product_id: product._id,
+        product_name: product.name,
+        product_picture: product.picture,
       });
 
       // Add post to posts collection
