@@ -9,22 +9,7 @@ import { getPost } from '../../actions/post';
 
 import Spinner from '../layout/Spinner';
 
-const Post = ({
-  getPost,
-  post: {
-    post: {
-      video,
-      preview,
-      product_name,
-      product_picture,
-      caption,
-      creator_username,
-      creator_profile_pic,
-    },
-    loading,
-  },
-  match,
-}) => {
+const Post = ({ getPost, post: { post, loading }, match }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -56,7 +41,7 @@ const Post = ({
 
   return (
     <Fragment>
-      {loading || video === null ? (
+      {loading || post === null ? (
         <Spinner />
       ) : (
         <div className='post-wrapper'>
@@ -72,14 +57,14 @@ const Post = ({
             <div className='preview-video-wrapper'>
               <video
                 className='preview-video'
-                src={video}
+                src={post.video}
                 playsInline
                 loop
                 ratiowidth='calc(0.56 * (400px + (100vw - 768px) / 1152 * 100))'
                 ratioheight='calc(400px + (100vw - 768px) / 1152 * 100)'
                 ref={videoRef}
                 onClick={() => onVideoPress()}
-                poster={preview}
+                poster={post.preview}
                 onMouseOver={() => onVideoPress()}
                 onMouseOut={() => onVideoPress()}
                 muted={muted}
@@ -98,14 +83,14 @@ const Post = ({
           </div>
           <div className='post-product-wrapper'>
             <div className='product-info'>
-              <img src={product_picture} alt='Product' />
-              <p>{product_name}</p>
+              <img src={post.product_picture} alt='Product' />
+              <p>{post.product_name}</p>
               <a href='/'>View product info</a>
             </div>
             <div className='creator-info'>
-              <img src={creator_profile_pic} alt='User profile' />
-              <p>{creator_username}</p>
-              <p>{caption}</p>
+              <img src={post.creator_profile_pic} alt='User profile' />
+              <p>{post.creator_username}</p>
+              <p>{post.caption}</p>
             </div>
             <div className='post-login'>
               <p>Login to earn money</p>
