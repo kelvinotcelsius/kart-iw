@@ -1,5 +1,5 @@
 import React, { useState, useRef, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Post.css';
 
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
@@ -19,20 +19,22 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
   return (
     <Fragment>
       <div className='preview-video-wrapper'>
-        <video
-          className='preview-video'
-          src={videoURL}
-          playsInline
-          loop
-          ratiowidth='calc(0.56 * (400px + (100vw - 768px) / 1152 * 100))'
-          ratioheight='calc(400px + (100vw - 768px) / 1152 * 100)'
-          ref={videoRef}
-          onClick={() => onVideoPress()}
-          poster={previewImageURL}
-          onMouseOver={() => onVideoPress()}
-          onMouseOut={() => onVideoPress()}
-          muted={muted}
-        />
+        <Link to={`/${creatorID}/${postID}`}>
+          <video
+            className='preview-video'
+            src={videoURL}
+            playsInline
+            loop
+            ratiowidth='calc(0.56 * (400px + (100vw - 768px) / 1152 * 100))'
+            ratioheight='calc(400px + (100vw - 768px) / 1152 * 100)'
+            ref={videoRef}
+            onClick={() => onVideoPress()}
+            poster={previewImageURL}
+            onMouseOver={() => onVideoPress()}
+            onMouseOut={() => onVideoPress()}
+            muted={muted}
+          />
+        </Link>
         <div className='video-controls-wrapper'>
           <div
             className={videoRef.current.paused ? 'paused' : 'playing'}

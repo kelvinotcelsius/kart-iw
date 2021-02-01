@@ -137,7 +137,7 @@
   top: 90%;
   bottom: 0%;
   background-size: contain;
-  z-index: 5;
+  z-index: 10;
 }
 
 .unmuted {
@@ -151,5 +151,5 @@
   top: 90%;
   bottom: 0%;
   background-size: contain;
-  z-index: 5;
+  z-index: 10;
 }

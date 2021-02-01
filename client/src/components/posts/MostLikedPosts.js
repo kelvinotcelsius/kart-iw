@@ -22,6 +22,7 @@ const MostLikedPosts = ({ getPosts, post: { posts } }) => {
         <div className='preview-wrapper'>
           {posts.map((post) => (
             <PostPreview
+              key={post._id}
               profPic={post.creator_profile_pic}
               username={post.creator_username}
               caption={post.caption}

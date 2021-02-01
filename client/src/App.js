@@ -45,7 +45,6 @@ const App = () => {
               <Route exact path='/' component={Landing} />
               <Route exact path='/:creator_id/:post_id' component={Post} />
               <PrivateRoute exact path='/upload' component={UploadForm} />
-              <PrivateRoute exact path='/bingeable' component={Landing} />
               <PrivateRoute
                 exact
                 path='/finish-registration'

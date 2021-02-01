@@ -31,9 +31,9 @@ const PostPreview = ({
         </div>
         <div className='preview-right-wrapper'>
           <button className='deal-btn'>
-            <Link to={`/${creatorID}/${postID}`} className='btn-link'>
+            <a href={`/${creatorID}/${postID}`} className='btn-link'>
               View deal
-            </Link>
+            </a>
           </button>
         </div>
       </div>
@@ -45,7 +45,7 @@ const PostPreview = ({
           postID={postID}
         />
         <div className='product-wrapper'>
-          <img className='product-image' src={productPic} />
+          <img className='product-image' src={productPic} alt='product' />
           <p className='product-name'>{productName}</p>
         </div>
       </div>
