@@ -1,13 +1,44 @@
-/* Post.js */
+/* PostModal.js */
 .post-wrapper {
+  width: 80%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.modal.hide {
+  display: none;
+}
+
+.modal.show {
+  position: absolute;
+  background: #fff;
+  top: 25;
+  left: 10%;
+  right: 10%;
+  padding: 15px;
+  border: 2px solid #444;
+
   display: flex;
   flex-direction: row;
-  width: 100%;
+  z-index: 5;
 }
 
 .post-video-wrapper {
   background-color: var(--superblack);
-  width: 60%;
+  width: 50%;
+  /* width: calc(0.56 * (400px + ((100vw - 768px) / 1152) * 100)); */
+}
+
+.post-video {
+  height: calc(700px + ((100vw - 768px) / 1152) * 100);
+  width: calc(0.56 * (700px + ((100vw - 768px) / 1152) * 100));
+}
+
+.post-video:hover {
+  cursor: pointer;
 }
 
 .post-product-wrapper {
@@ -125,7 +156,7 @@
   top: 90%;
   bottom: 0%;
   background-size: contain;
-  z-index: 5;
+  z-index: 2;
 }
 
 .paused {
@@ -139,10 +170,10 @@
   top: 90%;
   bottom: 0%;
   background-size: contain;
-  z-index: 5;
+  z-index: 2;
 }
 
-.mute {
+.muted {
   background-image: url('../../assets/images/icons/mute.svg');
   background-repeat: no-repeat;
   width: 10%;
@@ -153,7 +184,8 @@
   top: 90%;
   bottom: 0%;
   background-size: contain;
-  z-index: 10;
+  z-index: 2;
+  padding: 5px;
 }
 
 .unmuted {
@@ -167,5 +199,14 @@
   top: 90%;
   bottom: 0%;
   background-size: contain;
-  z-index: 10;
+  z-index: 2;
+  padding: 5px;
+}
+
+.muted:hover {
+  cursor: pointer;
+}
+
+.unmuted:hover {
+  cursor: pointer;
 }

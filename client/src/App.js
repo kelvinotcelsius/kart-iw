@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Custom routing
@@ -22,7 +22,7 @@ import FinishRegistrationForm from './components/auth/FinishRegistrationForm';
 
 // Posts
 import UploadForm from './components/posts/UploadForm';
-import Post from './components/posts/Post';
+import PostModal from './components/posts/PostModal';
 
 const App = () => {
   useEffect(() => {
@@ -37,24 +37,48 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Fragment>
-          <div id='container'>
-            <Navbar />
-            <Alert />
-            <Switch>
-              <Route exact path='/' component={Landing} />
-              <Route exact path='/:creator_id/:post_id' component={Post} />
-              <PrivateRoute exact path='/upload' component={UploadForm} />
-              <PrivateRoute
-                exact
-                path='/finish-registration'
-                component={FinishRegistrationForm}
-              />
-            </Switch>
-          </div>
-        </Fragment>
+        <Routes />
       </Router>
     </Provider>
+  );
+};
+
+// Taken from https://reactrouter.com/web/example/modal-gallery
+const Routes = () => {
+  let location = useLocation();
+  let background = {
+    pathname: '/',
+  };
+  if (location.state && location.state.background) {
+    background = location.state && location.state.background;
+  }
+
+  return (
+    <Fragment>
+      <div id='container'>
+        <Navbar />
+        <Alert />
+        <Switch location={background || location}>
+          <Route exact path='/' component={Landing} />
+          <PrivateRoute exact path='/upload' component={UploadForm} />
+          <PrivateRoute
+            exact
+            path='/finish-registration'
+            component={FinishRegistrationForm}
+          />
+          {/* <Route exact path='/:creator_id/:post_id' children={<Post />} /> */}
+        </Switch>
+
+        {/* Show the backgruond*/}
+        {background && (
+          // <Route
+          //   path='/:creator_id/:post_id'
+          //   render={(props) => <PostModal {...props} background={background} />}
+          // />
+          <Route exact path='/:creator_id/:post_id' component={PostModal} />
+        )}
+      </div>
+    </Fragment>
   );
 };
 

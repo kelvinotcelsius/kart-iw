@@ -41,7 +41,7 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             onClick={() => setPlaying(!playing)}
           ></div>
           <div
-            className={muted ? 'mute' : 'unmuted'}
+            className={muted ? 'muted' : 'unmuted'}
             onClick={() => setMute(!muted)}
           ></div>
         </div>

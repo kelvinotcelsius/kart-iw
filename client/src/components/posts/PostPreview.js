@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import VideoPreview from './VideoPreview';
 import './Post.css';
@@ -15,6 +15,8 @@ const PostPreview = ({
   productName,
   productPic,
 }) => {
+  let location = useLocation();
+
   return (
     <Fragment>
       <div className='preview-top-wrapper'>
@@ -31,7 +33,13 @@ const PostPreview = ({
         </div>
         <div className='preview-right-wrapper'>
           <button className='deal-btn'>
-            <Link to={`/${creatorID}/${postID}`} className='btn-link'>
+            <Link
+              to={{
+                pathname: `/${creatorID}/${postID}`,
+                state: { background: location },
+              }}
+              className='btn-link'
+            >
               View deal
             </Link>
           </button>
