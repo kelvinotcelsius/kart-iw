@@ -83,12 +83,20 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
           </div>
           <div className='post-product-wrapper'>
             <div className='product-info'>
-              <img src={post.product_picture} alt='Product' />
+              <img
+                className='product-image'
+                src={post.product_picture}
+                alt='Product'
+              />
               <p>{post.product_name}</p>
               <a href='/'>View product info</a>
             </div>
             <div className='creator-info'>
-              <img src={post.creator_profile_pic} alt='User profile' />
+              <img
+                className='preview-profile-pic'
+                src={post.creator_profile_pic}
+                alt='User profile'
+              />
               <p>{post.creator_username}</p>
               <p>{post.caption}</p>
             </div>

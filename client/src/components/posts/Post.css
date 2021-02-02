@@ -1,3 +1,19 @@
+/* Post.js */
+.post-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.post-video-wrapper {
+  background-color: var(--superblack);
+  width: 60%;
+}
+
+.post-product-wrapper {
+  width: 40%;
+}
+
 /* MostLikedPosts.js */
 .home-wrapper {
   display: flex;
