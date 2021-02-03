@@ -1,6 +1,7 @@
 /* PostModal.js */
-.post-wrapper {
-  width: 80%;
+.post-background-wrapper {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.15);
   position: absolute;
   top: 0;
   left: 0;
@@ -8,11 +9,15 @@
   right: 0;
 }
 
-.modal.hide {
-  display: none;
+.post-wrapper {
+  width: 65%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  top: 9%;
 }
 
-.modal.show {
+.modal {
   position: absolute;
   background: #fff;
   top: 25;
@@ -28,13 +33,13 @@
 
 .post-video-wrapper {
   background-color: var(--superblack);
-  width: 50%;
+  /* width: 50%; */
   /* width: calc(0.56 * (400px + ((100vw - 768px) / 1152) * 100)); */
 }
 
 .post-video {
-  height: calc(700px + ((100vw - 768px) / 1152) * 100);
-  width: calc(0.56 * (700px + ((100vw - 768px) / 1152) * 100));
+  height: calc(550px + ((100vw - 768px) / 1152) * 100);
+  width: calc(0.56 * (550px + ((100vw - 768px) / 1152) * 100));
 }
 
 .post-video:hover {
@@ -43,6 +48,11 @@
 
 .post-product-wrapper {
   width: 40%;
+}
+
+.post-product {
+  height: calc(600px + ((100vw - 768px) / 1152) * 100);
+  width: calc(0.56 * (600px + ((100vw - 768px) / 1152) * 100));
 }
 
 /* MostLikedPosts.js */

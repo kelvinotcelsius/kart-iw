@@ -53,12 +53,14 @@ const Routes = () => {
     background = location.state && location.state.background;
   }
 
+  console.log(background);
+
   return (
     <Fragment>
       <div id='container'>
         <Navbar />
         <Alert />
-        <Switch location={background || location}>
+        <Switch location={location || background}>
           <Route exact path='/' component={Landing} />
           <PrivateRoute exact path='/upload' component={UploadForm} />
           <PrivateRoute
@@ -66,17 +68,14 @@ const Routes = () => {
             path='/finish-registration'
             component={FinishRegistrationForm}
           />
-          {/* <Route exact path='/:creator_id/:post_id' children={<Post />} /> */}
+          {background && (
+            <Route
+              exact
+              path='/:creator_id/:post_id'
+              children={<PostModal background={background} />}
+            />
+          )}
         </Switch>
-
-        {/* Show the backgruond*/}
-        {background && (
-          // <Route
-          //   path='/:creator_id/:post_id'
-          //   render={(props) => <PostModal {...props} background={background} />}
-          // />
-          <Route exact path='/:creator_id/:post_id' component={PostModal} />
-        )}
       </div>
     </Fragment>
   );
