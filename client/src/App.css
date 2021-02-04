@@ -7,7 +7,8 @@
     url('https://fonts.google.com/specimen/Lora') format(ttf);
 }
 
-/* @import url('https://fonts.google.com/specimen/Lora'); Got a warning in the console */
+/* @import url('https://fonts.google.com/specimen/Lora'); */
+/* Got a warning in the console */
 
 /* If fonts render differently on differnt computers, check out https://stackoverflow.com/questions/11737168/how-to-embed-fonts-in-css*/
 
@@ -18,6 +19,7 @@
   --passion: #e7261b;
   --wet-rock: #707070;
   --moonstone: #f0f0f0;
+  --blue-jeans: #4bb3fd;
 
   --danger-color: #dc3545;
   --success-color: #40da67;

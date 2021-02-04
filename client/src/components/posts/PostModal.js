@@ -36,7 +36,12 @@ function useOutsideAlerter(ref, background) {
   }, [ref, history, background]);
 }
 
-const PostModal = ({ getPost, post: { post, loading }, background }) => {
+const PostModal = ({
+  getPost,
+  post: { post, loading },
+  auth: { isAuthenticated },
+  background,
+}) => {
   let { post_id, creator_id } = useParams();
 
   useEffect(() => {
@@ -68,64 +73,72 @@ const PostModal = ({ getPost, post: { post, loading }, background }) => {
           ) : (
             <div className='modal'>
               <div className='post-video-wrapper'>
-                {/* <button
-                className='back-btn'
-                onClick={() => {
-                  history.goBack();
-                }}
-              >
-                Back
-              </button> */}
-                <div className='preview-video-wrapper'>
-                  <video
-                    className='post-video'
-                    src={post.video}
-                    playsInline
-                    loop
-                    ref={videoRef}
-                    onClick={() => onVideoPress()}
-                    poster={post.preview}
-                    muted={muted}
-                  />
-                  <div className='video-controls-wrapper'>
-                    <div
-                      className={videoRef.current.paused ? 'paused' : 'playing'}
-                      onClick={() => setPlaying(!playing)}
-                    ></div>
-                    <div
-                      className={muted ? 'muted' : 'unmuted'}
-                      onClick={() => setMute(!muted)}
-                    ></div>
-                  </div>
+                <video
+                  className='post-video'
+                  src={post.video}
+                  playsInline
+                  loop
+                  ref={videoRef}
+                  onClick={() => onVideoPress()}
+                  poster={post.preview}
+                  muted={muted}
+                />
+                <div className='video-controls-wrapper'>
+                  <div
+                    className={videoRef.current.paused ? 'paused' : 'playing'}
+                    onClick={() => setPlaying(!playing)}
+                  ></div>
+                  <div
+                    className={muted ? 'muted' : 'unmuted'}
+                    onClick={() => setMute(!muted)}
+                  ></div>
                 </div>
               </div>
               <div className='post-product-wrapper'>
-                <div className='product-info'>
+                <div className='product-data'>
                   <img
-                    className='product-image'
+                    id='product-image'
                     src={post.product_picture}
                     alt='Product'
                   />
-                  <p>{post.product_name}</p>
-                  <a href='/'>View product info</a>
+                  <div className='product-info'>
+                    <p id='product-name'>{post.product_name}</p>
+                    <a id='product-url' href='/'>
+                      View product info
+                    </a>
+                  </div>
                 </div>
-                <div className='creator-info'>
+                <div className='divider'></div>
+                <div className='creator-data'>
                   <img
-                    className='preview-profile-pic'
+                    id='post-profile-pic'
                     src={post.creator_profile_pic}
                     alt='User profile'
                   />
-                  <p>{post.creator_username}</p>
-                  <p>{post.caption}</p>
+                  <div className='creator-info'>
+                    <p id='creator-username'>{post.creator_username}</p>
+                    <p id='post-caption'>{post.caption}</p>
+                  </div>
                 </div>
-                <div className='post-login'>
-                  <p>Login to earn money</p>
-                  <p>
-                    You can earn money by purchasing with a registered account.
-                    Learn more <Link to='/faq'>here</Link>
-                  </p>
-                  <button>Login</button>
-                </div>
+                <div className='divider'></div>
+                {isAuthenticated ? (
+                  <Fragment></Fragment>
+                ) : (
+                  <Fragment>
+                    <div className='post-login'>
+                      <p id='post-login-title'>Login to earn money</p>
+                      <p id='post-login-body'>
+                        You can earn money by purchasing with a registered
+                        account. Learn more{' '}
+                        <Link className='url' to='/faq'>
+                          here.
+                        </Link>
+                      </p>
+                      <button className='post-login-btn'>Login</button>
+                    </div>
+                    <div className='divider'></div>
+                  </Fragment>
+                )}
               </div>
             </div>
           )}
@@ -138,10 +151,12 @@ const PostModal = ({ getPost, post: { post, loading }, background }) => {
 PostModal.propTypes = {
   getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getPost })(PostModal);

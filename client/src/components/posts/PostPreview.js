@@ -19,42 +19,44 @@ const PostPreview = ({
 
   return (
     <Fragment>
-      <div className='preview-top-wrapper'>
-        <div className='preview-left-wrapper'>
-          <img className='preview-profile-pic' src={profPic} alt='profile' />
-          <div className='preview-user-metadata'>
-            <div className='preview-username'>
-              <span>{username}</span>
-            </div>
-            <div className='preview-caption'>
-              <span>{caption}</span>
+      <div className='preview-post-wrapper'>
+        <div className='preview-top-wrapper'>
+          <div className='preview-left-wrapper'>
+            <img className='preview-profile-pic' src={profPic} alt='profile' />
+            <div className='preview-user-metadata'>
+              <div className='preview-username'>
+                <span>{username}</span>
+              </div>
+              <div className='preview-caption'>
+                <span>{caption}</span>
+              </div>
             </div>
           </div>
+          <div className='preview-right-wrapper'>
+            <button className='deal-btn'>
+              <Link
+                to={{
+                  pathname: `/${creatorID}/${postID}`,
+                  state: { background: location },
+                }}
+                className='btn-link'
+              >
+                View deal
+              </Link>
+            </button>
+          </div>
         </div>
-        <div className='preview-right-wrapper'>
-          <button className='deal-btn'>
-            <Link
-              to={{
-                pathname: `/${creatorID}/${postID}`,
-                state: { background: location },
-              }}
-              className='btn-link'
-            >
-              View deal
-            </Link>
-          </button>
-        </div>
-      </div>
-      <div className='preview-video-wrapper'>
-        <VideoPreview
-          previewImageURL={previewImageURL}
-          videoURL={videoURL}
-          creatorID={creatorID}
-          postID={postID}
-        />
-        <div className='product-wrapper'>
-          <img className='product-image' src={productPic} alt='product' />
-          <p className='product-name'>{productName}</p>
+        <div className='preview-video-wrapper'>
+          <VideoPreview
+            previewImageURL={previewImageURL}
+            videoURL={videoURL}
+            creatorID={creatorID}
+            postID={postID}
+          />
+          <div className='product-wrapper'>
+            <img className='product-image' src={productPic} alt='product' />
+            <p className='product-name'>{productName}</p>
+          </div>
         </div>
       </div>
     </Fragment>
