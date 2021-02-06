@@ -44,7 +44,6 @@ const MostLikedPosts = ({ getPosts, post: { posts } }) => {
 MostLikedPosts.propTypes = {
   getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import './Post.css';
 
 import { getPost } from '../../actions/post';
+import { getProductFromPostId } from '../../actions/product';
 
 import Spinner from '../layout/Spinner';
 
@@ -38,15 +39,23 @@ function useOutsideAlerter(ref, background) {
 
 const PostModal = ({
   getPost,
+  getProductFromPostId,
   post: { post, loading },
+  product,
   auth: { isAuthenticated },
   background,
 }) => {
   let { post_id, creator_id } = useParams();
 
   useEffect(() => {
-    getPost(post_id);
-  }, [getPost, post_id]);
+    async function fetchData() {
+      await getPost(post_id);
+      await getProductFromPostId(post_id);
+    }
+    fetchData();
+    // getPost(post_id);
+    // getProductFromPostId(post_id);
+  }, [getPost, getProductFromPostId, post_id]);
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, background);
@@ -64,11 +73,12 @@ const PostModal = ({
     }
   };
 
+  console.log(product.product);
   return (
     <Fragment>
       <div className='post-background-wrapper'>
         <div className='post-wrapper' ref={wrapperRef}>
-          {loading || post === null ? (
+          {loading || product.loading || post === null ? (
             <Spinner />
           ) : (
             <div className='modal'>
@@ -98,14 +108,17 @@ const PostModal = ({
                 <div className='product-data'>
                   <img
                     id='product-image'
-                    src={post.product_picture}
+                    src={product.product.picture}
                     alt='Product'
                   />
                   <div className='product-info'>
-                    <p id='product-name'>{post.product_name}</p>
-                    <a id='product-url' href='/'>
+                    <p id='product-name'>{product.product.name}</p>
+                    <a id='product-url' href={product.product.external_url}>
                       View product info
                     </a>
+                    <p id='product-description'>
+                      {product.product.description}
+                    </p>
                   </div>
                 </div>
                 <div className='divider'></div>
@@ -150,13 +163,18 @@ const PostModal = ({
 
 PostModal.propTypes = {
   getPost: PropTypes.func.isRequired,
+  getProductFromPostId: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  product: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
+  product: state.product,
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getPost })(PostModal);
+export default connect(mapStateToProps, { getPost, getProductFromPostId })(
+  PostModal
+);

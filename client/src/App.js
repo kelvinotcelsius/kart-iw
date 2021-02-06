@@ -53,8 +53,6 @@ const Routes = () => {
     background = location.state && location.state.background;
   }
 
-  console.log(background);
-
   return (
     <Fragment>
       <div id='container'>

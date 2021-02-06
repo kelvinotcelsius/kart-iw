@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
+const checkObjectId = require('../../middleware/checkObjectId');
 
 const Product = require('../../models/Product');
 const Supplier = require('../../models/Supplier');
@@ -70,6 +71,29 @@ router.get('/all', async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/products/:post_id
+// @desc    Get a product by the post ID
+// @access  Public
+router.get('/:post_id', [checkObjectId('post_id')], async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.post_id);
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+
+    const product = await Product.findById(post.product_id);
+    if (!product) {
+      return res.status(404).json({ msg: 'Product not found' });
+    }
+
+    res.json(product);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
   }
 });
 
