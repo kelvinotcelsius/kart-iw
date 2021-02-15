@@ -31,11 +31,10 @@
 
 .post-video-wrapper {
   background-color: var(--superblack);
-  height: 100%;
   display: table;
   width: auto;
   position: relative;
-  width: 50%;
+  text-align: center;
 }
 
 .post-video {
@@ -48,7 +47,7 @@
 }
 
 .post-product-wrapper {
-  width: 40%;
+  width: 100%;
   padding: 30px 35px;
 }
 
@@ -77,12 +76,19 @@
 #product-name {
   font-weight: 600;
   margin-block-start: 0;
+  margin-block-end: 10px;
 }
 
 #product-url {
   font-size: 10px;
   color: var(--blue-jeans);
   text-decoration: none;
+}
+
+#product-description {
+  font-size: 11px;
+  color: var(--wet-rock);
+  margin-block-start: 0;
 }
 
 .divider {
@@ -111,7 +117,7 @@
 #post-caption {
   margin-block-start: 0;
   margin-block-end: 0;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 #post-profile-pic {
@@ -148,6 +154,31 @@
   border: 1px solid var(--black);
   font-size: 14px;
   color: var(--black);
+}
+
+.purchase-btn-wrapper {
+  text-align: center;
+}
+
+.purchase-btn-wrapper:hover {
+  cursor: pointer;
+}
+
+.post-purchase-btn {
+  padding: 10px 30px;
+  background-color: var(--passion);
+  border: none;
+  font-size: 14px;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.purchase-btn-text {
+  width: 100%;
+  text-align: center;
+  margin: 0;
 }
 
 /* MostLikedPosts.js */
@@ -251,7 +282,7 @@
 }
 
 .playing {
-  background-image: url('../../assets/images/icons/pause.svg');
+  background-image: url('../../assets/images/icons/play.svg');
   background-repeat: no-repeat;
   width: 10%;
   height: 10%;
@@ -265,7 +296,7 @@
 }
 
 .paused {
-  background-image: url('../../assets/images/icons/play.svg');
+  background-image: url('../../assets/images/icons/pause.svg');
   background-repeat: no-repeat;
   width: 10%;
   height: 10%;
@@ -281,8 +312,8 @@
 .muted {
   background-image: url('../../assets/images/icons/mute.svg');
   background-repeat: no-repeat;
-  width: 10%;
-  height: 10%;
+  width: 11%;
+  height: 11%;
   position: absolute;
   left: 80%;
   right: 0%;
@@ -290,14 +321,13 @@
   bottom: 0%;
   background-size: contain;
   z-index: 2;
-  padding: 5px;
 }
 
 .unmuted {
   background-image: url('../../assets/images/icons/unmute.svg');
   background-repeat: no-repeat;
-  width: 10%;
-  height: 10%;
+  width: 11%;
+  height: 11%;
   position: absolute;
   left: 80%;
   right: 0%;
@@ -305,13 +335,11 @@
   bottom: 0%;
   background-size: contain;
   z-index: 2;
-  padding: 5px;
 }
 
-.muted:hover {
-  cursor: pointer;
-}
-
-.unmuted:hover {
+.muted:hover,
+.unmuted:hover,
+.playing:hover,
+.paused:hover {
   cursor: pointer;
 }

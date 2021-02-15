@@ -2,6 +2,11 @@ import React, { useEffect, useState, useRef, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Popup from 'reactjs-popup';
+
+import Login from '../auth/Login';
+import Register from '../auth/Register';
+import PaymentWrapper from '../shop/PaymentWrapper';
 
 import './Post.css';
 
@@ -11,7 +16,7 @@ import { getProductFromPostId } from '../../actions/product';
 import Spinner from '../layout/Spinner';
 
 // Hook that alerts clicks outside of the passed ref
-function useOutsideAlerter(ref, background) {
+function useOutsideAlerter(ref, background, modalStatus) {
   const history = useHistory();
 
   useEffect(() => {
@@ -23,7 +28,11 @@ function useOutsideAlerter(ref, background) {
 
     // Alert if clicked on outside of element
     function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        modalStatus === false
+      ) {
         back(event);
       }
     }
@@ -34,7 +43,7 @@ function useOutsideAlerter(ref, background) {
       // Unbind the event listener on clean up
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref, history, background]);
+  }, [ref, history, background, modalStatus]);
 }
 
 const PostModal = ({
@@ -53,16 +62,21 @@ const PostModal = ({
       await getProductFromPostId(post_id);
     }
     fetchData();
-    // getPost(post_id);
-    // getProductFromPostId(post_id);
   }, [getPost, getProductFromPostId, post_id]);
 
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, background);
+  const [loginModal, changeModal] = useState(true); // true = show login modal, false = show sign in modal
+  const [modalStatus, showModal] = useState(false); // true = show modal, false = close modal
+  const closeModal = () => showModal(false);
 
-  const [muted, setMute] = useState(true);
+  const [showPayment, triggerPayment] = useState(false);
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, background, modalStatus);
+
+  const [muted, setMute] = useState(false);
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef(false);
+
   const onVideoPress = () => {
     if (playing) {
       videoRef.current.pause();
@@ -73,12 +87,11 @@ const PostModal = ({
     }
   };
 
-  console.log(product.product);
   return (
     <Fragment>
       <div className='post-background-wrapper'>
         <div className='post-wrapper' ref={wrapperRef}>
-          {loading || product.loading || post === null ? (
+          {loading || product.loading || post == null ? (
             <Spinner />
           ) : (
             <div className='modal'>
@@ -95,8 +108,12 @@ const PostModal = ({
                 />
                 <div className='video-controls-wrapper'>
                   <div
-                    className={videoRef.current.paused ? 'paused' : 'playing'}
-                    onClick={() => setPlaying(!playing)}
+                    className={
+                      videoRef.current.paused || videoRef.current.paused == null
+                        ? 'paused'
+                        : 'playing'
+                    }
+                    onClick={() => onVideoPress()}
                   ></div>
                   <div
                     className={muted ? 'muted' : 'unmuted'}
@@ -105,51 +122,118 @@ const PostModal = ({
                 </div>
               </div>
               <div className='post-product-wrapper'>
-                <div className='product-data'>
-                  <img
-                    id='product-image'
-                    src={product.product.picture}
-                    alt='Product'
-                  />
-                  <div className='product-info'>
-                    <p id='product-name'>{product.product.name}</p>
-                    <a id='product-url' href={product.product.external_url}>
-                      View product info
-                    </a>
-                    <p id='product-description'>
-                      {product.product.description}
-                    </p>
-                  </div>
-                </div>
-                <div className='divider'></div>
-                <div className='creator-data'>
-                  <img
-                    id='post-profile-pic'
-                    src={post.creator_profile_pic}
-                    alt='User profile'
-                  />
-                  <div className='creator-info'>
-                    <p id='creator-username'>{post.creator_username}</p>
-                    <p id='post-caption'>{post.caption}</p>
-                  </div>
-                </div>
-                <div className='divider'></div>
-                {isAuthenticated ? (
-                  <Fragment></Fragment>
-                ) : (
+                {!showPayment ? (
                   <Fragment>
-                    <div className='post-login'>
-                      <p id='post-login-title'>Login to earn money</p>
-                      <p id='post-login-body'>
-                        You can earn money by purchasing with a registered
-                        account. Learn more{' '}
-                        <Link className='url' to='/faq'>
-                          here.
-                        </Link>
-                      </p>
-                      <button className='post-login-btn'>Login</button>
+                    <div className='product-data'>
+                      <img
+                        id='product-image'
+                        src={product.product.picture}
+                        alt='Product'
+                      />
+                      <div className='product-info'>
+                        <p id='product-name'>{product.product.name}</p>
+                        <p id='product-description'>
+                          {product.product.description}
+                        </p>
+                        <a
+                          id='product-url'
+                          href={`//${product.product.external_url}`}
+                          rel='noreferrer'
+                          target='_blank'
+                        >
+                          View product info
+                        </a>
+                      </div>
                     </div>
                     <div className='divider'></div>
+                    <div className='creator-data'>
+                      <img
+                        id='post-profile-pic'
+                        src={post.creator_profile_pic}
+                        alt='User profile'
+                      />
+                      <div className='creator-info'>
+                        <p id='creator-username'>{post.creator_username}</p>
+                        <p id='post-caption'>{post.caption}</p>
+                      </div>
+                    </div>
+                    <div className='divider'></div>
+                    {isAuthenticated ? (
+                      <Fragment></Fragment>
+                    ) : (
+                      <Fragment>
+                        <div className='post-login'>
+                          <p id='post-login-title'>Login to earn money</p>
+                          <p id='post-login-body'>
+                            You can earn money by purchasing with a registered
+                            account. Learn more{' '}
+                            <Link className='url' to='/faq'>
+                              here.
+                            </Link>
+                          </p>
+                          <button
+                            className='post-login-btn'
+                            onClick={() => showModal((o) => !o)}
+                          >
+                            Login
+                          </button>
+                        </div>
+                        <div className='modal'>
+                          <Popup
+                            className='popup'
+                            open={modalStatus}
+                            onClose={closeModal}
+                            closeOnDocumentClick
+                            contentStyle={{
+                              borderRadius: '10px',
+                              height: '600px',
+                              overflowY: 'auto',
+                              textAlign: 'center',
+                              backgroundColor: 'white',
+                              border: '1px solid ',
+                            }}
+                          >
+                            {loginModal === true ? (
+                              <Login
+                                changeModal={changeModal}
+                                closeModal={closeModal}
+                              />
+                            ) : (
+                              <Register
+                                changeModal={changeModal}
+                                closeModal={closeModal}
+                              />
+                            )}
+                          </Popup>
+                        </div>
+                        <div className='divider'></div>
+                      </Fragment>
+                    )}
+                    <div className='purchase-btn-wrapper'>
+                      <button
+                        className='post-purchase-btn'
+                        onClick={() => triggerPayment(true)}
+                      >
+                        <span className='purchase-btn-text'>
+                          ${product.product.price}
+                        </span>
+                        <span className='purchase-btn-text'>Buy now</span>
+                      </button>
+                    </div>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <PaymentWrapper
+                      showPayment={showPayment}
+                      triggerPayment={triggerPayment}
+                      keys={{
+                        stripe:
+                          'pk_test_51IJgQfH8gVlzmKAC4VyQjXBmVAnxloBxer9cnuQeuw042BfkjMz7EiiRxFYPdUwIocpgKtXOcUlzQoLcewMjiHgk003TDp4mHE',
+                      }}
+                      creatorID={creator_id}
+                      postID={post_id}
+                      productID={product.product._id}
+                    />
                   </Fragment>
                 )}
               </div>

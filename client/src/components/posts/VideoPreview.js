@@ -37,8 +37,12 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
         </Link>
         <div className='video-controls-wrapper'>
           <div
-            className={videoRef.current.paused ? 'paused' : 'playing'}
-            onClick={() => setPlaying(!playing)}
+            className={
+              videoRef.current.paused || videoRef.current.paused == null
+                ? 'paused'
+                : 'playing'
+            }
+            // onClick={() => onVideoPress()}
           ></div>
           <div
             className={muted ? 'muted' : 'unmuted'}

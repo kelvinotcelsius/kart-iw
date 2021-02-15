@@ -42,3 +42,7 @@ body {
   padding: 0 3rem;
   margin-bottom: 3rem;
 }
+
+a:hover {
+  cursor: pointer;
+}
