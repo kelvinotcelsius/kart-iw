@@ -233,6 +233,7 @@ const PostModal = ({
                       creatorID={creator_id}
                       postID={post_id}
                       productID={product.product._id}
+                      price={product.product.price}
                     />
                   </Fragment>
                 )}

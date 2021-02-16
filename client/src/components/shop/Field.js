@@ -16,20 +16,19 @@ const Field = ({
     <div className='form-row'>
       <div className='form-field-wrapper'>
         <label htmlFor={id} className='form-row-label'>
-          {label}
+          <span>{label}</span>
+          <input
+            className='form-row-input'
+            id={id}
+            type={type}
+            min={min}
+            placeholder={placeholder}
+            required={required}
+            autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
+          />
         </label>
-        <br />
-        <input
-          className='FormRowInput'
-          id={id}
-          type={type}
-          min={min}
-          placeholder={placeholder}
-          required={required}
-          autoComplete={autoComplete}
-          value={value}
-          onChange={onChange}
-        />
       </div>
     </div>
   );

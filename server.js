@@ -5,8 +5,8 @@ const connectDB = require('./config/db');
 const app = express();
 
 // Necessary package to make POST request from React to Node backend
-// var cors = require('cors');
-// app.use(cors());
+var cors = require('cors');
+app.use(cors());
 
 //enable cors
 // app.use((_, res, next) => {

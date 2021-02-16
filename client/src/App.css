@@ -22,13 +22,17 @@
 :root {
   --superblack: #000000;
   --black: #262626;
-  --white: #ffffff;
-  --passion: #e7261b;
-  --wet-rock: #707070;
-  --moonstone: #f0f0f0;
-  --blue-jeans: #4bb3fd;
 
+  --white: #ffffff;
+  --moonstone: #f0f0f0;
+  --magnesium: #cccccc;
+  --wet-rock: #707070;
+
+  --passion: #e7261b;
   --danger-color: #dc3545;
+  --soft-passion: #ff9292;
+
+  --blue-jeans: #4bb3fd;
   --success-color: #40da67;
 }
 

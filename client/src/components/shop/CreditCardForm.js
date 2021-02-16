@@ -1,11 +1,7 @@
 import React, { useState, Fragment } from 'react';
-import { useHistory, Redirect, Link } from 'react-router-dom';
-import {
-  CardElement,
-  useElements,
-  useStripe,
-  Elements,
-} from '@stripe/react-stripe-js';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { Form, Modal, Button } from 'react-bootstrap';
 import Field from './Field';
 import './Payments.css';
@@ -18,7 +14,7 @@ const CARD_OPTIONS = {
   style: {
     base: {
       fontWeight: 500,
-      fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+      fontFamily: 'Open Sans, Segoe UI, sans-serif',
       fontSize: '18px',
       color: '#424770',
       fontSmoothing: 'antialiased',
@@ -47,7 +43,7 @@ const CARD_OPTIONS = {
 //   </button>
 // );
 
-const CreditCardForm = ({ productID, creatorID, postID }) => {
+const CreditCardForm = ({ productID, creatorID, postID, price }) => {
   let history = useHistory();
 
   const stripe = useStripe();
@@ -56,14 +52,17 @@ const CreditCardForm = ({ productID, creatorID, postID }) => {
   const [success, setSuccess] = useState(false);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [price, setPrice] = useState(0);
+  // const [paymentMethod, setPaymentMethod] = useState('');
+  // const [price, setPrice] = useState(0);
   const [billingDetails, setBillingDetails] = useState({
     email: '',
     name: '',
     address: {
       line1: '',
-      line2: '',
+      // line2: '',
+      city: '',
+      state: '',
+      postal_code: '',
     },
   });
 
@@ -71,8 +70,8 @@ const CreditCardForm = ({ productID, creatorID, postID }) => {
   const reset = () => {
     setError(null);
     setProcessing(false);
-    setPaymentMethod('');
-    setPrice(0);
+    // setPaymentMethod('');
+    // setPrice(0);
     setSuccess(false);
     setCardComplete(false);
     setBillingDetails({
@@ -80,7 +79,10 @@ const CreditCardForm = ({ productID, creatorID, postID }) => {
       name: '',
       address: {
         line1: '',
-        line2: '',
+        // line2: '',
+        city: '',
+        state: '',
+        postal_code: '',
       },
     });
   };
@@ -258,14 +260,15 @@ const CreditCardForm = ({ productID, creatorID, postID }) => {
       </Modal>
 
       {/* Credit Card Payment Form */}
+      <h5>Shipping and billing</h5>
       <fieldset className='FormGroup'>
         <Field
           label='Name'
           id='name'
           type='text'
-          placeholder='Jane Doe'
+          placeholder='Julia Smith'
           required={true}
-          autoComplete='name'
+          autoComplete='shipping name'
           value={billingDetails.name}
           onChange={(event) => {
             setBillingDetails({ ...billingDetails, name: event.target.value });
@@ -275,38 +278,92 @@ const CreditCardForm = ({ productID, creatorID, postID }) => {
           label='Email'
           id='email'
           type='email'
-          placeholder='janedoe@gmail.com'
+          placeholder='julias@gmail.com'
           required={true}
-          autoComplete='email'
+          autoComplete='shipping email'
           value={billingDetails.email}
           onChange={(event) => {
             setBillingDetails({ ...billingDetails, email: event.target.value });
           }}
         />
         <Field
-          label='Billing Address'
+          label='Address'
           id='line1'
           type='address-line1'
-          placeholder='1234 your street'
+          placeholder='1234 NW 13th Street Suite 50'
           required={true}
-          autoComplete='address-line1'
+          autoComplete='shipping address-line1'
           value={billingDetails.address.line1}
           onChange={(event) => {
             setBillingDetails({
               ...billingDetails,
               address: {
                 line1: event.target.value,
-                line2: billingDetails.address.line2,
+                // line2: billingDetails.address.line2,
               },
             });
           }}
         />
         <Field
+          label='City'
+          id='city'
+          type='address-city'
+          placeholder='San Francisco'
+          required={true}
+          autoComplete='shipping address-level2'
+          value={billingDetails.address.city}
+          onChange={(event) => {
+            setBillingDetails({
+              ...billingDetails,
+              address: {
+                city: event.target.value,
+                // line2: billingDetails.address.line2,
+              },
+            });
+          }}
+        />
+        <Field
+          label='State'
+          id='state'
+          type='address-state'
+          placeholder='CA'
+          required={true}
+          autoComplete='shipping address-level1'
+          value={billingDetails.address.state}
+          onChange={(event) => {
+            setBillingDetails({
+              ...billingDetails,
+              address: {
+                state: event.target.value,
+                // line2: billingDetails.address.line2,
+              },
+            });
+          }}
+        />
+        <Field
+          label='Zip code'
+          id='postal_code'
+          type='address-postal_code'
+          placeholder='85440'
+          required={true}
+          autoComplete='shipping postal-code'
+          value={billingDetails.address.postal_code}
+          onChange={(event) => {
+            setBillingDetails({
+              ...billingDetails,
+              address: {
+                postal_code: event.target.value,
+                // line2: billingDetails.address.line2,
+              },
+            });
+          }}
+        />
+        {/* <Field
           label=''
           id='line2'
           type='address-line2'
           placeholder='building/suite number'
-          autoComplete='address-line2'
+          autoComplete='shipping address-line2'
           value={billingDetails.address.line2}
           onChange={(event) => {
             setBillingDetails({
@@ -317,29 +374,39 @@ const CreditCardForm = ({ productID, creatorID, postID }) => {
               },
             });
           }}
-        />
+        /> */}
       </fieldset>
 
       {/* credit card field and submit button */}
-      <fieldset className='FormGroup'>
-        {/* card */}
-        <div className='FormRow'>
-          <CardElement
-            // options={CARD_OPTIONS}
-            onChange={(event) => {
-              console.log(event);
-              setError(event.error.message);
-              // setCardComplete(event.complete);
-            }}
-          />
-        </div>
-      </fieldset>
+      <Fragment>
+        <h5>Credit card</h5>
+        <CardElement
+          options={CARD_OPTIONS}
+          onChange={(event) => {
+            console.log(event);
+            setError(event.error.message);
+            // setCardComplete(event.complete);
+          }}
+        />
+      </Fragment>
       {/* submit */}
-      <button type='submit' error={error} disabled={!stripe}>
-        Make Payment
+      <button
+        className='form-submit'
+        type='submit'
+        error={error}
+        disabled={!stripe}
+      >
+        <span> Pay ${price}</span>
       </button>
     </Form>
   );
+};
+
+CreditCardForm.propTypes = {
+  price: PropTypes.number.isRequired,
+  creatorID: PropTypes.string.isRequired,
+  postID: PropTypes.string.isRequired,
+  productID: PropTypes.string.isRequired,
 };
 
 export default CreditCardForm;
