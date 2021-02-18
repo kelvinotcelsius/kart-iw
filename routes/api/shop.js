@@ -70,7 +70,6 @@ router.post(
       res.json({ secret: intent.client_secret, intent_id: intent.id });
     } catch (err) {
       console.log(err);
-      console.error(err.message);
       res.status(500).send('Server Error');
     }
   }
@@ -78,33 +77,30 @@ router.post(
 
 //handle payment confirmations
 router.post('/confirm-payment', async (req, res) => {
-  //extract payment type from the client request
-  const paymentType = String(req.body.payment_type);
+  try {
+    //extract payment type from the client request
+    const paymentType = String(req.body.payment_type);
 
-  //handle confirmed stripe transaction
-  if (paymentType == 'stripe') {
-    //get payment id for stripe
-    const clientid = String(req.body.payment_id);
+    //handle confirmed stripe transaction
+    if (paymentType == 'stripe') {
+      //get payment id for stripe
+      const clientid = String(req.body.payment_id);
 
-    //get the transaction based on the provided id
-    stripe.paymentIntents.retrieve(clientid, function (err, paymentIntent) {
-      //handle errors
-      if (err) {
-        console.log(err);
-      }
+      //get the intent based on the provided id
+      const paymentIntent = await stripe.paymentIntents.retrieve(clientid);
 
       //respond to the client that the server confirmed the transaction
       if (paymentIntent.status === 'succeeded') {
         /*YOUR CODE HERE*/
-
         console.log('confirmed stripe payment: ' + clientid);
         res.json({ success: true });
       } else {
-        console.log(paymentIntent.status);
-        console.log(paymentIntent);
         res.json({ success: false });
       }
-    });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server Error');
   }
 });
 

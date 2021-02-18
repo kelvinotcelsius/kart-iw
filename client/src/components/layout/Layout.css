@@ -189,11 +189,11 @@
 }
 
 .alert-danger {
-  background: var(--danger-color);
+  background: var(--dark-danger);
   color: #fff;
 }
 
 .alert-success {
-  background: var(--success-color);
+  background: var(--success);
   color: #fff;
 }

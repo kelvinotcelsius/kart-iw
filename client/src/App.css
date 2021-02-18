@@ -29,11 +29,12 @@
   --wet-rock: #707070;
 
   --passion: #e7261b;
-  --danger-color: #dc3545;
+  --dark-danger: #dc3545;
+  --light-danger: #ff7474;
   --soft-passion: #ff9292;
 
   --blue-jeans: #4bb3fd;
-  --success-color: #40da67;
+  --success: #40da67;
 }
 
 body {

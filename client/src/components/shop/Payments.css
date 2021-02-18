@@ -22,11 +22,11 @@
 }
 
 /* CreditCardForm */
-.Form {
+.form-wrapper {
   width: 100%;
 }
 
-.FormGroup {
+.form-group {
   width: 100%;
   margin-bottom: 20px;
   background: #fff;
@@ -55,6 +55,42 @@ h5 {
 
 .form-submit:hover {
   background-color: var(--passion);
+}
+
+.status {
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0.9;
+  margin: 5px 0 10px 0;
+}
+
+.status-msg {
+  text-align: left;
+  color: var(--dark-danger);
+}
+
+.close-status-btn {
+  background-color: transparent;
+  box-shadow: none;
+  height: 100%;
+}
+
+.close-status-btn:hover {
+  color: var(--light-danger);
+  cursor: pointer;
+  transform: none;
+  box-shadow: none;
+}
+
+.error {
+  color: var(--dark-danger);
+}
+
+.success {
+  color: var(--success);
 }
 
 /* Field.js */
@@ -143,7 +179,7 @@ button {
   text-decoration: none;
   -webkit-transition: all 150ms ease;
   transition: all 150ms ease;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 button:hover {
@@ -176,7 +212,7 @@ input::placeholder {
   color: #cccccc;
 }
 
-.result,
+/* .result,
 .error {
   font-size: 16px;
   font-weight: bold;
@@ -190,7 +226,7 @@ input::placeholder {
 
 .result {
   color: #666ee8;
-}
+} */
 
 /* 
   The StripeElement class is applied to the Element container by default.

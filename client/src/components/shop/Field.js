@@ -42,7 +42,7 @@ Field.propTypes = {
   // placeholder: PropTypes.string.isRequired,
   // required: PropTypes.bool.isRequired,
   autoComplete: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  // value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
