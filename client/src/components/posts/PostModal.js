@@ -125,11 +125,13 @@ const PostModal = ({
                 {!showPayment ? (
                   <Fragment>
                     <div className='product-data'>
-                      <img
-                        id='product-image'
-                        src={product.product.picture}
-                        alt='Product'
-                      />
+                      <Link to={`/${product.product._id}`}>
+                        <img
+                          id='product-image'
+                          src={product.product.picture}
+                          alt='Product'
+                        />
+                      </Link>
                       <div className='product-info'>
                         <p id='product-name'>{product.product.name}</p>
                         <p id='product-description'>

@@ -143,107 +143,6 @@ router.post(
   }
 );
 
-// @route   POST api/posts/product_id/tiktok
-// @desc    Create a post for a product with Tiktok
-// @access  Private
-router.post(
-  '/tiktok/:product_id',
-  upload.fields([{ name: 'preview', maxCount: 1 }]),
-  [
-    auth,
-    [
-      check('caption', 'A caption is required').not().isEmpty(),
-      check('caption', 'The caption must be less than 75 characters').isLength({
-        max: 75,
-      }),
-      checkObjectId('product_id'),
-    ],
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    try {
-      const user = await User.findById(req.user.id);
-      const product = await Product.findById(req.params.product_id);
-      if (!product) {
-        return res.status(400).json({ errors: [{ msg: 'Product not found' }] });
-      }
-
-      if (!user) {
-        return res.status(400).json({ errors: [{ msg: 'User not found' }] });
-      }
-
-      // Check if the user has purchased the item
-      // if (!user.purchased_items.includes(req.params.product_id)) {
-      //   return res
-      //     .status(400)
-      //     .json({
-      //       errors: [
-      //         {
-      //           msg:
-      //             'You cannot create videos for this item because you have not purchased it.',
-      //         },
-      //       ],
-      //     });
-      // }
-
-      const previewFile = req.files.preview[0];
-      // See if they uploaded a valid cover iamge
-      if (!previewFile) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Please upload a cover image' }] });
-      }
-      if (!previewFile.mimetype.startsWith('image')) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Only image file types accepted' }] });
-      }
-
-      // Delete all special characters from file names when adding to path
-      const previewFilePath = `preview_${req.user.id}${path
-        .parse(previewFile.originalname)
-        .name.replace(/[^a-zA-Z]/g, '')}${
-        path.parse(previewFile.originalname).ext
-      }`;
-
-      uploadS3(previewFile, previewFilePath);
-
-      awsPreviewPath = `https://kart-iw.s3.amazonaws.com/${previewFilePath}`;
-
-      const newPost = new Post({
-        creator_id: req.user.id,
-        creator_profile_pic: user.profile_pic,
-        creator_username: user.username,
-        caption: req.body.caption,
-        video: req.body.video,
-        preview: awsPreviewPath,
-        product_id: product._id,
-        product_name: product.name,
-        product_picture: product.picture,
-      });
-
-      // Add post to posts collection
-      const post = await newPost.save();
-
-      // Add post to user.posts array
-      user.posts.unshift(post._id);
-      await user.save();
-
-      // Add post to product.posts array
-      product.posts.unshift(post._id);
-      await product.save();
-
-      res.json(post);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
-  }
-);
-
 // @route   POST api/posts/all
 // @desc    Get all posts
 // @access  Public
@@ -258,7 +157,7 @@ router.get('/all', async (req, res) => {
 });
 
 // @route    GET api/posts/:post_id
-// @desc     Get post by ID
+// @desc     Get post by post ID
 // @access   Public
 router.get('/:post_id', [checkObjectId('post_id')], async (req, res) => {
   try {
@@ -330,6 +229,30 @@ router.delete(
 
       if (err.kind === 'ObjectId') {
         return res.status(404).json({ msg: 'Post not found' });
+      }
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route    GET api/posts/products/:product_id
+// @desc     Get all posts by product ID
+// @access   Public
+router.get(
+  '/products/:product_id',
+  [checkObjectId('product_id')],
+  async (req, res) => {
+    try {
+      const posts = await Post.find({ product_id: req.params.product_id });
+      if (!posts) {
+        return res.status(404).json({ msg: 'Posts not found' });
+      }
+      res.json(posts);
+    } catch (err) {
+      console.error(err.message);
+
+      if (err.kind === 'ObjectId') {
+        return res.status(404).json({ msg: 'Posts not found' });
       }
       res.status(500).send('Server Error');
     }

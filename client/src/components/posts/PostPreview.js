@@ -14,6 +14,7 @@ const PostPreview = ({
   videoURL,
   productName,
   productPic,
+  productID,
 }) => {
   let location = useLocation();
 
@@ -53,10 +54,12 @@ const PostPreview = ({
             creatorID={creatorID}
             postID={postID}
           />
-          <div className='product-wrapper'>
-            <img className='product-image' src={productPic} alt='product' />
-            <p className='product-name'>{productName}</p>
-          </div>
+          <Link to={`/${productID}`}>
+            <div className='product-wrapper'>
+              <img className='product-image' src={productPic} alt='product' />
+              <p className='product-name'>{productName}</p>
+            </div>
+          </Link>
         </div>
       </div>
     </Fragment>

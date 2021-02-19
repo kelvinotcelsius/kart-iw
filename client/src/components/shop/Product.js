@@ -2,10 +2,10 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import PostPreview from './PostPreview';
+import PostPreview from '../posts/PostPreview';
 import { getPosts } from '../../actions/post';
 
-const MostLikedPosts = ({ getPosts, post: { posts } }) => {
+const Product = ({ getPosts, post: { posts } }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
@@ -13,13 +13,7 @@ const MostLikedPosts = ({ getPosts, post: { posts } }) => {
   return (
     <Fragment>
       <div className='home-wrapper'>
-        <div className='home-left-wrapper'>
-          <h1 className='large text-primary'>Posts</h1>
-          <p className='lead'>
-            <i className='fas fa-user' /> Welcome to the community
-          </p>
-        </div>
-        <div className='preview-wrapper'>
+        <div className='video-preview-wrapper'>
           {posts.map((post) => (
             <PostPreview
               key={post._id}
@@ -42,7 +36,7 @@ const MostLikedPosts = ({ getPosts, post: { posts } }) => {
   );
 };
 
-MostLikedPosts.propTypes = {
+Product.propTypes = {
   getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
 };
@@ -51,4 +45,4 @@ const mapStateToProps = (state) => ({
   post: state.post,
 });
 
-export default connect(mapStateToProps, { getPosts })(MostLikedPosts);
+export default connect(mapStateToProps, { getPosts })(Product);

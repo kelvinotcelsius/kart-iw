@@ -24,6 +24,9 @@ import FinishRegistrationForm from './components/auth/FinishRegistrationForm';
 import UploadForm from './components/posts/UploadForm';
 import PostModal from './components/posts/PostModal';
 
+// Products
+import Product from './components/shop/Product';
+
 const App = () => {
   useEffect(() => {
     // Check if there's a token. If there is, put it in the global axios header
@@ -60,6 +63,7 @@ const Routes = () => {
         <Alert />
         <Switch location={location || background}>
           <Route exact path='/' component={Landing} />
+          <Route exact path='/:product_id' component={Product} />
           <PrivateRoute exact path='/upload' component={UploadForm} />
           <PrivateRoute
             exact

@@ -68,3 +68,22 @@ export const addPost = (formData, selectedItemID, history) => async (
     });
   }
 };
+
+// Get post by product ID
+// Get post
+export const getPostsbyProductID = (id) => async (dispatch) => {
+  try {
+    const res = await api.get(`/posts/products/${id}`);
+
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
