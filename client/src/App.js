@@ -63,7 +63,7 @@ const Routes = () => {
         <Alert />
         <Switch location={location || background}>
           <Route exact path='/' component={Landing} />
-          <Route exact path='/:product_id' component={Product} />
+          <Route exact path='/product/:product_id' component={Product} />
           <PrivateRoute exact path='/upload' component={UploadForm} />
           <PrivateRoute
             exact

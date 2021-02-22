@@ -1,24 +1,29 @@
+/* UploadForm.js */
+#upload-form .form-btn {
+  margin-top: 20px;
+}
+
 /* SelectSearch */
 
-.select-search {
+#upload-form .select-search {
   width: 300px;
   position: relative;
   font-family: 'Nunito Sans', sans-serif;
   box-sizing: border-box;
 }
 
-.select-search *,
-.select-search *::after,
-.select-search *::before {
+#upload-form .select-search *,
+#upload-form .select-search *::after,
+#upload-form .select-search *::before {
   box-sizing: inherit;
 }
 
-.select-search__value {
+#upload-form .select-search__value {
   position: relative;
   z-index: 1;
 }
 
-.select-search__value::after {
+#upload-form .select-search__value::after {
   content: '';
   display: inline-block;
   position: absolute;
@@ -28,7 +33,7 @@
   height: 11px;
 }
 
-.select-search__input {
+#upload-form .select-search__input {
   display: block;
   height: 36px;
   width: 100%;
@@ -46,7 +51,7 @@
   -webkit-appearance: none;
 }
 
-.select-search__select {
+#upload-form .select-search__select {
   background: #fff;
   box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.15);
 }
@@ -54,22 +59,22 @@
 /**
  * Options
  */
-.select-search__options {
+#upload-form .select-search__options {
   list-style: none;
 }
 
 /**
  * Option row
  */
-.select-search__row:not(:first-child) {
+#upload-form .select-search__row:not(:first-child) {
   border-top: 1px solid #eee;
 }
 
 /**
  * Option
  */
-.select-search__option,
-.select-search__not-found {
+#upload-form .select-search__option,
+#upload-form .select-search__not-found {
   display: block;
   height: 36px;
   width: 100%;
@@ -83,22 +88,22 @@
   cursor: pointer;
 }
 
-.select-search--multiple .select-search__option {
+#upload-form .select-search--multiple .select-search__option {
   height: 48px;
 }
 
-.select-search__option.is-selected {
+#upload-form .select-search__option.is-selected {
   background: #2fcc8b;
   color: #fff;
 }
 
-.select-search__option.is-highlighted,
-.select-search__option:not(.is-selected):hover {
+#upload-form .select-search__option.is-highlighted,
+#upload-form .select-search__option:not(.is-selected):hover {
   background: rgba(47, 204, 139, 0.1);
 }
 
-.select-search__option.is-highlighted.is-selected,
-.select-search__option.is-selected:hover {
+#upload-form .select-search__option.is-highlighted.is-selected,
+#upload-form .select-search__option.is-selected:hover {
   background: #2eb378;
   color: #fff;
 }

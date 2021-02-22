@@ -7,7 +7,7 @@ import MostLikedPosts from '../posts/MostLikedPosts';
 const Landing = ({ isAuthenticated }) => {
   return (
     <Fragment>
-      <MostLikedPosts />
+      <MostLikedPosts auth={isAuthenticated} />
     </Fragment>
   );
 };

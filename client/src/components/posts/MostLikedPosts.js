@@ -4,22 +4,20 @@ import { connect } from 'react-redux';
 
 import PostPreview from './PostPreview';
 import { getPosts } from '../../actions/post';
+import GuestSidebar from './GuestSidebar';
 
-const MostLikedPosts = ({ getPosts, post: { posts } }) => {
+const MostLikedPosts = ({ getPosts, post: { posts }, isAuthenticated }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
 
   return (
     <Fragment>
-      <div className='home-wrapper'>
-        <div className='home-left-wrapper'>
-          <h1 className='large text-primary'>Posts</h1>
-          <p className='lead'>
-            <i className='fas fa-user' /> Welcome to the community
-          </p>
+      <div className='main-wrapper'>
+        <div className='main-left-wrapper'>
+          {isAuthenticated ? <div>Authenticated!</div> : <GuestSidebar />}
         </div>
-        <div className='preview-wrapper'>
+        <div className='main-right-wrapper'>
           {posts.map((post) => (
             <PostPreview
               key={post._id}
@@ -45,10 +43,12 @@ const MostLikedPosts = ({ getPosts, post: { posts } }) => {
 MostLikedPosts.propTypes = {
   getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { getPosts })(MostLikedPosts);

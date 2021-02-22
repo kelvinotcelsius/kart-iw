@@ -7,6 +7,7 @@ import Popup from 'reactjs-popup';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
 import PaymentWrapper from '../shop/PaymentWrapper';
+import externalURLIcon from '../../assets/images/icons/external-link.svg';
 
 import './Post.css';
 
@@ -23,7 +24,8 @@ function useOutsideAlerter(ref, background, modalStatus) {
     // Function defining go back
     let back = (e) => {
       e.stopPropagation();
-      history.push(background);
+      // history.push(background);
+      history.goBack();
     };
 
     // Alert if clicked on outside of element
@@ -125,7 +127,7 @@ const PostModal = ({
                 {!showPayment ? (
                   <Fragment>
                     <div className='product-data'>
-                      <Link to={`/${product.product._id}`}>
+                      <Link to={`/product/${product.product._id}`}>
                         <img
                           id='product-image'
                           src={product.product.picture}
@@ -144,6 +146,7 @@ const PostModal = ({
                           target='_blank'
                         >
                           View product info
+                          <img src={externalURLIcon} alt='external url icon' />
                         </a>
                       </div>
                     </div>

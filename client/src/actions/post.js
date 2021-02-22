@@ -69,12 +69,10 @@ export const addPost = (formData, selectedItemID, history) => async (
   }
 };
 
-// Get post by product ID
-// Get post
+// Get all posts by product ID
 export const getPostsbyProductID = (id) => async (dispatch) => {
   try {
     const res = await api.get(`/posts/products/${id}`);
-
     dispatch({
       type: GET_POSTS,
       payload: res.data,

@@ -47,20 +47,18 @@ const PostPreview = ({
             </button>
           </div>
         </div>
-        <div className='preview-video-wrapper'>
-          <VideoPreview
-            previewImageURL={previewImageURL}
-            videoURL={videoURL}
-            creatorID={creatorID}
-            postID={postID}
-          />
-          <Link to={`/${productID}`}>
-            <div className='product-wrapper'>
-              <img className='product-image' src={productPic} alt='product' />
-              <p className='product-name'>{productName}</p>
-            </div>
-          </Link>
-        </div>
+        <VideoPreview
+          previewImageURL={previewImageURL}
+          videoURL={videoURL}
+          creatorID={creatorID}
+          postID={postID}
+        />
+        <Link to={`/product/${productID}`}>
+          <div className='product-wrapper'>
+            <img className='product-image' src={productPic} alt='product' />
+            <p className='product-name'>{productName}</p>
+          </div>
+        </Link>
       </div>
     </Fragment>
   );

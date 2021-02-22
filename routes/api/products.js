@@ -77,7 +77,7 @@ router.get('/all', async (req, res) => {
 // @route   GET api/products/:post_id
 // @desc    Get a product by the post ID
 // @access  Public
-router.get('/:post_id', [checkObjectId('post_id')], async (req, res) => {
+router.get('/post/:post_id', [checkObjectId('post_id')], async (req, res) => {
   try {
     const post = await Post.findById(req.params.post_id);
     if (!post) {
@@ -85,6 +85,24 @@ router.get('/:post_id', [checkObjectId('post_id')], async (req, res) => {
     }
 
     const product = await Product.findById(post.product_id);
+    if (!product) {
+      return res.status(404).json({ msg: 'Product not found' });
+    }
+
+    res.json(product);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/products/:product_id
+// @desc    Get a product by the product ID
+// @access  Public
+router.get('/:product_id', [checkObjectId('product_id')], async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.product_id);
     if (!product) {
       return res.status(404).json({ msg: 'Product not found' });
     }
