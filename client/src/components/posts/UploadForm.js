@@ -23,7 +23,9 @@ const UploadForm = ({ history, addPost }) => {
   const getPurchases = async () => {
     const res = await api.get('/users/my/purchased_items');
     const arr = res.data;
+    console.log(arr);
     arr.forEach((obj) => renameKey(obj, '_id', 'value'));
+    console.log(arr);
     setPurchases(arr);
   };
 
@@ -39,7 +41,6 @@ const UploadForm = ({ history, addPost }) => {
   };
 
   const onSelectChange = (e) => {
-    console.log(e);
     setItem(String(e));
   };
 
@@ -54,82 +55,91 @@ const UploadForm = ({ history, addPost }) => {
     for (var key in formData) {
       form_data.append(key, formData[key]);
     }
-    console.log(selectedItemID);
     // send id as separate arg
     addPost(form_data, selectedItemID, history);
   };
 
   return (
     <Fragment>
-      <h1>Upload vido</h1>
-      <form
-        className='form-page'
-        onSubmit={(e) => onSubmit(e)}
-        encType='multipart/form-data'
-      >
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='caption' className='upload-label'>
-              Product
-            </label>
-            <br />
-            <SelectSearch
-              options={purchases}
-              onChange={(e) => onSelectChange(e)}
-              search
-              placeholder='Select product'
-            />
+      <div id='upload-form'>
+        <h1>Upload video</h1>
+        <form
+          className='form-page'
+          onSubmit={(e) => onSubmit(e)}
+          encType='multipart/form-data'
+        >
+          <div className='upload-form-row'>
+            <div className='upload-form-field-wrapper'>
+              <label htmlFor='caption' className='upload-label'>
+                Product
+              </label>
+              <br />
+              <SelectSearch
+                options={purchases}
+                onChange={(e) => onSelectChange(e)}
+                search
+                placeholder='Select product'
+              />
+              {purchases === '' ? (
+                <span style={{ fontSize: '10px' }}>
+                  You can only upload videos for items you have purchased. Buy
+                  your first snack <a href='/'>here</a>.
+                </span>
+              ) : (
+                <p style={{ display: 'none' }}></p>
+              )}
+            </div>
           </div>
-        </div>
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='caption' className='upload-label'>
-              Caption
-            </label>
-            <br />
-            <input
-              id='caption'
-              className='form-field'
-              placeholder='150 chars max'
-              name='caption'
-              value={caption}
-              onChange={(e) => onChange(e)}
-              maxLength='150'
-            />
+          <div className='upload-form-row'>
+            <div className='upload-form-field-wrapper'>
+              <label htmlFor='caption' className='upload-label'>
+                Caption
+              </label>
+              <br />
+              <input
+                id='caption'
+                className='form-field'
+                placeholder='75 chars max'
+                name='caption'
+                value={caption}
+                onChange={(e) => onChange(e)}
+                maxLength='75'
+              />
+            </div>
           </div>
-        </div>
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='video' className='register-label'>
-              Video
-            </label>
-            <br />
-            <input
-              type='file'
-              id='video'
-              name='video'
-              className='inputFile'
-              onChange={(e) => onFileChange(e)}
-            />
+          <div className='upload-form-row'>
+            <div className='upload-form-field-wrapper'>
+              <label htmlFor='video' className='register-label'>
+                Video
+              </label>
+              <br />
+              <input
+                type='file'
+                id='video'
+                name='video'
+                className='inputFile'
+                onChange={(e) => onFileChange(e)}
+              />
+            </div>
           </div>
-        </div>
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='preview' className='upload-label'>
-              Cover image
-            </label>
-            <br />
-            <input
-              type='file'
-              id='preview'
-              name='preview'
-              className='inputFile'
-              onChange={(e) => onFileChange(e)}
-            />
+          <div className='upload-form-row'>
+            <div className='upload-form-field-wrapper'>
+              <label htmlFor='preview' className='upload-label'>
+                Cover image
+              </label>
+              <br />
+              <input
+                type='file'
+                id='preview'
+                name='preview'
+                className='inputFile'
+                onChange={(e) => onFileChange(e)}
+              />
+            </div>
+            <input type='submit' className='form-btn' value='Post' />
           </div>
-          <input type='submit' className='form-btn' value='Post' />
-        </div>
-      </form>
+        </form>
+      </div>
     </Fragment>
   );
 };

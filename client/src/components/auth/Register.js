@@ -19,6 +19,7 @@ const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    closeModal(false);
     register(formData);
   };
 

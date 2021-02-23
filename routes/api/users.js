@@ -161,7 +161,7 @@ router.put(
       if (birthday) userFields.birthday = birthday;
       if (phone) userFields.phone = phone;
 
-      profPicPath = `video_${user._id}${encodeURIComponent(
+      profPicPath = `profile_image_${user._id}${encodeURIComponent(
         path.parse(file.originalname).name
       )}${path.parse(file.originalname).ext}`;
 
@@ -249,7 +249,7 @@ router.get('/my/purchased_items', auth, async (req, res) => {
     const purchased_items = await Product.find()
       .where('_id')
       .in(user.purchased_items)
-      .select('_id name')
+      .select('_id name picture')
       .exec();
 
     res.json(purchased_items);

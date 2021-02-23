@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from 'react';
-import { login } from '../../actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './Auth.css';
+import { login } from '../../actions/auth';
 
-const Login = ({ changeModal, login }) => {
+const Login = ({ changeModal, closeModal, login }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -18,6 +18,7 @@ const Login = ({ changeModal, login }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    closeModal(false);
     login({ email, password });
   };
 
@@ -59,6 +60,8 @@ const Login = ({ changeModal, login }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  changeModal: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default connect(null, { login })(Login);

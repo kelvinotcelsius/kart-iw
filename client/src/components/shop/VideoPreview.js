@@ -1,6 +1,5 @@
 import React, { useState, useRef, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import './Post.css';
 
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
   const [muted, setMute] = useState(true);
@@ -25,14 +24,13 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             src={videoURL}
             playsInline
             loop
-            ratiowidth='calc(0.56 * (400px + (100vw - 768px) / 1152 * 100))'
-            ratioheight='calc(400px + (100vw - 768px) / 1152 * 100)'
             ref={videoRef}
             onClick={() => onVideoPress()}
             poster={previewImageURL}
             onMouseOver={() => onVideoPress()}
             onMouseOut={() => onVideoPress()}
             muted={muted}
+            // autoPlay
           />
         </Link>
         <div className='video-controls-wrapper'>
@@ -42,7 +40,6 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
                 ? 'paused'
                 : 'playing'
             }
-            // onClick={() => onVideoPress()}
           ></div>
           <div
             className={muted ? 'muted' : 'unmuted'}

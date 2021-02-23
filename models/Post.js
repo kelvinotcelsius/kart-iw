@@ -7,6 +7,14 @@ const PostSchema = new Schema({
     ref: 'user',
     required: true,
   },
+  creator_profile_pic: {
+    type: String,
+    required: true,
+  },
+  creator_username: {
+    type: String,
+    required: true,
+  },
   caption: {
     type: String,
     required: true,
@@ -26,6 +34,14 @@ const PostSchema = new Schema({
   product_id: {
     type: Schema.Types.ObjectId,
     ref: 'product',
+    required: true,
+  },
+  product_name: {
+    type: String,
+    required: true,
+  },
+  product_picture: {
+    type: String,
     required: true,
   },
   buyers: [

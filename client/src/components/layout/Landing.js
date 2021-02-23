@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import VideoPreview from '../posts/VideoPreview';
+import MostLikedPosts from '../posts/MostLikedPosts';
 
 const Landing = ({ isAuthenticated }) => {
   return (
     <Fragment>
-      <VideoPreview />
+      <MostLikedPosts auth={isAuthenticated} />
     </Fragment>
   );
 };
