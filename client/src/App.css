@@ -1,18 +1,20 @@
 /* Global Styles */
-@font-face {
+/* @font-face {
   font-family: 'Lora';
   font-style: normal;
   font-weight: 400;
   src: local('Lora'), url('assets/fonts/Lora.ttf') format(ttf),
     url('https://fonts.google.com/specimen/Lora') format(ttf);
-}
+} */
 
 /* @font-face {
-  font-family: 'Cera';
-  font-style: normal;
-  font-weight: 400;
-  src: url('assets/fonts/Cera.ttf') format(ttf);
+	font-family: 'Cera';
+	font-style: normal;
+	font-weight: 400;
+	src: url('assets/fonts/Cera-Pro-Regular-Italic.ttf') format(ttf);
 } */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 /* @import url('https://fonts.google.com/specimen/Lora'); */
 /* Got a warning in the console */
@@ -20,38 +22,38 @@
 /* If fonts render differently on differnt computers, check out https://stackoverflow.com/questions/11737168/how-to-embed-fonts-in-css*/
 
 :root {
-  --superblack: #000000;
-  --black: #262626;
+	--superblack: #000000;
+	--black: #262626;
 
-  --white: #ffffff;
-  --moonstone: #f0f0f0;
-  --magnesium: #cccccc;
-  --wet-rock: #707070;
+	--white: #ffffff;
+	--moonstone: #f0f0f0;
+	--magnesium: #cccccc;
+	--wet-rock: #707070;
 
-  --passion: #e7261b;
-  --dark-danger: #dc3545;
-  --light-danger: #ff7474;
-  --soft-passion: #ff9292;
+	--passion: #e7261b;
+	--dark-danger: #dc3545;
+	--light-danger: #ff7474;
+	--soft-passion: #ff9292;
 
-  --blue-jeans: #4bb3fd;
-  --success: #40da67;
+	--blue-jeans: #4bb3fd;
+	--success: #40da67;
 }
 
 body {
-  font-family: 'Lora';
+	font-family: 'Inter';
 }
 
 #container {
-  margin: auto;
-  max-width: 1100px;
-  padding: 0 3rem;
-  margin-bottom: 3rem;
+	margin: auto;
+	max-width: 1100px;
+	padding: 0 3rem;
+	margin-bottom: 3rem;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 a:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
