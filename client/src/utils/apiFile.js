@@ -16,15 +16,15 @@ const apiFile = axios.create({
  logout the user if the token has expired
 **/
 
-// apiFile.interceptors.response.use(
-//   (res) => res,
-//   (err) => {
-//     console.log(err);
-//     if (err.response.status === 401) {
-//       store.dispatch({ type: LOGOUT });
-//     }
-//     return Promise.reject(err);
-//   }
-// );
+apiFile.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    console.log(err);
+    if (err.response.status === 401) {
+      store.dispatch({ type: LOGOUT });
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default apiFile;
