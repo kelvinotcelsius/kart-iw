@@ -53,6 +53,11 @@ const UserSchema = new Schema({
     required: true,
     default: 0.0,
   },
+  payout: {
+    type: Number,
+    required: true,
+    default: 0.0,
+  },
   verified: {
     type: Boolean,
     required: true,

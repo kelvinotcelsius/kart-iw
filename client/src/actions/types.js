@@ -22,3 +22,6 @@ export const ADD_POST = 'ADD_POST';
 // Products
 export const GET_PRODUCT = 'GET_PRODUCT';
 export const PRODUCT_ERROR = 'GET_PRODUCT';
+
+// Users
+export const GET_USER = 'GET_USER';

@@ -23,10 +23,18 @@ const PostPreview = ({
       <div className='preview-post-wrapper'>
         <div className='preview-top-wrapper'>
           <div className='preview-left-wrapper'>
-            <img className='preview-profile-pic' src={profPic} alt='profile' />
+            <Link to={`/user/${creatorID}`}>
+              <img
+                className='preview-profile-pic'
+                src={profPic}
+                alt='profile'
+              />
+            </Link>
             <div className='preview-user-metadata'>
               <div className='preview-username'>
-                <span>{username}</span>
+                <Link to={`/user/${creatorID}`}>
+                  <span id='username'>{username}</span>
+                </Link>
               </div>
               <div className='preview-caption'>
                 <span>{caption}</span>

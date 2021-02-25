@@ -1,0 +1,85 @@
+#profile #user-profile-pic {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+#profile .preview-video-wrapper {
+  flex-grow: 1;
+  width: 33%;
+  text-align: center;
+}
+
+#profile .preview-video {
+  height: calc(300px + ((100vw - 768px) / 1152) * 100);
+  width: calc(0.56 * (300px + ((100vw - 768px) / 1152) * 100));
+}
+
+#profile .profile-top-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+#profile .basic-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.25em;
+}
+
+#profile #username {
+  font-size: 24px;
+  color: var(--superblack);
+  font-weight: 500;
+  margin-block-start: 0px;
+  margin-block-end: 0.25em;
+}
+
+#profile #name {
+  color: var(--black);
+  font-size: 16px;
+  font-weight: 500;
+  margin-block-start: 0px;
+  margin-block-end: 0.75em;
+}
+
+#profile #bio {
+  color: var(--black);
+  font-size: 12px;
+  margin-block-start: 0px;
+  margin-block-end: 0.75em;
+}
+
+#profile #follow-btn {
+  border-radius: 0;
+  background-color: white;
+  border: 0.5px solid var(--passion);
+  color: var(--passion);
+  padding: 5px 20px;
+  box-shadow: none;
+  height: 30px;
+  width: 10em;
+  margin-left: 2em;
+}
+
+#profile .user-stats-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+#profile .stat-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2em;
+  margin-top: 0.25em;
+}
+
+#profile .stat-number {
+  font-weight: 600;
+  font-size: 15px;
+  padding: 3px 0;
+}
+
+#profile .stat-label {
+  font-size: 12px;
+}

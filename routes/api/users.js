@@ -203,7 +203,9 @@ router.get('/all', async (req, res) => {
 // @access  Public
 router.get('/:user_id', async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.user_id });
+    const user = await User.findOne({ _id: req.params.user_id }).select(
+      'bio profile_pic follower_count likes_count amount_earned followers following first last username'
+    );
 
     if (!user) return res.status(400).json({ msg: 'User not found' });
 

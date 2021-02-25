@@ -152,13 +152,17 @@ const PostModal = ({
                     </div>
                     <div className='divider'></div>
                     <div className='creator-data'>
-                      <img
-                        id='post-profile-pic'
-                        src={post.creator_profile_pic}
-                        alt='User profile'
-                      />
+                      <Link to={`/user/${post.creator_id}`}>
+                        <img
+                          id='post-profile-pic'
+                          src={post.creator_profile_pic}
+                          alt='User profile'
+                        />
+                      </Link>
                       <div className='creator-info'>
-                        <p id='creator-username'>{post.creator_username}</p>
+                        <Link to={`/user/${post.creator_id}`}>
+                          <p id='creator-username'>{post.creator_username}</p>{' '}
+                        </Link>
                         <p id='post-caption'>{post.caption}</p>
                       </div>
                     </div>

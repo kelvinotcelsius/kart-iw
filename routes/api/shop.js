@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const checkObjectId = require('../../middleware/checkObjectId');
-const stripe = require('stripe')(
-  'sk_test_51IJgQfH8gVlzmKACEcZfehO6sM6RpqIkvQ6EIPX6x2JUn9O05BzmcL4W9eCjZBtmzEKskAumcCZria8TOYgw1JhL00gmur2frc'
-);
+const config = require('config');
+
+const stripeKey = config.get('StripeTestKey');
+const stripe = require('stripe')(stripeKey);
 
 // Models
 const Post = require('../../models/Post');
@@ -26,6 +27,11 @@ router.post(
     ],
   ],
   async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       const user = await User.findById(req.user.id);
       if (!user) {
@@ -60,12 +66,16 @@ router.post(
       });
       const order = await newOrder.save();
 
-      // Add order to user.orders array and product to user.purchased_items
+      // Add order to user.orders array and product_id to user.purchased_items
       user.orders.unshift(order._id);
       user.purchased_items.unshift(order.product_id);
       await user.save();
 
-      // res.json(order);
+      // Add commission to creator account
+      newPayout = user.payout + 0.1 * price;
+      user.payout = newPayout;
+      await user.save();
+
       //respond with the client secret and id of the new paymentintent
       res.json({ secret: intent.client_secret, intent_id: intent.id });
     } catch (err) {
@@ -75,8 +85,15 @@ router.post(
   }
 );
 
-//handle payment confirmations
+// @route   GET api/products/:post_id
+// @desc    Handle payment confirmation
+// @access  Private
 router.post('/confirm-payment', async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
   try {
     //extract payment type from the client request
     const paymentType = String(req.body.payment_type);
@@ -103,5 +120,67 @@ router.post('/confirm-payment', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// @route   GET api/shop/create-stripe-account
+// @desc    Create a Stripe account for user
+// @access  Private
+router.post('/create-stripe-account/:email', async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const account = await stripe.accounts.create({
+      type: 'express',
+      country: 'US',
+      // email: req.params.email,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/products/:post_id
+// @desc    Handle payment confirmation
+// @access  Private
+router.post(
+  '/payout/:user_id',
+  [auth, checkObjectId('user_id')],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const user = await User.findById(req.params.user_id);
+
+      if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+
+      // checks if the user requesting the payout is the same one as the passed in user_id
+      // post.user is of type object id, so we need to to call .toString
+      if (user._id.toString() !== req.user.id) {
+        return res
+          .status(401)
+          .json({ msg: 'User not authorized to request payout' });
+      }
+
+      // STRIPE STUFF
+
+      res.json('success');
+    } catch (err) {
+      console.error(err.message);
+
+      if (err.kind === 'ObjectId') {
+        return res.status(404).json({ msg: 'User not found' });
+      }
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 module.exports = router;

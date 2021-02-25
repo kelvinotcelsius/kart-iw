@@ -70,18 +70,10 @@ const Product = ({
                   {post.posts.map((post) => (
                     <VideoPreview
                       key={post._id}
-                      profPic={post.creator_profile_pic}
-                      username={post.creator_username}
-                      caption={post.caption}
-                      postURL={post.url}
                       previewImageURL={post.preview}
                       videoURL={post.video}
                       postID={post._id}
                       creatorID={post.creator_id}
-                      productName={post.product_name}
-                      productPic={post.product_picture}
-                      productID={post.product_id}
-                      // NEED TO CHECK WHY I'M PASSING IN SO MANY PROPS, NOT USING THEM IN ACTUAL COMPONENT??
                     />
                   ))}
                 </div>

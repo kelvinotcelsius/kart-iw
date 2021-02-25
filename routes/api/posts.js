@@ -175,6 +175,50 @@ router.get('/:post_id', [checkObjectId('post_id')], async (req, res) => {
   }
 });
 
+// @route    GET api/posts/products/:product_id
+// @desc     Get all posts by product ID
+// @access   Public
+router.get(
+  '/products/:product_id',
+  [checkObjectId('product_id')],
+  async (req, res) => {
+    try {
+      const posts = await Post.find({ product_id: req.params.product_id });
+      if (!posts) {
+        return res.status(404).json({ msg: 'Posts not found' });
+      }
+      res.json(posts);
+    } catch (err) {
+      console.error(err.message);
+
+      if (err.kind === 'ObjectId') {
+        return res.status(404).json({ msg: 'Posts not found' });
+      }
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
+// @route    GET api/posts/user/:user_id
+// @desc     Get all posts by user ID
+// @access   Public
+router.get('/user/:user_id', [checkObjectId('user_id')], async (req, res) => {
+  try {
+    const posts = await Post.find({ creator_id: req.params.user_id });
+    if (!posts) {
+      return res.status(404).json({ msg: 'Posts not found' });
+    }
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Posts not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route   DELETE api/posts/:id
 // @desc    Delete post by id
 // @access  Private
@@ -229,30 +273,6 @@ router.delete(
 
       if (err.kind === 'ObjectId') {
         return res.status(404).json({ msg: 'Post not found' });
-      }
-      res.status(500).send('Server Error');
-    }
-  }
-);
-
-// @route    GET api/posts/products/:product_id
-// @desc     Get all posts by product ID
-// @access   Public
-router.get(
-  '/products/:product_id',
-  [checkObjectId('product_id')],
-  async (req, res) => {
-    try {
-      const posts = await Post.find({ product_id: req.params.product_id });
-      if (!posts) {
-        return res.status(404).json({ msg: 'Posts not found' });
-      }
-      res.json(posts);
-    } catch (err) {
-      console.error(err.message);
-
-      if (err.kind === 'ObjectId') {
-        return res.status(404).json({ msg: 'Posts not found' });
       }
       res.status(500).send('Server Error');
     }

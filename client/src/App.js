@@ -19,6 +19,7 @@ import Alert from './components/layout/Alert';
 
 // User
 import FinishRegistrationForm from './components/auth/FinishRegistrationForm';
+import Profile from './components/user/Profile';
 
 // Posts
 import UploadForm from './components/posts/UploadForm';
@@ -64,6 +65,7 @@ const Routes = () => {
         <Switch location={location || background}>
           <Route exact path='/' component={Landing} />
           <Route exact path='/product/:product_id' component={Product} />
+          <Route exact path='/user/:user_id' component={Profile} />
           <PrivateRoute exact path='/upload' component={UploadForm} />
           <PrivateRoute
             exact
