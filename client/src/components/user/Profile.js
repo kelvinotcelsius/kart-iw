@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import VideoPreview from '../shop/VideoPreview';
 import GuestSidebar from '../posts/GuestSidebar';

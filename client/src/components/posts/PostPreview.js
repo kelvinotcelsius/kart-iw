@@ -1,5 +1,12 @@
 import React, { Fragment } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import redHeart from '../../assets/images/icons/filled-red-heart.svg';
+import emptyHeart from '../../assets/images/icons/unfilled-gray-heart.svg';
+
+import { addLike } from '../../actions/post';
 
 import VideoPreview from './VideoPreview';
 import './Post.css';
@@ -15,6 +22,9 @@ const PostPreview = ({
   productName,
   productPic,
   productID,
+  likes,
+  addLike,
+  authUserId,
 }) => {
   let location = useLocation();
 
@@ -42,6 +52,15 @@ const PostPreview = ({
             </div>
           </div>
           <div className='preview-right-wrapper'>
+            <div className='like-wrapper'>
+              <img
+                className='like-btn'
+                alt='like button'
+                src={likes.includes(authUserId) ? redHeart : emptyHeart}
+                // onClick={() => }
+              ></img>
+              <p className='likes-count'>{likes.length}</p>
+            </div>
             <button className='deal-btn'>
               <Link
                 to={{
@@ -72,4 +91,24 @@ const PostPreview = ({
   );
 };
 
-export default PostPreview;
+PostPreview.propTypes = {
+  addLike: PropTypes.func.isRequired,
+  profPic: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  caption: PropTypes.string.isRequired,
+  postID: PropTypes.string.isRequired,
+  creatorID: PropTypes.string.isRequired,
+  previewImageURL: PropTypes.string.isRequired,
+  videoURL: PropTypes.string.isRequired,
+  productName: PropTypes.string.isRequired,
+  productPic: PropTypes.string.isRequired,
+  productID: PropTypes.string.isRequired,
+  likes: PropTypes.array.isRequired,
+  authUserId: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  authUserId: state.auth.user._id,
+});
+
+export default connect(mapStateToProps, { addLike })(PostPreview);

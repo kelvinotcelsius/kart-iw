@@ -20,10 +20,9 @@
 .modal {
   position: absolute;
   background: #fff;
-  top: 25;
-  left: 10%;
-  right: 10%;
-
+  top: 25%;
+  left: 20%;
+  right: 20%;
   display: flex;
   flex-direction: row;
   z-index: 5;
@@ -52,8 +51,8 @@
 }
 
 .post-product {
-  height: calc(600px + ((100vw - 768px) / 1152) * 100);
-  width: calc(0.56 * (600px + ((100vw - 768px) / 1152) * 100));
+  height: calc(400px + ((100vw - 768px) / 1152) * 100);
+  width: calc(0.56 * (400px + ((100vw - 768px) / 1152) * 100));
 }
 
 .product-data {
@@ -119,6 +118,7 @@
   margin-block-end: 5px;
   font-weight: 500;
   font-size: 14px;
+  color: var(--black);
 }
 
 .post-product-wrapper #creator-username:hover {
@@ -226,17 +226,18 @@
   flex-direction: row;
 }
 
+.preview-post-wrapper .preview-right-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .preview-profile-pic {
   width: 50px;
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
   /* padding: 5px; */
-}
-
-.preview-post-wrapper #username:hover {
-  color: var(--passion);
-  text-decoration: underline;
 }
 
 .preview-user-metadata {
@@ -247,6 +248,15 @@
   font-weight: 600;
   padding: 0 0 0.5em 0;
   font-size: 16px;
+}
+
+.preview-post-wrapper #username {
+  color: var(--black);
+}
+
+.preview-post-wrapper #username:hover {
+  color: var(--passion);
+  text-decoration: underline;
 }
 
 .preview-caption {
@@ -362,4 +372,19 @@
 .playing:hover,
 .paused:hover {
   cursor: pointer;
+}
+
+.preview-post-wrapper .like-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 10px;
+  color: var(--wet-rock);
+}
+
+.preview-post-wrapper .like-btn {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  vertical-align: middle;
 }

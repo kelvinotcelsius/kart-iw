@@ -32,6 +32,7 @@ const MostLikedPosts = ({ getPosts, post: { posts }, isAuthenticated }) => {
               productName={post.product_name}
               productPic={post.product_picture}
               productID={post.product_id}
+              likes={post.likes}
             />
           ))}
         </div>
