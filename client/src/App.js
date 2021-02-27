@@ -1,10 +1,14 @@
 import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, useLocation } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  useLocation,
+  Route,
+} from 'react-router-dom';
 import './App.css';
 
 // Custom routing
 import PrivateRoute from './components/routing/PrivateRoute';
-import Route from './components/routing/Route';
 
 // Redux
 import { Provider } from 'react-redux';
