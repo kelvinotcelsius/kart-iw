@@ -183,4 +183,52 @@ router.post(
   }
 );
 
+// router.post('/onboard-user', async (req, res) => {
+//   try {
+//     const account = await stripe.accounts.create({ type: 'standard' });
+//     req.session.accountID = account.id;
+//     console.log(account.id);
+
+//     // const origin = `${req.headers.origin}`;
+//     // console.log(origin);
+
+//     const accountLinkURL = await generateAccountLink(account.id);
+//     console.log(accountLinkURL);
+//     res.send({ url: accountLinkURL });
+//   } catch (err) {
+//     res.status(500).send({
+//       error: err.message,
+//     });
+//   }
+// });
+
+// router.get('/onboard-user/refresh', async (req, res) => {
+//   if (!req.session.accountID) {
+//     res.redirect('/');
+//     return;
+//   }
+//   try {
+//     const { accountID } = req.session;
+//     // const origin = `${req.secure ? 'https://' : 'https://'}${req.headers.host}`;
+
+//     const accountLinkURL = await generateAccountLink(accountID);
+//     res.redirect(accountLinkURL);
+//   } catch (err) {
+//     res.status(500).send({
+//       error: err.message,
+//     });
+//   }
+// });
+
+// function generateAccountLink(accountID, origin) {
+//   return stripe.accountLinks
+//     .create({
+//       type: 'account_onboarding',
+//       account: accountID,
+//       refresh_url: `https://www.google.com`,
+//       return_url: `https://www.google.com`,
+//     })
+//     .then((link) => link.url);
+// }
+
 module.exports = router;

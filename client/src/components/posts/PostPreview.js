@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -28,7 +28,14 @@ const PostPreview = ({
   addLike,
   auth,
 }) => {
+  useEffect(() => {
+    if (auth.user) {
+      setAuthUserId(auth.user._id);
+    }
+  }, [auth]);
+
   let location = useLocation();
+  const [authUserId, setAuthUserId] = useState('');
 
   return (
     <Fragment>
@@ -61,7 +68,7 @@ const PostPreview = ({
                 <img
                   className='like-btn'
                   alt='like button'
-                  src={likes.includes(auth.user._id) ? redHeart : emptyHeart}
+                  src={likes.includes(authUserId) ? redHeart : emptyHeart}
                   // onClick={() => }
                 ></img>
                 <p className='likes-count'>{likes.length}</p>

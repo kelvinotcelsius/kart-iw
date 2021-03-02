@@ -1,8 +1,19 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const session = require('express-session');
+const config = require('config');
 
 // creates an Express application
 const app = express();
+
+// Need to store session data somewhere else during production https://flaviocopes.com/express-sessions/
+app.use(
+  session({
+    secret: config.get('expressSecret'), //Set this to a random string that is kept secure
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Necessary package to make POST request from React to Node backend
 var cors = require('cors');
@@ -43,7 +54,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// process.env.PORT will look for a an enirontment variable called PORT to run it on which is how we'll run it on Heroku, but otherwise we'll just use 5000
+// process.env.PORT will look for a an enirontment variable called PORT to run it on which is how we'll run it on Heroku, but otherwise we'll just use 5000
 const PORT = process.env.PORT || 5000;
 
 // Starts a UNIX socket and listens for connections on the given path
