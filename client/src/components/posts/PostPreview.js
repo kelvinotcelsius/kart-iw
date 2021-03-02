@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import redHeart from '../../assets/images/icons/filled-red-heart.svg';
 import emptyHeart from '../../assets/images/icons/unfilled-gray-heart.svg';
 
-import { addLike } from '../../actions/post';
+import { updateLikes } from '../../actions/post';
 
 import VideoPreview from './VideoPreview';
 import Spinner from '../layout/Spinner';
@@ -25,7 +25,7 @@ const PostPreview = ({
   productPic,
   productID,
   likes,
-  addLike,
+  updateLikes,
   auth,
 }) => {
   useEffect(() => {
@@ -69,7 +69,7 @@ const PostPreview = ({
                   className='like-btn'
                   alt='like button'
                   src={likes.includes(authUserId) ? redHeart : emptyHeart}
-                  // onClick={() => }
+                  onClick={() => updateLikes(postID)}
                 ></img>
                 <p className='likes-count'>{likes.length}</p>
               </div>
@@ -105,7 +105,7 @@ const PostPreview = ({
 };
 
 PostPreview.propTypes = {
-  addLike: PropTypes.func.isRequired,
+  updateLikes: PropTypes.func.isRequired,
   profPic: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   caption: PropTypes.string.isRequired,
@@ -124,4 +124,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { addLike })(PostPreview);
+export default connect(mapStateToProps, { updateLikes })(PostPreview);
