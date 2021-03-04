@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const checkObjectId = require('../../middleware/checkObjectId');
 const config = require('config');
+const { validationResult } = require('express-validator');
 
 const stripeKey = config.get('StripeTestKey');
 const stripe = require('stripe')(stripeKey);
@@ -85,7 +86,7 @@ router.post(
   }
 );
 
-// @route   GET api/products/:post_id
+// @route   GET api/shop/:post_id
 // @desc    Handle payment confirmation
 // @access  Private
 router.post('/confirm-payment', async (req, res) => {
@@ -142,7 +143,7 @@ router.post('/create-stripe-account/:email', async (req, res) => {
   }
 });
 
-// @route   GET api/products/:post_id
+// @route   GET api/shop/payout/:user_id
 // @desc    Handle payment confirmation
 // @access  Private
 router.post(
@@ -182,6 +183,33 @@ router.post(
     }
   }
 );
+
+// @route   DELETE api/shop/orders
+// @desc    Delete all orders
+// @access  Private
+router.delete('/orders', [auth], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    Order.deleteMany({}, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json('Successfully deleted all orders');
+      }
+    });
+  } catch (err) {
+    console.error(err.message);
+
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
 
 // router.post('/onboard-user', async (req, res) => {
 //   try {

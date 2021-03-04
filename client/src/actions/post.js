@@ -104,7 +104,7 @@ export const getPostsbyUserID = (id) => async (dispatch) => {
     console.log(err);
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err, status: err.response.status },
     });
   }
 };

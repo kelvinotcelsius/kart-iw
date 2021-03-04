@@ -1,6 +1,8 @@
 import React, { useState, useRef, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+import './Product.css';
+
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
   const [muted, setMute] = useState(true);
   const [playing, setPlaying] = useState(false);

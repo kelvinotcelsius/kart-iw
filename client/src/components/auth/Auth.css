@@ -1,5 +1,50 @@
-/* Register and login forms */
+/* Finish registration */
+#finish-registration .form-field-wrapper {
+  margin: 15px 0;
+  width: 100%;
+  justify-content: left;
+  display: flex;
+  flex-direction: row;
+}
 
+#finish-registration .form-row {
+  border-bottom: 1px solid var(--moonstone);
+  display: flex;
+  flex-direction: row;
+}
+
+#finish-registration .form-row-label {
+  display: flex;
+  flex-direction: row;
+  height: 42px;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: center;
+  color: #8898aa;
+  font-weight: 400;
+  margin: 0;
+}
+
+#finish-registration .form-field {
+  padding: 0.5em 10px;
+  margin-left: 0.75em;
+  width: 50%;
+  font-size: 14px;
+  color: var(--black);
+  border: 1px solid var(--moonstone);
+}
+
+#finish-registration .form-btn {
+  /* padding: 10px 10px; */
+  height: 40px;
+  width: 80%;
+  background-color: var(--passion);
+  border: none;
+  font-size: 14px;
+  color: var(--white);
+}
+
+/* Sign up and login modals */
 .modal-title {
   font-size: 24px;
   font-weight: 600;
@@ -15,29 +60,6 @@
   flex-direction: row;
 }
 
-.form-field-wrapper {
-  margin: 15px 0;
-  width: 100%;
-}
-
-.form-field {
-  padding: 0.5em 10px;
-  width: 80%;
-  font-size: 14px;
-  color: var(--black);
-  border: 1px solid var(--moonstone);
-}
-
-.form-btn {
-  padding: 10px 10px;
-  width: 80%;
-  background-color: var(--passion);
-  border: none;
-  font-size: 14px;
-  color: var(--white);
-}
-
-/* Sign up and login modals */
 .popup-content {
   margin: auto;
   background: rgb(255, 255, 255);

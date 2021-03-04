@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { finishRegistration } from '../../actions/auth';
 
 const initialState = {
-  username: 'ninjawearingnike',
-  first: 'kelvin',
-  last: 'yu',
-  birthday: '1999-03-09',
-  phone: '541-403-9010',
+  username: '',
+  first: '',
+  last: '',
+  birthday: '',
+  phone: '',
   file: '',
 };
 
@@ -37,105 +37,111 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
 
   return (
     <Fragment>
-      <h1>Complete profile</h1>
-      <form
-        className='form-page'
-        onSubmit={(e) => onSubmit(e)}
-        encType='multipart/form-data'
-      >
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='username' className='register-label'>
-              Username
-            </label>
-            <br />
-            <input
-              id='username'
-              className='form-field'
-              placeholder='@'
-              name='username'
-              value={username}
-              onChange={(e) => onChange(e)}
-            />
+      <div id='finish-registration'>
+        <h1>Complete profile</h1>
+        <form
+          className='form-page'
+          onSubmit={(e) => onSubmit(e)}
+          encType='multipart/form-data'
+        >
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='username' className='form-row-label'>
+                Username
+              </label>
+              <br />
+              <input
+                id='username'
+                className='form-field'
+                placeholder='@'
+                name='username'
+                value={username}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
           </div>
-        </div>
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='first' className='register-label'>
-              First name
-            </label>
-            <br />
-            <input
-              id='first'
-              className='form-field'
-              name='first'
-              value={first}
-              onChange={(e) => onChange(e)}
-            />
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='first' className='form-row-label'>
+                First name
+              </label>
+              <br />
+              <input
+                id='first'
+                className='form-field'
+                name='first'
+                value={first}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
+            <div className='form-field-wrapper'>
+              <label htmlFor='last' className='form-row-label'>
+                Last name
+              </label>
+              <br />
+              <input
+                id='last'
+                className='form-field'
+                name='last'
+                value={last}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
+            <div className='form-field-wrapper'>
+              <label htmlFor='birthday' className='form-row-label'>
+                Birthday
+              </label>
+              <br />
+              <input
+                id='birthday'
+                type='date'
+                className='form-field'
+                name='birthday'
+                value={birthday}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
           </div>
-          <div className='form-field-wrapper'>
-            <label htmlFor='last' className='register-label'>
-              Last name
-            </label>
-            <br />
-            <input
-              id='last'
-              className='form-field'
-              name='last'
-              value={last}
-              onChange={(e) => onChange(e)}
-            />
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='phone' className='form-row-label'>
+                Phone
+              </label>
+              <br />
+              <input
+                type='tel'
+                id='phone'
+                name='phone'
+                pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
+                className='form-field'
+                placeholder='Format: 541-132-0912'
+                value={phone}
+                onChange={(e) => onChange(e)}
+              />
+            </div>
           </div>
-          <div className='form-field-wrapper'>
-            <label htmlFor='birthday' className='register-label'>
-              Birthday
-            </label>
-            <br />
-            <input
-              id='birthday'
-              type='date'
-              className='form-field'
-              name='birthday'
-              value={birthday}
-              onChange={(e) => onChange(e)}
-            />
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='file' className='form-row-label'>
+                Profile picture
+              </label>
+              <br />
+              <input
+                type='file'
+                id='file'
+                name='file'
+                className='form-field'
+                onChange={(e) => onFileChange(e)}
+              />
+            </div>
           </div>
-        </div>
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='phone' className='register-label'>
-              Phone
-            </label>
-            <br />
-            <input
-              type='tel'
-              id='phone'
-              name='phone'
-              pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'
-              className='form-field'
-              placeholder='Format: 541-132-0912'
-              value={phone}
-              onChange={(e) => onChange(e)}
-            />
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <input type='submit' className='form-btn' value='Start earning' />
+            </div>
           </div>
-        </div>
-        <div className='form-row'>
-          <div className='form-field-wrapper'>
-            <label htmlFor='file' className='register-label'>
-              Profile picture
-            </label>
-            <br />
-            <input
-              type='file'
-              id='file'
-              name='file'
-              className='inputFile'
-              onChange={(e) => onFileChange(e)}
-            />
-          </div>
-          <input type='submit' className='form-btn' value='Start earning' />
-        </div>
-      </form>
+        </form>
+      </div>
     </Fragment>
   );
 };

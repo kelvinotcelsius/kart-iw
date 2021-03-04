@@ -5,15 +5,18 @@
   border-radius: 50%;
 }
 
-#profile .preview-video-wrapper {
-  flex-grow: 1;
+#profile .profile-post-preview-wrapper {
+  display: flex;
+  flex-direction: column;
   width: 33%;
-  text-align: center;
 }
 
-#profile .preview-video {
-  height: calc(300px + ((100vw - 768px) / 1152) * 100);
-  width: calc(0.56 * (300px + ((100vw - 768px) / 1152) * 100));
+#profile .preview-video-wrapper {
+  width: 100%;
+}
+
+#profile .product-wrapper {
+  width: 100%;
 }
 
 #profile .profile-top-wrapper {

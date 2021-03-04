@@ -1,14 +1,10 @@
 import React, { Fragment, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  useLocation,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Custom routing
 import PrivateRoute from './components/routing/PrivateRoute';
+import PublicRoute from './components/routing/PublicRoute';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -67,9 +63,9 @@ const Routes = () => {
         <Navbar />
         <Alert />
         <Switch location={location || background}>
-          <Route exact path='/' component={Landing} />
-          <Route exact path='/product/:product_id' component={Product} />
-          <Route exact path='/user/:user_id' component={Profile} />
+          <PublicRoute exact path='/' component={Landing} />
+          <PublicRoute exact path='/product/:product_id' component={Product} />
+          <PublicRoute exact path='/user/:user_id' component={Profile} />
           <PrivateRoute exact path='/upload' component={UploadForm} />
           <PrivateRoute
             exact
@@ -77,12 +73,13 @@ const Routes = () => {
             component={FinishRegistrationForm}
           />
           {background && (
-            <Route
+            <PublicRoute
               exact
               path='/:creator_id/:post_id'
               children={<PostModal background={background} />}
             />
           )}
+          <PublicRoute component={Landing} />
         </Switch>
       </div>
     </Fragment>
