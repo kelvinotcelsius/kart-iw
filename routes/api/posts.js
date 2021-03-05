@@ -284,18 +284,29 @@ router.delete(
 // @access   Private
 router.put('/like/:id', [auth, checkObjectId('id')], async (req, res) => {
   try {
+    /* Update post model */
     const post = await Post.findById(req.params.id);
+    const user = await User.findById(req.user.id);
+
+    if (!post) {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
 
     // If post is already liked, unlike it
     if (post.likes.some((like) => like.toString() === req.user.id)) {
-      const removeIndex = post.likes.indexOf(req.params.id);
-      post.likes.splice(removeIndex, 1);
+      const removeIndexPost = post.likes.indexOf(req.params.id);
+      post.likes.splice(removeIndexPost, 1);
+
+      const removeIndexUser = user.likes.indexOf(req.params.id);
+      user.likes.splice(removeIndexUser, 1);
     } else {
       // else, like it
       post.likes.unshift(req.user.id);
+      user.likes.unshift(req.params.id);
     }
 
     await post.save();
+    await user.save();
 
     return res.json(post.likes);
   } catch (err) {

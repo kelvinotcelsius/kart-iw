@@ -69,6 +69,7 @@ const UserSchema = new Schema({
   orders: [{ type: Schema.Types.ObjectId, ref: 'order' }],
   posts: [{ type: Schema.Types.ObjectId, ref: 'post' }],
   bookmarks: [{ type: Schema.Types.ObjectId, ref: 'post' }],
+  likes: [{ type: Schema.Types.ObjectId, ref: 'post' }],
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

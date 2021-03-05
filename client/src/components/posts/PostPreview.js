@@ -11,11 +11,11 @@ import { updateLikes } from '../../actions/post';
 import VideoPreview from './VideoPreview';
 import Spinner from '../layout/Spinner';
 
+import api from '../../utils/api';
+
 import './Post.css';
 
 const PostPreview = ({
-  profPic,
-  username,
   caption,
   postID,
   creatorID,
@@ -28,18 +28,29 @@ const PostPreview = ({
   updateLikes,
   auth,
 }) => {
-  useEffect(() => {
-    if (auth.user) {
-      setAuthUserId(auth.user._id);
-    }
-  }, [auth]);
-
   let location = useLocation();
   const [authUserId, setAuthUserId] = useState('');
+  const [creator, setCreator] = useState('');
+  const [product, setProduct] = useState('');
+
+  useEffect(() => {
+    async function initializeData() {
+      const creatorData = await api.get(`/users/${creatorID}`);
+      setCreator(creatorData.data);
+
+      const productData = await api.get(`/products/${productID}`);
+      setProduct(productData.data);
+
+      if (auth.user) {
+        setAuthUserId(auth.user._id);
+      }
+    }
+    initializeData();
+  }, []);
 
   return (
     <Fragment>
-      {auth.loading ? (
+      {auth.loading || creator === '' || product === '' ? (
         <Spinner />
       ) : (
         <div className='preview-post-wrapper'>
@@ -48,14 +59,14 @@ const PostPreview = ({
               <Link to={`/user/${creatorID}`}>
                 <img
                   className='preview-profile-pic'
-                  src={profPic}
+                  src={creator.profile_pic}
                   alt='profile'
                 />
               </Link>
               <div className='preview-user-metadata'>
                 <div className='preview-username'>
                   <Link to={`/user/${creatorID}`}>
-                    <span id='username'>{username}</span>
+                    <span id='username'>{creator.username}</span>
                   </Link>
                 </div>
                 <div className='preview-caption'>
@@ -94,8 +105,12 @@ const PostPreview = ({
           />
           <Link to={`/product/${productID}`}>
             <div className='product-wrapper'>
-              <img className='product-image' src={productPic} alt='product' />
-              <p className='product-name'>{productName}</p>
+              <img
+                className='product-image'
+                src={product.picture}
+                alt='product'
+              />
+              <p className='product-name'>{product.name}</p>
             </div>
           </Link>
         </div>

@@ -382,6 +382,10 @@
   color: var(--wet-rock);
 }
 
+.like-wrapper:hover {
+  cursor: pointer;
+}
+
 .preview-post-wrapper .like-btn {
   width: 20px;
   height: 20px;

@@ -16,7 +16,6 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
   let { user_id } = useParams();
   useEffect(() => {
     async function fetchData() {
-      console.log(await getUser(user_id));
       await getPostsbyUserID(user_id);
     }
     fetchData();
