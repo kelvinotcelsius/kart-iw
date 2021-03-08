@@ -6,7 +6,6 @@ import { setAlert } from './alert';
 export const getUser = (user_id) => async (dispatch) => {
   try {
     const res = await api.get(`/users/${user_id}`);
-    console.log(res);
     dispatch({
       type: GET_USER,
       payload: res.data,

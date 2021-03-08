@@ -13,6 +13,7 @@ import './Post.css';
 
 import { getPost } from '../../actions/post';
 import { getProductFromPostId } from '../../actions/product';
+import { getUser } from '../../actions/user';
 
 import Spinner from '../layout/Spinner';
 
@@ -55,6 +56,8 @@ const PostModal = ({
   product,
   auth: { isAuthenticated },
   background,
+  getUser,
+  user,
 }) => {
   let { post_id, creator_id } = useParams();
 
@@ -62,9 +65,11 @@ const PostModal = ({
     async function fetchData() {
       await getPost(post_id);
       await getProductFromPostId(post_id);
+      await getUser(creator_id);
     }
     fetchData();
-  }, [getPost, getProductFromPostId, post_id]);
+    console.log('hi');
+  }, [getPost, getProductFromPostId, post_id, creator_id]);
 
   const [loginModal, changeModal] = useState(true); // true = show login modal, false = show sign in modal
   const [modalStatus, showModal] = useState(false); // true = show modal, false = close modal
@@ -93,7 +98,7 @@ const PostModal = ({
     <Fragment>
       <div className='post-background-wrapper'>
         <div className='post-wrapper' ref={wrapperRef}>
-          {loading || product.loading || post == null ? (
+          {loading || product.loading || user.loading || post == null ? (
             <Spinner />
           ) : (
             <div className='modal'>
@@ -155,13 +160,13 @@ const PostModal = ({
                       <Link to={`/user/${post.creator_id}`}>
                         <img
                           id='post-profile-pic'
-                          src={post.creator_profile_pic}
+                          src={user.user.profile_pic}
                           alt='User profile'
                         />
                       </Link>
                       <div className='creator-info'>
                         <Link to={`/user/${post.creator_id}`}>
-                          <p id='creator-username'>{post.creator_username}</p>{' '}
+                          <p id='creator-username'>{user.user.username}</p>{' '}
                         </Link>
                         <p id='post-caption'>{post.caption}</p>
                       </div>
@@ -258,17 +263,22 @@ const PostModal = ({
 PostModal.propTypes = {
   getPost: PropTypes.func.isRequired,
   getProductFromPostId: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   post: state.post,
   product: state.product,
   auth: state.auth,
+  user: state.user,
 });
 
-export default connect(mapStateToProps, { getPost, getProductFromPostId })(
-  PostModal
-);
+export default connect(mapStateToProps, {
+  getPost,
+  getProductFromPostId,
+  getUser,
+})(PostModal);

@@ -17,13 +17,15 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
   useEffect(() => {
     async function fetchData() {
       await getPostsbyUserID(user_id);
+      await getUser(user_id);
     }
     fetchData();
+    console.log(user);
   }, [getPostsbyUserID, getUser, user_id]);
 
   return (
     <Fragment>
-      {user.loading === true && !user.user ? (
+      {user.loading === false && !user.user ? (
         <Redirect to='/' />
       ) : (
         <div id='profile'>
@@ -73,7 +75,7 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
                         </div>
                       </div>
                     </div>
-                    {user.user._id === auth.user._id ? (
+                    {!auth.user || user.user._id === auth.user._id ? (
                       <div>{user.user.payout}</div>
                     ) : (
                       <button id='follow-btn'>Follow</button>

@@ -21,8 +21,6 @@ const PostPreview = ({
   creatorID,
   previewImageURL,
   videoURL,
-  productName,
-  productPic,
   productID,
   likes,
   updateLikes,
