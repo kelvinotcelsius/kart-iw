@@ -7,13 +7,13 @@ const config = require('config');
 const app = express();
 
 // Need to store session data somewhere else during production https://flaviocopes.com/express-sessions/
-app.use(
-  session({
-    secret: config.get('expressSecret'), //Set this to a random string that is kept secure
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+// app.use(
+//   session({
+//     secret: config.get('expressSecret'), //Set this to a random string that is kept secure
+//     resave: false,
+//     saveUninitialized: true,
+//   })
+// );
 
 // Necessary package to make POST request from React to Node backend
 var cors = require('cors');
