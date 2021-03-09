@@ -68,8 +68,7 @@ const PostModal = ({
       await getUser(creator_id);
     }
     fetchData();
-    console.log('hi');
-  }, [getPost, getProductFromPostId, post_id, creator_id]);
+  }, [getPost, getProductFromPostId, getUser, post_id, creator_id]);
 
   const [loginModal, changeModal] = useState(true); // true = show login modal, false = show sign in modal
   const [modalStatus, showModal] = useState(false); // true = show modal, false = close modal

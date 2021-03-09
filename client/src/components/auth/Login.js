@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -23,12 +23,12 @@ const Login = ({ changeModal, closeModal, login }) => {
   };
 
   return (
-    <Fragment>
+    <div id='auth-modal'>
       <h2 className='modal-title'>Log in to Kart</h2>
       <p className='modal-subtitle'>
         Earn money for making videos, comment on posts, and more
       </p>
-      <form id='login' onSubmit={(e) => onSubmit(e)}>
+      <form id='login-form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-field-wrapper'>
           <input
             type='email'
@@ -54,7 +54,7 @@ const Login = ({ changeModal, closeModal, login }) => {
       </form>
       <p className='body'>Don't have an account?</p>{' '}
       <button onClick={() => changeModal(false)}>Sign up</button>
-    </Fragment>
+    </div>
   );
 };
 

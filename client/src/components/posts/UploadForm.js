@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { addPost } from '../../actions/post';
+import { setAlert } from '../../actions/alert';
+
 import api from '../../utils/api';
+
 import SelectSearch from 'react-select-search'; // Alternate library: https://www.digitalocean.com/community/tutorials/react-react-select
+import spinnerGIF from '../layout/spinner.gif';
 
 import './UploadForm.css';
 
@@ -13,8 +17,8 @@ function renameKey(obj, oldKey, newKey) {
   delete obj[oldKey];
 }
 
-const UploadForm = ({ history, addPost }) => {
-  const [purchases, setPurchases] = useState('');
+const UploadForm = ({ history, addPost, setAlert }) => {
+  const [purchases, setPurchases] = useState([]);
   const [selectedItemID, setItem] = useState('');
   useEffect(() => {
     getPurchases();
@@ -23,9 +27,7 @@ const UploadForm = ({ history, addPost }) => {
   const getPurchases = async () => {
     const res = await api.get('/users/my/purchased_items');
     const arr = res.data;
-    console.log(arr);
     arr.forEach((obj) => renameKey(obj, '_id', 'value'));
-    console.log(arr);
     setPurchases(arr);
   };
 
@@ -45,7 +47,34 @@ const UploadForm = ({ history, addPost }) => {
   };
 
   const onFileChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+    try {
+      // If file is a video
+      if (e.target.files[0].type.includes('video')) {
+        // Check file size, can't be over 200MB
+        if (e.target.files[0].size > 209715200) {
+          setAlert('File is too big!', 'danger');
+          e.target.value = '';
+          return;
+        } else {
+          setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+        }
+      }
+
+      // If file is an image
+      if (e.target.files[0].type.includes('image')) {
+        // Check file size, can't be over 5MB
+        if (e.target.files[0].size > 5242880) {
+          setAlert('File is too big!', 'danger');
+          e.target.value = '';
+          return;
+        } else {
+          setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+        }
+      }
+    } catch (err) {
+      setAlert('An error occured. Please refresh and try again', 'danger');
+      console.log(err);
+    }
   };
 
   const onSubmit = (e) => {
@@ -57,6 +86,18 @@ const UploadForm = ({ history, addPost }) => {
     }
     // send id as separate arg
     addPost(form_data, selectedItemID, history);
+
+    // Turn form button into spinner
+    const button = document.getElementById('post-upload-btn');
+    const spinner = document.createElement('div');
+    spinner.innerHTML = `<img
+    src=${spinnerGIF}
+    style=${{ width: '100px', margin: 'auto', display: 'block' }}
+    alt='Loading...'
+  />`;
+    console.log(button);
+    console.log(button.parentNode);
+    button.parentNode.replaceChild(spinner, button);
   };
 
   return (
@@ -109,23 +150,8 @@ const UploadForm = ({ history, addPost }) => {
           </div>
           <div className='upload-form-row'>
             <div className='upload-form-field-wrapper'>
-              <label htmlFor='video' className='register-label'>
-                Video
-              </label>
-              <br />
-              <input
-                type='file'
-                id='video'
-                name='video'
-                className='inputFile'
-                onChange={(e) => onFileChange(e)}
-              />
-            </div>
-          </div>
-          <div className='upload-form-row'>
-            <div className='upload-form-field-wrapper'>
               <label htmlFor='preview' className='upload-label'>
-                Cover image
+                Cover image (10MB max)
               </label>
               <br />
               <input
@@ -136,7 +162,27 @@ const UploadForm = ({ history, addPost }) => {
                 onChange={(e) => onFileChange(e)}
               />
             </div>
-            <input type='submit' className='form-btn' value='Post' />
+          </div>
+          <div className='upload-form-row'>
+            <div className='upload-form-field-wrapper'>
+              <label htmlFor='video' className='register-label'>
+                Video (200MB max)
+              </label>
+              <br />
+              <input
+                type='file'
+                id='video'
+                name='video'
+                className='inputFile'
+                onChange={(e) => onFileChange(e)}
+              />
+            </div>
+            <input
+              type='submit'
+              id='post-upload-btn'
+              className='form-btn'
+              value='Post'
+            />
           </div>
         </form>
       </div>
@@ -146,6 +192,7 @@ const UploadForm = ({ history, addPost }) => {
 
 UploadForm.propTypes = {
   addPost: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addPost })(UploadForm);
+export default connect(null, { addPost, setAlert })(UploadForm);

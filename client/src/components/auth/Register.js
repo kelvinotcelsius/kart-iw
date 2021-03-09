@@ -1,6 +1,5 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-// import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
@@ -24,12 +23,12 @@ const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
   };
 
   return (
-    <Fragment>
+    <div id='auth-modal'>
       <h2 className='modal-title'>Sign up for Kart</h2>
       <p className='modal-subtitle'>
         Earn money for making videos, comment on posts, and more
       </p>
-      <form id='register' onSubmit={(e) => onSubmit(e)}>
+      <form id='register-form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-field-wrapper'>
           <input
             type='email'
@@ -55,7 +54,7 @@ const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
       </form>
       <p className='body'>Already have an account?</p>
       <button onClick={() => changeModal(true)}>Log in</button>
-    </Fragment>
+    </div>
   );
 };
 

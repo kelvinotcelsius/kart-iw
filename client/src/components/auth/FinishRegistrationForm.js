@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { finishRegistration } from '../../actions/auth';
+import { setAlert } from '../../actions/alert';
 
 const initialState = {
   username: '',
@@ -12,7 +13,12 @@ const initialState = {
   file: '',
 };
 
-const FinishRegistrationForm = ({ history, finishRegistration }) => {
+const FinishRegistrationForm = ({
+  history,
+  finishRegistration,
+  auth,
+  setAlert,
+}) => {
   const [formData, setFormData] = useState(initialState);
   const { username, first, last, birthday, phone, file } = formData;
 
@@ -23,6 +29,12 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
   const onFileChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
   };
+
+  useEffect(() => {
+    if (!auth.registrationFinished) {
+      setAlert('Please finish your profile before continuing', 'danger');
+    }
+  }, [auth, setAlert]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -57,6 +69,7 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
                 name='username'
                 value={username}
                 onChange={(e) => onChange(e)}
+                required
               />
             </div>
           </div>
@@ -72,6 +85,7 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
                 name='first'
                 value={first}
                 onChange={(e) => onChange(e)}
+                required
               />
             </div>
             <div className='form-field-wrapper'>
@@ -85,6 +99,7 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
                 name='last'
                 value={last}
                 onChange={(e) => onChange(e)}
+                required
               />
             </div>
             <div className='form-field-wrapper'>
@@ -99,6 +114,7 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
                 name='birthday'
                 value={birthday}
                 onChange={(e) => onChange(e)}
+                required
               />
             </div>
           </div>
@@ -117,6 +133,7 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
                 placeholder='Format: 541-132-0912'
                 value={phone}
                 onChange={(e) => onChange(e)}
+                required
               />
             </div>
           </div>
@@ -132,6 +149,7 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
                 name='file'
                 className='form-field'
                 onChange={(e) => onFileChange(e)}
+                required
               />
             </div>
           </div>
@@ -147,12 +165,15 @@ const FinishRegistrationForm = ({ history, finishRegistration }) => {
 };
 
 FinishRegistrationForm.propTypes = {
-  //   auth: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
   finishRegistration: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
-// const mapStateToProps = (state) => ({
-//   auth: state.auth,
-// });
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
 
-export default connect(null, { finishRegistration })(FinishRegistrationForm);
+export default connect(mapStateToProps, { finishRegistration, setAlert })(
+  FinishRegistrationForm
+);

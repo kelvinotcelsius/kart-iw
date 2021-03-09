@@ -7,6 +7,7 @@ import redHeart from '../../assets/images/icons/filled-red-heart.svg';
 import emptyHeart from '../../assets/images/icons/unfilled-gray-heart.svg';
 
 import { updateLikes } from '../../actions/post';
+import { setAlert } from '../../actions/alert';
 
 import VideoPreview from './VideoPreview';
 import Spinner from '../layout/Spinner';
@@ -25,6 +26,7 @@ const PostPreview = ({
   likes,
   updateLikes,
   auth,
+  setAlert,
 }) => {
   let location = useLocation();
   const [authUserId, setAuthUserId] = useState('');
@@ -44,7 +46,18 @@ const PostPreview = ({
       }
     }
     initializeData();
-  }, []);
+  }, [creatorID, productID, auth.user]);
+
+  const handleLikes = (postID) => {
+    if (!auth.isAuthenticated) {
+      setAlert(
+        `Please sign up or log in to like ${creator.username}'s post`,
+        'danger'
+      );
+    } else {
+      updateLikes(postID);
+    }
+  };
 
   return (
     <Fragment>
@@ -78,7 +91,7 @@ const PostPreview = ({
                   className='like-btn'
                   alt='like button'
                   src={likes.includes(authUserId) ? redHeart : emptyHeart}
-                  onClick={() => updateLikes(postID)}
+                  onClick={(postID) => handleLikes(postID)}
                 ></img>
                 <p className='likes-count'>{likes.length}</p>
               </div>
@@ -119,15 +132,11 @@ const PostPreview = ({
 
 PostPreview.propTypes = {
   updateLikes: PropTypes.func.isRequired,
-  profPic: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
   caption: PropTypes.string.isRequired,
   postID: PropTypes.string.isRequired,
   creatorID: PropTypes.string.isRequired,
   previewImageURL: PropTypes.string.isRequired,
   videoURL: PropTypes.string.isRequired,
-  productName: PropTypes.string.isRequired,
-  productPic: PropTypes.string.isRequired,
   productID: PropTypes.string.isRequired,
   likes: PropTypes.array.isRequired,
   auth: PropTypes.object.isRequired,
@@ -137,4 +146,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { updateLikes })(PostPreview);
+export default connect(mapStateToProps, { updateLikes, setAlert })(PostPreview);

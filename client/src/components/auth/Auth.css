@@ -45,17 +45,17 @@
 }
 
 /* Sign up and login modals */
-.modal-title {
+#auth-modal .modal-title {
   font-size: 24px;
   font-weight: 600;
 }
 
-.modal-subtitle {
+#auth-modal .modal-subtitle {
   font-size: 13px;
   color: var(--wet-rock);
 }
 
-#login #register {
+#login-form #register-form {
   display: flex;
   flex-direction: row;
 }

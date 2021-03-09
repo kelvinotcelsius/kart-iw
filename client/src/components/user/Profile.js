@@ -20,7 +20,6 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
       await getUser(user_id);
     }
     fetchData();
-    console.log(user);
   }, [getPostsbyUserID, getUser, user_id]);
 
   return (
