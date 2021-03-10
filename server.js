@@ -1,7 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/db');
-const session = require('express-session');
-const config = require('config');
+const path = require('path');
+// const session = require('express-session');
+// const config = require('config');
 
 // creates an Express application
 const app = express();
@@ -20,14 +21,14 @@ var cors = require('cors');
 app.use(cors());
 
 // enable cors
-app.use((_, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  next();
-});
+// app.use((_, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   );
+//   next();
+// });
 
 // Connect DB
 connectDB();
