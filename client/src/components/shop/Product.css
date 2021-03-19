@@ -3,18 +3,6 @@
   flex-wrap: wrap;
 }
 
-.preview-video-wrapper {
-  flex-grow: 1;
-  width: 33%;
-  text-align: center;
-}
-
-.preview-video {
-  /* height: calc(300px + ((100vw - 768px) / 1152) * 100);
-  width: calc(0.56 * (300px + ((100vw - 768px) / 1152) * 100)); */
-  width: 100%;
-}
-
 #product #product-image {
   height: 4em;
   width: 4em;

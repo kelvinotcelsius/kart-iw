@@ -31,12 +31,14 @@ const UserSchema = new Schema({
   },
   bio: {
     type: String,
+    default: '',
   },
   birthday: {
     type: Date,
   },
   phone: {
     type: String,
+    default: '',
   },
   follower_count: {
     type: Number,
@@ -63,6 +65,17 @@ const UserSchema = new Schema({
     required: true,
     default: false,
   },
+  stripe_id: {
+    type: String,
+  },
+  address: {
+    city: String,
+    country: String,
+    line1: String,
+    line2: String,
+    postal_code: String,
+    state: String,
+  },
   followers: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   purchased_items: [{ type: Schema.Types.ObjectId, ref: 'product' }],
@@ -70,6 +83,7 @@ const UserSchema = new Schema({
   posts: [{ type: Schema.Types.ObjectId, ref: 'post' }],
   bookmarks: [{ type: Schema.Types.ObjectId, ref: 'post' }],
   likes: [{ type: Schema.Types.ObjectId, ref: 'post' }],
+  transfers: [{ type: Schema.Types.String }],
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

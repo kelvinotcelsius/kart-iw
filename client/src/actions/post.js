@@ -112,8 +112,8 @@ export const getPostsbyUserID = (id) => async (dispatch) => {
 // Add like
 export const updateLikes = (id) => async (dispatch) => {
   try {
+    console.log(id);
     const res = await api.put(`/posts/like/${id}`);
-
     dispatch({
       type: UPDATE_LIKES,
       payload: { id, likes: res.data },

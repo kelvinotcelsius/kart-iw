@@ -21,7 +21,6 @@ const Field = ({
             className='form-row-input'
             id={id}
             type={type}
-            min={min}
             placeholder={placeholder}
             required={required}
             autoComplete={autoComplete}
@@ -38,11 +37,10 @@ Field.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  // min: PropTypes.string.isRequired,
-  // placeholder: PropTypes.string.isRequired,
-  // required: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  required: PropTypes.bool.isRequired,
   autoComplete: PropTypes.string.isRequired,
-  // value: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const checkObjectId = require('../../middleware/checkObjectId');
 const config = require('config');
-const { validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 const stripeKey = config.get('StripeTestKey');
 const stripe = require('stripe')(stripeKey);
@@ -89,7 +89,7 @@ router.post(
 // @route   GET api/shop/:post_id
 // @desc    Handle payment confirmation
 // @access  Private
-router.post('/confirm-payment', async (req, res) => {
+router.post('/confirm-payment', [auth], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -122,67 +122,179 @@ router.post('/confirm-payment', async (req, res) => {
   }
 });
 
-// @route   GET api/shop/create-stripe-account
-// @desc    Create a Stripe account for user
-// @access  Private
-router.post('/create-stripe-account/:email', async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  try {
-    const account = await stripe.accounts.create({
-      type: 'express',
-      country: 'US',
-      // email: req.params.email,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Server Error');
-  }
-});
-
-// @route   GET api/shop/payout/:user_id
-// @desc    Handle payment confirmation
+// @route   POST api/shop/create-stripe-account/:email
+// @desc    Create a Stripe account for creators seeking payout
 // @access  Private
 router.post(
-  '/payout/:user_id',
-  [auth, checkObjectId('user_id')],
+  '/create-stripe-account/:email',
+  [
+    auth,
+    [
+      check('name', 'Name is required').not().isEmpty(),
+      check('routing_number', 'Routing number is required').not().isEmpty(),
+      check('account_number', 'Checking account number is required')
+        .not()
+        .isEmpty(),
+    ],
+  ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
+    const {
+      name,
+      routing_number,
+      account_number,
+      city,
+      country,
+      line1,
+      line2,
+      postal_code,
+      state,
+    } = req.body;
+
     try {
-      const user = await User.findById(req.params.user_id);
-
+      const user = await User.findById(req.user.id);
       if (!user) {
-        return res.status(404).json({ msg: 'User not found' });
+        return res.status(400).json({ errors: [{ msg: 'User not found' }] });
       }
+      const birthday = user.birthday.toISOString().split('-');
+      const dob_year = birthday[0];
+      const dob_month = birthday[1];
+      const dob_day = birthday[2].split('T')[0];
 
-      // checks if the user requesting the payout is the same one as the passed in user_id
-      // post.user is of type object id, so we need to to call .toString
-      if (user._id.toString() !== req.user.id) {
-        return res
-          .status(401)
-          .json({ msg: 'User not authorized to request payout' });
-      }
-
-      // STRIPE STUFF
-
-      res.json('success');
+      const account = await stripe.accounts.create({
+        type: 'custom',
+        country: 'US',
+        email: req.params.email,
+        business_type: 'individual',
+        individual: {
+          first_name: user.first,
+          last_name: user.last,
+          email: user.email,
+          phone: user.phone,
+          dob: {
+            day: dob_day,
+            year: dob_year,
+            month: dob_month,
+          },
+          address: {
+            city: city,
+            country: country,
+            line1: line1,
+            line2: line2,
+            postal_code: postal_code,
+            state: state,
+          },
+          id_number: req.body.social_security_num,
+        },
+        tos_acceptance: {
+          date: Math.floor(Date.now() / 1000),
+          ip: req.ip, // Assumes you're not using a proxy; https://stripe.com/docs/connect/updating-accounts#tos-acceptance
+        },
+        business_profile: {
+          mcc: 5969, // Direct marketing, Other from https://stripe.com/docs/connect/setting-mcc
+          url: `https://www.shopkart.com/user/${user._id}`,
+        },
+        capabilities: {
+          card_payments: { requested: true },
+          transfers: { requested: true },
+        },
+        external_account: {
+          object: 'bank_account',
+          country: 'US',
+          currency: 'usd',
+          account_holder_name: name,
+          routing_number: routing_number,
+          account_number: account_number,
+        },
+      });
+      user.stripe_id = account.id;
+      user.save();
+      res.json(user);
     } catch (err) {
-      console.error(err.message);
-
-      if (err.kind === 'ObjectId') {
-        return res.status(404).json({ msg: 'User not found' });
-      }
+      console.log(err);
       res.status(500).send('Server Error');
     }
   }
 );
+
+// @route   POST api/shop/payout
+// @desc    Create a Stripe transfer from Kart to creator
+// @access  Private
+router.post('/payout', [auth], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+    }
+
+    const transfer = await stripe.transfers.create({
+      amount: user.payout,
+      currency: 'usd',
+      description: 'Kart payout',
+      destination: user.stripe_id,
+      transfer_group: 'CREATOR',
+    });
+
+    user.transfers.unshift(transfer.id);
+    const oldPayout = user.payout / 100;
+    user.payout = 0;
+    user.save();
+    res.json(`You were paid out $${oldPayout}!`);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// // @route   GET api/shop/payout/:user_id
+// // @desc    Handle payment confirmation
+// // @access  Private
+// router.post(
+//   '/payout/:user_id',
+//   [auth, checkObjectId('user_id')],
+//   async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+
+//     try {
+//       const user = await User.findById(req.params.user_id);
+
+//       if (!user) {
+//         return res.status(404).json({ msg: 'User not found' });
+//       }
+
+//       // checks if the user requesting the payout is the same one as the passed in user_id
+//       // post.user is of type object id, so we need to to call .toString
+//       if (user._id.toString() !== req.user.id) {
+//         return res
+//           .status(401)
+//           .json({ msg: 'User not authorized to request payout' });
+//       }
+
+//       // STRIPE STUFF
+
+//       res.json('success');
+//     } catch (err) {
+//       console.error(err.message);
+
+//       if (err.kind === 'ObjectId') {
+//         return res.status(404).json({ msg: 'User not found' });
+//       }
+//       res.status(500).send('Server Error');
+//     }
+//   }
+// );
 
 // @route   DELETE api/shop/orders
 // @desc    Delete all orders

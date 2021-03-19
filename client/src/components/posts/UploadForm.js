@@ -92,11 +92,9 @@ const UploadForm = ({ history, addPost, setAlert }) => {
     const spinner = document.createElement('div');
     spinner.innerHTML = `<img
     src=${spinnerGIF}
-    style=${{ width: '100px', margin: 'auto', display: 'block' }}
+    style=${{ width: '50px', margin: 'auto', display: 'block' }}
     alt='Loading...'
   />`;
-    console.log(button);
-    console.log(button.parentNode);
     button.parentNode.replaceChild(spinner, button);
   };
 
@@ -112,7 +110,7 @@ const UploadForm = ({ history, addPost, setAlert }) => {
           <div className='upload-form-row'>
             <div className='upload-form-field-wrapper'>
               <label htmlFor='caption' className='upload-label'>
-                Product
+                Product*
               </label>
               <br />
               <SelectSearch
@@ -134,7 +132,7 @@ const UploadForm = ({ history, addPost, setAlert }) => {
           <div className='upload-form-row'>
             <div className='upload-form-field-wrapper'>
               <label htmlFor='caption' className='upload-label'>
-                Caption
+                Caption*
               </label>
               <br />
               <input
@@ -151,7 +149,7 @@ const UploadForm = ({ history, addPost, setAlert }) => {
           <div className='upload-form-row'>
             <div className='upload-form-field-wrapper'>
               <label htmlFor='preview' className='upload-label'>
-                Cover image (10MB max)
+                Cover image* (10MB max)
               </label>
               <br />
               <input
@@ -166,7 +164,7 @@ const UploadForm = ({ history, addPost, setAlert }) => {
           <div className='upload-form-row'>
             <div className='upload-form-field-wrapper'>
               <label htmlFor='video' className='register-label'>
-                Video (200MB max)
+                Video* (200MB max)
               </label>
               <br />
               <input

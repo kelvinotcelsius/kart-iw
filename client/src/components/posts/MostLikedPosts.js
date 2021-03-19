@@ -13,28 +13,30 @@ const MostLikedPosts = ({ getPosts, post: { posts }, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <div className='main-wrapper'>
-        <div className='main-left-wrapper'>
-          {isAuthenticated ? <div>Authenticated!</div> : <GuestSidebar />}
-        </div>
-        <div className='main-right-wrapper'>
-          {posts.map((post) => (
-            <PostPreview
-              key={post._id}
-              profPic={post.creator_profile_pic}
-              username={post.creator_username}
-              caption={post.caption}
-              postURL={post.url}
-              previewImageURL={post.preview}
-              videoURL={post.video}
-              postID={post._id}
-              creatorID={post.creator_id}
-              productName={post.product_name}
-              productPic={post.product_picture}
-              productID={post.product_id}
-              likes={post.likes}
-            />
-          ))}
+      <div id='home'>
+        <div className='main-wrapper'>
+          <div className='main-left-wrapper'>
+            {isAuthenticated ? <div>Authenticated!</div> : <GuestSidebar />}
+          </div>
+          <div className='main-right-wrapper'>
+            {posts.map((post) => (
+              <PostPreview
+                key={post._id}
+                profPic={post.creator_profile_pic}
+                username={post.creator_username}
+                caption={post.caption}
+                postURL={post.url}
+                previewImageURL={post.preview}
+                videoURL={post.video}
+                postID={post._id}
+                creatorID={post.creator_id}
+                productName={post.product_name}
+                productPic={post.product_picture}
+                productID={post.product_id}
+                likes={post.likes}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </Fragment>

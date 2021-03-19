@@ -176,10 +176,11 @@ const PostModal = ({
                     ) : (
                       <Fragment>
                         <div className='post-login'>
-                          <p id='post-login-title'>Login to earn money</p>
+                          <p id='post-login-title'>Login to purchase</p>
                           <p id='post-login-body'>
-                            You can earn money by purchasing with a registered
-                            account. Learn more{' '}
+                            You can create videos for products you purchase.
+                            Every purchase from your video earns you 10%
+                            commission. Learn more{' '}
                             <Link className='url' to='/faq'>
                               here.
                             </Link>
@@ -222,17 +223,21 @@ const PostModal = ({
                         <div className='divider'></div>
                       </Fragment>
                     )}
-                    <div className='purchase-btn-wrapper'>
-                      <button
-                        className='post-purchase-btn'
-                        onClick={() => triggerPayment(true)}
-                      >
-                        <span className='purchase-btn-text'>
-                          ${product.product.price}
-                        </span>
-                        <span className='purchase-btn-text'>Buy now</span>
-                      </button>
-                    </div>
+                    {isAuthenticated ? (
+                      <div className='purchase-btn-wrapper'>
+                        <button
+                          className='post-purchase-btn'
+                          onClick={() => triggerPayment(true)}
+                        >
+                          <span className='purchase-btn-text'>
+                            ${product.product.price}
+                          </span>
+                          <span className='purchase-btn-text'>Buy now</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <Fragment></Fragment>
+                    )}
                   </Fragment>
                 ) : (
                   <Fragment>

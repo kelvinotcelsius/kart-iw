@@ -91,7 +91,7 @@ const PostPreview = ({
                   className='like-btn'
                   alt='like button'
                   src={likes.includes(authUserId) ? redHeart : emptyHeart}
-                  onClick={(postID) => handleLikes(postID)}
+                  onClick={() => handleLikes(postID)}
                 ></img>
                 <p className='likes-count'>{likes.length}</p>
               </div>

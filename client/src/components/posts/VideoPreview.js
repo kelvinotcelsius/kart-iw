@@ -25,8 +25,6 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             src={videoURL}
             playsInline
             loop
-            ratiowidth='calc(0.56 * (400px + (100vw - 768px) / 1152 * 100))'
-            ratioheight='calc(400px + (100vw - 768px) / 1152 * 100)'
             ref={videoRef}
             onClick={() => onVideoPress()}
             poster={previewImageURL}
@@ -42,7 +40,7 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
                 ? 'paused'
                 : 'playing'
             }
-            // onClick={() => onVideoPress()}
+            onClick={() => onVideoPress()}
           ></div>
           <div
             className={muted ? 'muted' : 'unmuted'}

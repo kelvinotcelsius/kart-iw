@@ -1,5 +1,61 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="24 / music / volume-off">
-<path id="icon" fill-rule="evenodd" clip-rule="evenodd" d="M8 8.61803L12 6.61803V17.382L8 15.382V8.61803ZM6.76393 6.99999L14 3.38196V20.618L6.76393 17H3C1.89543 17 1 16.1046 1 15V8.99999C1 7.89542 1.89543 6.99999 3 6.99999H6.76393ZM6 8.99999H3V15H6V8.99999ZM20.4142 12L22.7071 14.2929L21.2929 15.7071L19 13.4142L16.7071 15.7071L15.2929 14.2929L17.5858 12L15.2929 9.7071L16.7071 8.29289L19 10.5858L21.2929 8.29289L22.7071 9.7071L20.4142 12Z" fill="#FFFBFB"/>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="24"
+   height="24"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="mute.svg"
+   fill="none"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3200"
+     inkscape:window-height="1659"
+     id="namedview6"
+     showgrid="false"
+     inkscape:zoom="9.8333333"
+     inkscape:cx="12"
+     inkscape:cy="12"
+     inkscape:window-x="-14"
+     inkscape:window-y="-14"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <g
+     id="24 / music / volume-off">
+    <path
+       id="icon"
+       d="M8 8.61803L12 6.61803V17.382L8 15.382V8.61803ZM6.76393 6.99999L14 3.38196V20.618L6.76393 17H3C1.89543 17 1 16.1046 1 15V8.99999C1 7.89542 1.89543 6.99999 3 6.99999H6.76393ZM6 8.99999H3V15H6V8.99999ZM20.4142 12L22.7071 14.2929L21.2929 15.7071L19 13.4142L16.7071 15.7071L15.2929 14.2929L17.5858 12L15.2929 9.7071L16.7071 8.29289L19 10.5858L21.2929 8.29289L22.7071 9.7071L20.4142 12Z"
+       clip-rule="evenodd"
+       fill-rule="evenodd"
+       fill="#FFFBFB" />
+  </g>
 </svg>

@@ -25,7 +25,7 @@ const ProfileVideoPreview = ({
 
   return (
     <Fragment>
-      <div className='profile-post-preview-wrapper'>
+      <div className='post-preview-wrapper'>
         <div className='preview-video-wrapper'>
           <Link to={`/${creatorID}/${postID}`}>
             <video
@@ -39,7 +39,6 @@ const ProfileVideoPreview = ({
               onMouseOver={() => onVideoPress()}
               onMouseOut={() => onVideoPress()}
               muted={muted}
-              // autoPlay
             />
           </Link>
           <div className='video-controls-wrapper'>
@@ -49,6 +48,7 @@ const ProfileVideoPreview = ({
                   ? 'paused'
                   : 'playing'
               }
+              onClick={() => onVideoPress()}
             ></div>
             <div
               className={muted ? 'muted' : 'unmuted'}

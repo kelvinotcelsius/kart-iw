@@ -5,6 +5,7 @@ import './App.css';
 // Custom routing
 import PrivateRoute from './components/routing/PrivateRoute';
 import PublicRoute from './components/routing/PublicRoute';
+import ScrollToTop from './components/routing/ScrollToTop';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -41,7 +42,9 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Routes />
+        <ScrollToTop>
+          <Routes />
+        </ScrollToTop>
       </Router>
     </Provider>
   );

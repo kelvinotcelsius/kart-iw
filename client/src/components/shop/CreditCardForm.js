@@ -1,12 +1,16 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Field from './Field';
-import './Payments.css';
+import { connect } from 'react-redux';
+// import { Redirect } from 'react-router-dom';
 
-import api from '../../utils/api';
+import './Payments.css';
 
 import Spinner from '../layout/Spinner';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import Field from './Field';
+
+import { setAlert } from '../../actions/alert';
+import api from '../../utils/api';
 
 //credit card element specific styling
 const CARD_OPTIONS = {
@@ -32,7 +36,7 @@ const CARD_OPTIONS = {
   },
 };
 
-const CreditCardForm = ({ productID, creatorID, postID, price }) => {
+const CreditCardForm = ({ productID, creatorID, postID, price, setAlert }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -163,6 +167,7 @@ const CreditCardForm = ({ productID, creatorID, postID, price }) => {
 
         /* YOUR APPLICATION SPECIFIC CODE HERE: for this example all we do is render a modal */
         setSuccess(true);
+        // setAlert('Payment successful', 'success');
       }
     }
   };
@@ -340,6 +345,8 @@ CreditCardForm.propTypes = {
   creatorID: PropTypes.string.isRequired,
   postID: PropTypes.string.isRequired,
   productID: PropTypes.string.isRequired,
+  // setAlert: PropTypes.func.isRequired,
 };
 
-export default CreditCardForm;
+// export default CreditCardForm;
+export default connect(null, { setAlert })(CreditCardForm);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { finishRegistration } from '../../actions/auth';
 import { setAlert } from '../../actions/alert';
+import spinnerGIF from '../layout/spinner.gif';
 
 const initialState = {
   username: '',
@@ -45,6 +46,16 @@ const FinishRegistrationForm = ({
     }
 
     finishRegistration(form_data, history);
+
+    // Turn form button into spinner
+    const button = document.getElementById('submit-btn');
+    const spinner = document.createElement('div');
+    spinner.innerHTML = `<img
+      src=${spinnerGIF}
+      style=${{ width: '50px', margin: 'auto', display: 'block' }}
+      alt='Loading...'
+    />`;
+    button.parentNode.replaceChild(spinner, button);
   };
 
   return (
@@ -59,7 +70,7 @@ const FinishRegistrationForm = ({
           <div className='form-row'>
             <div className='form-field-wrapper'>
               <label htmlFor='username' className='form-row-label'>
-                Username
+                Username*
               </label>
               <br />
               <input
@@ -76,7 +87,7 @@ const FinishRegistrationForm = ({
           <div className='form-row'>
             <div className='form-field-wrapper'>
               <label htmlFor='first' className='form-row-label'>
-                First name
+                First name*
               </label>
               <br />
               <input
@@ -90,7 +101,7 @@ const FinishRegistrationForm = ({
             </div>
             <div className='form-field-wrapper'>
               <label htmlFor='last' className='form-row-label'>
-                Last name
+                Last name*
               </label>
               <br />
               <input
@@ -104,7 +115,7 @@ const FinishRegistrationForm = ({
             </div>
             <div className='form-field-wrapper'>
               <label htmlFor='birthday' className='form-row-label'>
-                Birthday
+                Birthday*
               </label>
               <br />
               <input
@@ -121,7 +132,7 @@ const FinishRegistrationForm = ({
           <div className='form-row'>
             <div className='form-field-wrapper'>
               <label htmlFor='phone' className='form-row-label'>
-                Phone
+                Phone*
               </label>
               <br />
               <input
@@ -140,7 +151,7 @@ const FinishRegistrationForm = ({
           <div className='form-row'>
             <div className='form-field-wrapper'>
               <label htmlFor='file' className='form-row-label'>
-                Profile picture
+                Profile picture*
               </label>
               <br />
               <input
@@ -155,7 +166,12 @@ const FinishRegistrationForm = ({
           </div>
           <div className='form-row'>
             <div className='form-field-wrapper'>
-              <input type='submit' className='form-btn' value='Start earning' />
+              <input
+                type='submit'
+                id='submit-btn'
+                className='form-btn'
+                value='Start earning'
+              />
             </div>
           </div>
         </form>

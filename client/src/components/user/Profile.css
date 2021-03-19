@@ -5,16 +5,6 @@
   border-radius: 50%;
 }
 
-#profile .profile-post-preview-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 33%;
-}
-
-#profile .preview-video-wrapper {
-  width: 100%;
-}
-
 #profile .product-wrapper {
   width: 100%;
 }
