@@ -57,6 +57,7 @@ a {
 }
 
 a:hover,
-button:hover {
+button:hover,
+video:hover {
   cursor: pointer;
 }

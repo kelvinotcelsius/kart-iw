@@ -36,15 +36,23 @@ const CARD_OPTIONS = {
   },
 };
 
-const CreditCardForm = ({ productID, creatorID, postID, price, setAlert }) => {
+const CreditCardForm = ({
+  productID,
+  creatorID,
+  postID,
+  price,
+  setAlert,
+  user,
+  triggerPayment,
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [billingDetails, setBillingDetails] = useState({
-    email: '',
-    name: '',
+    email: `${user.email}`,
+    name: `${user.first} ${user.last}`,
     address: {
       line1: '',
       city: '',
@@ -59,7 +67,7 @@ const CreditCardForm = ({ productID, creatorID, postID, price, setAlert }) => {
     setProcessing(false);
     // setPaymentMethod('');
     // setPrice(0);
-    setSuccess(false);
+    // setSuccess(false);
     setBillingDetails({
       email: '',
       name: '',
@@ -166,8 +174,9 @@ const CreditCardForm = ({ productID, creatorID, postID, price, setAlert }) => {
         reset();
 
         /* YOUR APPLICATION SPECIFIC CODE HERE: for this example all we do is render a modal */
-        setSuccess(true);
-        // setAlert('Payment successful', 'success');
+        // setSuccess(true);
+        setAlert('Payment successful! Your order is on the way.', 'success');
+        triggerPayment(false); // go back to product view
       }
     }
   };
@@ -188,7 +197,7 @@ const CreditCardForm = ({ productID, creatorID, postID, price, setAlert }) => {
         </div>
       ) : null}
 
-      {success ? (
+      {/* {success ? (
         <div className='status success'>
           <span className='status-msg success'>
             Payment successful. Your order is on the way!
@@ -200,7 +209,7 @@ const CreditCardForm = ({ productID, creatorID, postID, price, setAlert }) => {
             x
           </button>
         </div>
-      ) : null}
+      ) : null} */}
 
       {/* Credit Card Payment Form */}
       <h5>Shipping and billing</h5>
@@ -345,8 +354,14 @@ CreditCardForm.propTypes = {
   creatorID: PropTypes.string.isRequired,
   postID: PropTypes.string.isRequired,
   productID: PropTypes.string.isRequired,
-  // setAlert: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  triggerPayment: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
 // export default CreditCardForm;
-export default connect(null, { setAlert })(CreditCardForm);
+export default connect(mapStateToProps, { setAlert })(CreditCardForm);

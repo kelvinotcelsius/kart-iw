@@ -14,6 +14,10 @@ const initialState = {
   file: '',
 };
 
+function checkValidCharacters(username) {
+  return /^[0-9a-zA-Z_.]+$/.test(username);
+}
+
 const FinishRegistrationForm = ({
   history,
   finishRegistration,
@@ -31,11 +35,17 @@ const FinishRegistrationForm = ({
     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
   };
 
-  useEffect(() => {
+  const checkRegistrationFinished = () => {
     if (!auth.registrationFinished) {
       setAlert('Please finish your profile before continuing', 'danger');
+    } else {
+      return;
     }
-  }, [auth, setAlert]);
+  };
+
+  useEffect(() => {
+    checkRegistrationFinished();
+  }, [checkRegistrationFinished]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -43,6 +53,11 @@ const FinishRegistrationForm = ({
 
     for (var key in formData) {
       form_data.append(key, formData[key]);
+    }
+
+    if (!checkValidCharacters(username)) {
+      setAlert("Please only use letters, numbers, and '_', '.'", 'danger');
+      return;
     }
 
     finishRegistration(form_data, history);

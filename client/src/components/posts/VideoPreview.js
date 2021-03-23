@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Post.css';
 
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
-  const [muted, setMute] = useState(true);
+  const [muted, setMute] = useState(false);
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef(false);
   const onVideoPress = () => {
@@ -28,8 +28,8 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             ref={videoRef}
             onClick={() => onVideoPress()}
             poster={previewImageURL}
-            onMouseOver={() => onVideoPress()}
-            onMouseOut={() => onVideoPress()}
+            // onMouseOver={() => onVideoPress()}
+            // onMouseOut={() => onVideoPress()}
             muted={muted}
           />
         </Link>

@@ -20,6 +20,10 @@ var upload = multer({ storage: storage });
 // AWS
 var uploadS3 = require('../utils/uploadS3');
 
+function checkValidCharacters(username) {
+  return /^[0-9a-zA-Z_.]+$/.test(username);
+}
+
 // @route   POST api/users
 // @desc    Register user
 // @access  Public
@@ -127,6 +131,12 @@ router.put(
     } = req.body;
 
     const file = req.file;
+
+    if (!checkValidCharacters(username)) {
+      return res.status(400).json({
+        errors: [{ msg: "Please only use letters, numbers, and '_', '.'" }],
+      });
+    }
 
     try {
       // See if username exists

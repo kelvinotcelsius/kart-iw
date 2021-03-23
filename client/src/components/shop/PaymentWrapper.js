@@ -30,6 +30,7 @@ const PaymentWrapper = ({
             creatorID={creatorID}
             postID={postID}
             price={price}
+            triggerPayment={triggerPayment}
           />
         </Elements>
       </div>

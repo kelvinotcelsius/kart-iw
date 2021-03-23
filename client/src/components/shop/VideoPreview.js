@@ -30,8 +30,8 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
               ref={videoRef}
               onClick={() => onVideoPress()}
               poster={previewImageURL}
-              onMouseOver={() => onVideoPress()}
-              onMouseOut={() => onVideoPress()}
+              // onMouseOver={() => onVideoPress()}
+              // onMouseOut={() => onVideoPress()}
               muted={muted}
             />
           </Link>

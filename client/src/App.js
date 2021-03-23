@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.css';
 
 // Custom routing
@@ -24,7 +24,7 @@ import Profile from './components/user/Profile';
 
 // Posts
 import UploadForm from './components/posts/UploadForm';
-import PostModal from './components/posts/PostModal';
+import Post from './components/posts/Post';
 
 // Products
 import Product from './components/shop/Product';
@@ -52,20 +52,12 @@ const App = () => {
 
 // Taken from https://reactrouter.com/web/example/modal-gallery
 const Routes = () => {
-  let location = useLocation();
-  let background = {
-    pathname: '/',
-  };
-  if (location.state && location.state.background) {
-    background = location.state && location.state.background;
-  }
-
   return (
     <Fragment>
       <div id='container'>
         <Navbar />
         <Alert />
-        <Switch location={location || background}>
+        <Switch>
           <PublicRoute exact path='/' component={Landing} />
           <PublicRoute exact path='/product/:product_id' component={Product} />
           <PublicRoute exact path='/user/:user_id' component={Profile} />
@@ -75,13 +67,7 @@ const Routes = () => {
             path='/finish-registration'
             component={FinishRegistrationForm}
           />
-          {background && (
-            <PublicRoute
-              exact
-              path='/:creator_id/:post_id'
-              children={<PostModal background={background} />}
-            />
-          )}
+          <PublicRoute exact path='/:creator_id/:post_id' component={Post} />
           <PublicRoute component={Landing} />
         </Switch>
       </div>

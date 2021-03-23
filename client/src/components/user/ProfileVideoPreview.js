@@ -36,8 +36,8 @@ const ProfileVideoPreview = ({
               ref={videoRef}
               onClick={() => onVideoPress()}
               poster={previewImageURL}
-              onMouseOver={() => onVideoPress()}
-              onMouseOut={() => onVideoPress()}
+              // onMouseOver={() => onVideoPress()}
+              // onMouseOut={() => onVideoPress()}
               muted={muted}
             />
           </Link>
