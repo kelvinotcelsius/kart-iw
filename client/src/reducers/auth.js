@@ -55,7 +55,6 @@ export default function auth(state = initialState, action) {
         registrationFinished: false,
       };
     case AUTH_ERROR:
-    case USER_ERROR:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
     case LOGOUT:
@@ -66,6 +65,12 @@ export default function auth(state = initialState, action) {
         user: null,
         token: null,
         isAuthenticated: false,
+        loading: false,
+      };
+    case USER_ERROR:
+      return {
+        ...state,
+        ...payload,
         loading: false,
       };
     default:
