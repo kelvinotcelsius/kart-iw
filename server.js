@@ -43,6 +43,7 @@ app.use('/api/suppliers', require('./routes/api/suppliers'));
 app.use('/api/products', require('./routes/api/products'));
 app.use('/api/shop', require('./routes/api/shop'));
 app.use('/api/users', require('./routes/api/users'));
+/* app.use('/api/stripe', require('./routes/api/stripe')); */
 
 // Serve static assets in production (place this section under route defitions)
 if (process.env.NODE_ENV === 'production') {

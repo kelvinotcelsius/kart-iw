@@ -166,7 +166,7 @@
 
 .nav-auth-menu.show {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   cursor: pointer;
   position: absolute;
   padding-top: 20px;

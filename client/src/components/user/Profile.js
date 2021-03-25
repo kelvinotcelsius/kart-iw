@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useParams, Redirect } from 'react-router-dom';
@@ -10,10 +10,15 @@ import Spinner from '../layout/Spinner';
 import { getPostsbyUserID } from '../../actions/post';
 import { getUser } from '../../actions/user';
 
-import './Profile.css';
+import api from '../../utils/api';
 
-const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
+import './Profile.css';
+import { setAlert } from '../../actions/alert';
+
+const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
   let { user_id } = useParams();
+  const [paymentProcessing, setProcessing] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       await getPostsbyUserID(user_id);
@@ -21,6 +26,38 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
     }
     fetchData();
   }, [getPostsbyUserID, getUser, user_id]);
+
+  const requestPayout = async () => {
+    if (user.user.payout < 1) {
+      setAlert('Minimum payout must be $1', 'danger');
+      return;
+    }
+
+    setProcessing(true);
+    // Check if user already has Stripe account
+    const stripeRes = await api.get('/shop/stripe');
+    // If not, redirect to register account form
+    if (!stripeRes.data.success) {
+      setProcessing(false);
+      <Redirect to='/update-stripe' />;
+    } else {
+      // If so, check if transfers are enabled
+      const transfersRes = await api.get('/shop/stripe-transfers-active');
+      // If transfers are not active, return error msg
+      if (!transfersRes.data.success) {
+        setProcessing(false);
+        setAlert(
+          'Your Stripe account is not configured for transfers. Please contact zkyu@princeton.edu',
+          'danger'
+        );
+      } else {
+        // If transfers are active, initiate payout
+        const res = await api.post('/shop/payout');
+        setProcessing(false);
+        setAlert(res.data, 'success');
+      }
+    }
+  };
 
   return (
     <Fragment>
@@ -75,9 +112,20 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
                       </div>
                     </div>
                     {!auth.user || user.user._id === auth.user._id ? (
-                      <div>{user.user.payout}</div>
+                      <Fragment>
+                        {!paymentProcessing ? (
+                          <button
+                            className='action-btn'
+                            onClick={() => requestPayout()}
+                          >
+                            Request ${user.user.payout} payout
+                          </button>
+                        ) : (
+                          <p>Processing payment...</p>
+                        )}
+                      </Fragment>
                     ) : (
-                      <button id='follow-btn'>Follow</button>
+                      <button className='action-btn'>Follow</button>
                     )}
                   </div>
                   <div className='three-video-wrapper'>
@@ -93,6 +141,13 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth }) => {
                         productPic={post.product_picture}
                       />
                     ))}
+                    {post.posts.length === 0 ? (
+                      <p style={{ marginTop: '2.5em' }}>
+                        User has not posted any videos yet.
+                      </p>
+                    ) : (
+                      <Fragment></Fragment>
+                    )}
                   </div>
                 </Fragment>
               )}
@@ -110,6 +165,7 @@ Profile.propTypes = {
   auth: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -118,4 +174,8 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getPostsbyUserID, getUser })(Profile);
+export default connect(mapStateToProps, {
+  getPostsbyUserID,
+  getUser,
+  setAlert,
+})(Profile);

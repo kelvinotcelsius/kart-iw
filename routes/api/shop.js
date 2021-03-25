@@ -72,10 +72,10 @@ router.post(
       user.purchased_items.unshift(order.product_id);
       await user.save();
 
-      // Add commission to creator account
-      newPayout = user.payout + 0.1 * price;
-      user.payout = newPayout;
-      await user.save();
+      // Add commission to creator account and total_earned amount
+      creator.payout += 0.1 * price;
+      creator.amount_earned += 0.1 * price;
+      await creator.save();
 
       //respond with the client secret and id of the new paymentintent
       res.json({ secret: intent.client_secret, intent_id: intent.id });
@@ -122,11 +122,64 @@ router.post('/confirm-payment', [auth], async (req, res) => {
   }
 });
 
-// @route   POST api/shop/create-stripe-account/:email
+// @route   GET api/shop/stripe
+// @desc    See if this creator has a Stripe account
+// @access  Private
+router.get('/stripe', [auth], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: 'User not found' }] });
+    }
+    if (user.stripe_id) {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/shop/stripe
+// @desc    See if this creator has a Stripe account with transfers enabled
+// @access  Private
+router.get('/stripe-transfers-active', [auth], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: 'User not found' }] });
+    }
+
+    const account = await stripe.accounts.retrieve(user.stripe_id);
+
+    if (account.capabilities.transfers === 'active') {
+      res.json({ success: true });
+    } else {
+      res.json({ success: false });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   POST api/shop/create-stripe-account/
 // @desc    Create a Stripe account for creators seeking payout
 // @access  Private
 router.post(
-  '/create-stripe-account/:email',
+  '/create-stripe-account',
   [
     auth,
     [
@@ -168,7 +221,7 @@ router.post(
       const account = await stripe.accounts.create({
         type: 'custom',
         country: 'US',
-        email: req.params.email,
+        email: user.email,
         business_type: 'individual',
         individual: {
           first_name: user.first,
@@ -221,7 +274,7 @@ router.post(
   }
 );
 
-// @route   POST api/shop/payout
+// @route   POST api/shop/stripe-payout
 // @desc    Create a Stripe transfer from Kart to creator
 // @access  Private
 router.post('/payout', [auth], async (req, res) => {

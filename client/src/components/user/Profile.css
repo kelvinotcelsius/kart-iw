@@ -43,16 +43,17 @@
   margin-block-end: 0.75em;
 }
 
-#profile #follow-btn {
+#profile .action-btn {
   border-radius: 0;
   background-color: white;
-  border: 0.5px solid var(--passion);
+  border: 1.5px solid var(--passion);
   color: var(--passion);
   padding: 5px 20px;
   box-shadow: none;
   height: 30px;
-  width: 10em;
+  width: 15em;
   margin-left: 2em;
+  font-size: 15px;
 }
 
 #profile .user-stats-wrapper {
