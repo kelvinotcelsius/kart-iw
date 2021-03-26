@@ -1,3 +1,5 @@
+/* Profile.js */
+
 #profile #user-profile-pic {
   width: 50px;
   height: 50px;
@@ -76,4 +78,21 @@
 
 #profile .stat-label {
   font-size: 12px;
+}
+
+/* ProfileVideoPreview.js */
+.preview-video-wrapper:hover .hover-msg {
+  display: block;
+  position: absolute;
+  text-align: center;
+  /* margin-top: 5px; */
+  bottom: 40%;
+  left: 34%;
+  background-color: var(--passion);
+  color: var(--white);
+  padding: 1em 0.5em;
+  border-radius: 2px;
+  width: 7em;
+  font-size: 12px;
+  z-index: 20;
 }

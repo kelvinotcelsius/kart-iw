@@ -32,6 +32,7 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             // onMouseOut={() => onVideoPress()}
             muted={muted}
           />
+          <p className='hover-msg'>Click to buy</p>
         </Link>
         <div className='video-controls-wrapper'>
           <div

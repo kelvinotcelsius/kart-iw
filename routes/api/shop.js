@@ -290,7 +290,7 @@ router.post('/payout', [auth], async (req, res) => {
     }
 
     const transfer = await stripe.transfers.create({
-      amount: user.payout,
+      amount: user.payout * 100,
       currency: 'usd',
       description: 'Kart payout',
       destination: user.stripe_id,
@@ -298,7 +298,7 @@ router.post('/payout', [auth], async (req, res) => {
     });
 
     user.transfers.unshift(transfer.id);
-    const oldPayout = user.payout / 100;
+    const oldPayout = user.payout;
     user.payout = 0;
     user.save();
     res.json(`You were paid out $${oldPayout}!`);

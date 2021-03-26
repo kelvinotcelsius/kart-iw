@@ -117,11 +117,11 @@
   width: 80%;
 }
 
-.upload-caption {
+.hover-msg {
   display: none;
 }
 
-.upload-wrapper:hover .upload-caption {
+.upload-wrapper:hover .hover-msg {
   display: block;
   position: absolute;
   text-align: center;

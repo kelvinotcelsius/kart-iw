@@ -195,7 +195,7 @@ const FinishRegistrationForm = ({
             <div className='form-row'>
               <div className='form-field-wrapper'>
                 <label htmlFor='file' className='form-row-label'>
-                  Profile picture* ()
+                  Profile picture* (image files only)
                 </label>
                 <br />
                 <input

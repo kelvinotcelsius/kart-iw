@@ -5,19 +5,20 @@ import { useParams, Redirect } from 'react-router-dom';
 
 import ProfileVideoPreview from './ProfileVideoPreview';
 import GuestSidebar from '../posts/GuestSidebar';
+
+import spinnerGIF from '../layout/spinner.gif';
 import Spinner from '../layout/Spinner';
 
 import { getPostsbyUserID } from '../../actions/post';
 import { getUser } from '../../actions/user';
+import { setAlert } from '../../actions/alert';
 
 import api from '../../utils/api';
 
 import './Profile.css';
-import { setAlert } from '../../actions/alert';
 
 const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
   let { user_id } = useParams();
-  const [paymentProcessing, setProcessing] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -27,9 +28,21 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
     fetchData();
   }, [getPostsbyUserID, getUser, user_id]);
 
+  const [paymentProcessing, setProcessing] = useState(false);
+
+  const handleFollow = async () => {
+    if (auth.user === null) {
+      setAlert('Please sign in to follow users', 'danger');
+      return;
+    }
+  };
+
   const requestPayout = async () => {
     if (user.user.payout < 1) {
-      setAlert('Minimum payout must be $1', 'danger');
+      setAlert(
+        'You can only request a payout if you have more than $1.',
+        'danger'
+      );
       return;
     }
 
@@ -111,7 +124,7 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
                         </div>
                       </div>
                     </div>
-                    {!auth.user || user.user._id === auth.user._id ? (
+                    {auth.user != null && user.user._id === auth.user._id ? (
                       <Fragment>
                         {!paymentProcessing ? (
                           <button
@@ -121,11 +134,26 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
                             Request ${user.user.payout} payout
                           </button>
                         ) : (
-                          <p>Processing payment...</p>
+                          <img
+                            src={spinnerGIF}
+                            style={{
+                              width: '75px',
+                              height: '75px',
+                              margin: '10px 0 10px 30px',
+                              padding: '0px',
+                              display: 'block',
+                            }}
+                            alt='Loading...'
+                          />
                         )}
                       </Fragment>
                     ) : (
-                      <button className='action-btn'>Follow</button>
+                      <button
+                        className='action-btn'
+                        onClick={() => handleFollow()}
+                      >
+                        Follow
+                      </button>
                     )}
                   </div>
                   <div className='three-video-wrapper'>
@@ -137,8 +165,6 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
                         postID={post._id}
                         creatorID={post.creator_id}
                         productID={post.product_id}
-                        productName={post.product_name}
-                        productPic={post.product_picture}
                       />
                     ))}
                     {post.posts.length === 0 ? (

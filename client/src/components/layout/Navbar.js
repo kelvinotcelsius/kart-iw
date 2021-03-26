@@ -70,7 +70,7 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
           <Link to='/upload'>
             <img id='upload-icon' src={uploadIcon} alt='upload icon'></img>
           </Link>
-          <p className='upload-caption'>Upload video</p>
+          <p className='hover-msg'>Upload video</p>
         </div>
         <div className='nav-profile-wrapper'>
           <img
