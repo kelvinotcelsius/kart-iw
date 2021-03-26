@@ -107,9 +107,9 @@ const UploadForm = ({ history, addPost, setAlert }) => {
           onSubmit={(e) => onSubmit(e)}
           encType='multipart/form-data'
         >
-          <div className='upload-form-row'>
-            <div className='upload-form-field-wrapper'>
-              <label htmlFor='caption' className='upload-label'>
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='caption' className='form-row-label'>
                 Product*
               </label>
               <br />
@@ -129,9 +129,9 @@ const UploadForm = ({ history, addPost, setAlert }) => {
               )}
             </div>
           </div>
-          <div className='upload-form-row'>
-            <div className='upload-form-field-wrapper'>
-              <label htmlFor='caption' className='upload-label'>
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='caption' className='form-row-label'>
                 Caption*
               </label>
               <br />
@@ -146,9 +146,9 @@ const UploadForm = ({ history, addPost, setAlert }) => {
               />
             </div>
           </div>
-          <div className='upload-form-row'>
-            <div className='upload-form-field-wrapper'>
-              <label htmlFor='preview' className='upload-label'>
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='preview' className='form-row-label'>
                 Cover image* (10MB max)
               </label>
               <br />
@@ -161,9 +161,9 @@ const UploadForm = ({ history, addPost, setAlert }) => {
               />
             </div>
           </div>
-          <div className='upload-form-row'>
-            <div className='upload-form-field-wrapper'>
-              <label htmlFor='video' className='register-label'>
+          <div className='form-row'>
+            <div className='form-field-wrapper'>
+              <label htmlFor='video' className='form-row-label'>
                 Video* (200MB max)
               </label>
               <br />

@@ -1,6 +1,48 @@
 /* UploadForm.js */
+#upload-form .form-field-wrapper {
+  margin: 15px 0;
+  width: 100%;
+  justify-content: left;
+  display: flex;
+  flex-direction: row;
+}
+
+#upload-form .form-row {
+  border-bottom: 1px solid var(--moonstone);
+  display: flex;
+  flex-direction: row;
+}
+
+#upload-form .form-row-label {
+  display: flex;
+  flex-direction: row;
+  height: 42px;
+  padding: 10px 0;
+  align-items: center;
+  justify-content: center;
+  color: #8898aa;
+  font-weight: 400;
+  margin: 0;
+}
+
+#upload-form .form-field {
+  padding: 0.5em 10px;
+  margin-left: 0.75em;
+  width: 50%;
+  font-size: 14px;
+  color: var(--black);
+  border: 1px solid var(--moonstone);
+}
+
 #upload-form .form-btn {
-  margin-top: 20px;
+  height: 40px;
+  width: 75%;
+  max-width: 300px;
+  background-color: var(--passion);
+  border: none;
+  font-size: 16px;
+  color: var(--white);
+  margin: 20px 20px 20px 0;
 }
 
 /* SelectSearch */

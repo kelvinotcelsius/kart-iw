@@ -52,8 +52,12 @@ const Login = ({ changeModal, closeModal, login }) => {
         </div>
         <input type='submit' className='form-btn' value='Login' />
       </form>
-      <p className='body'>Don't have an account?</p>{' '}
-      <button onClick={() => changeModal(false)}>Sign up</button>
+      <p className='body'>
+        Don't have an account?{' '}
+        <span className='switch-mode' onClick={() => changeModal(false)}>
+          Sign up.
+        </span>
+      </p>
     </div>
   );
 };

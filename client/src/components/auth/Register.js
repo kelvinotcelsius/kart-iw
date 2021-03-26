@@ -52,8 +52,12 @@ const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
         </div>
         <input type='submit' className='form-btn' value='Sign Up' />
       </form>
-      <p className='body'>Already have an account?</p>
-      <button onClick={() => changeModal(true)}>Log in</button>
+      <p className='body'>
+        Don't have an account?{' '}
+        <span className='switch-mode' onClick={() => changeModal(true)}>
+          Log in.
+        </span>
+      </p>
     </div>
   );
 };
