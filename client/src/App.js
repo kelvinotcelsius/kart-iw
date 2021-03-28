@@ -21,6 +21,7 @@ import Alert from './components/layout/Alert';
 // User
 import FinishRegistrationForm from './components/auth/FinishRegistrationForm';
 import Profile from './components/user/Profile';
+import EditStripeAccount from './components/user/EditStripeAccount';
 
 // Posts
 import UploadForm from './components/posts/UploadForm';
@@ -68,6 +69,11 @@ const Routes = () => {
             component={FinishRegistrationForm}
           />
           <PublicRoute exact path='/:creator_id/:post_id' component={Post} />
+          <PrivateRoute
+            exact
+            path='/edit-stripe'
+            component={EditStripeAccount}
+          />
           <PublicRoute component={Landing} />
         </Switch>
       </div>

@@ -302,7 +302,7 @@
 }
 
 .btn-link {
-  color: var(--passion);
+  color: var(--passion) !important;
   text-decoration: none;
 }
 

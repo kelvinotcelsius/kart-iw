@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useParams, Redirect } from 'react-router-dom';
+import { useParams, Redirect, Link } from 'react-router-dom';
 
 import ProfileVideoPreview from './ProfileVideoPreview';
 import GuestSidebar from '../posts/GuestSidebar';
@@ -38,6 +38,15 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
   };
 
   const requestPayout = async () => {
+    // If the user doesn't have a stripe ID, then they need to create a Stripe Connect account
+    if (!auth.user.stripe_id) {
+      setAlert(
+        'You must create a Stripe account in order to request a payout',
+        'danger'
+      );
+      return;
+    }
+
     if (user.user.payout < 1) {
       setAlert(
         'You can only request a payout if you have more than $1.',
@@ -65,9 +74,13 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
         );
       } else {
         // If transfers are active, initiate payout
-        const res = await api.post('/shop/payout');
-        setProcessing(false);
-        setAlert(res.data, 'success');
+        try {
+          const res = await api.post('/shop/payout');
+          setProcessing(false);
+          setAlert(res.data, 'success');
+        } catch (err) {
+          setAlert('Server error, please try again later.', 'danger');
+        }
       }
     }
   };
@@ -127,12 +140,23 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
                     {auth.user != null && user.user._id === auth.user._id ? (
                       <Fragment>
                         {!paymentProcessing ? (
-                          <button
-                            className='action-btn'
-                            onClick={() => requestPayout()}
-                          >
-                            Request ${user.user.payout} payout
-                          </button>
+                          <Fragment>
+                            <button
+                              className='action-btn'
+                              onClick={() => requestPayout()}
+                            >
+                              Request ${user.user.payout} payout
+                            </button>
+                            {!auth.user.stripe_id ? (
+                              <Link to='/edit-stripe'>
+                                <button className='action-btn'>
+                                  Create Stripe account
+                                </button>
+                              </Link>
+                            ) : (
+                              <Fragment></Fragment>
+                            )}
+                          </Fragment>
                         ) : (
                           <img
                             src={spinnerGIF}

@@ -83,6 +83,11 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
             <Link to={`/user/${userID}`}>
               <li className='nav-auth-menu-item'>My profile</li>
             </Link>
+            <Link to='/edit-stripe'>
+              <li className='nav-auth-menu-item'>
+                Create or edit Stripe account
+              </li>
+            </Link>
             <li className='nav-auth-menu-item' onClick={() => logout()}>
               Logout
             </li>

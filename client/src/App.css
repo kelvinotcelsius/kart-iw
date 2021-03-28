@@ -52,8 +52,10 @@ span {
   margin-bottom: 3rem;
 }
 
-a {
+a,
+a:visited {
   text-decoration: none;
+  color: inherit;
 }
 
 a:hover,

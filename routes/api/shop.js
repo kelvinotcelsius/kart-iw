@@ -201,7 +201,6 @@ router.post(
       routing_number,
       account_number,
       city,
-      country,
       line1,
       line2,
       postal_code,
@@ -218,55 +217,79 @@ router.post(
       const dob_month = birthday[1];
       const dob_day = birthday[2].split('T')[0];
 
-      const account = await stripe.accounts.create({
-        type: 'custom',
-        country: 'US',
-        email: user.email,
-        business_type: 'individual',
-        individual: {
-          first_name: user.first,
-          last_name: user.last,
-          email: user.email,
-          phone: user.phone,
-          dob: {
-            day: dob_day,
-            year: dob_year,
-            month: dob_month,
-          },
-          address: {
-            city: city,
-            country: country,
-            line1: line1,
-            line2: line2,
-            postal_code: postal_code,
-            state: state,
-          },
-          id_number: req.body.social_security_num,
-        },
-        tos_acceptance: {
-          date: Math.floor(Date.now() / 1000),
-          ip: req.ip, // Assumes you're not using a proxy; https://stripe.com/docs/connect/updating-accounts#tos-acceptance
-        },
-        business_profile: {
-          mcc: 5969, // Direct marketing, Other from https://stripe.com/docs/connect/setting-mcc
-          url: `https://www.shopkart.com/user/${user._id}`,
-        },
-        capabilities: {
-          card_payments: { requested: true },
-          transfers: { requested: true },
-        },
-        external_account: {
-          object: 'bank_account',
+      if (!user.stripe_id) {
+        const account = await stripe.accounts.create({
+          type: 'custom',
           country: 'US',
-          currency: 'usd',
-          account_holder_name: name,
-          routing_number: routing_number,
-          account_number: account_number,
-        },
-      });
-      user.stripe_id = account.id;
-      user.save();
-      res.json(user);
+          email: user.email,
+          business_type: 'individual',
+          individual: {
+            first_name: user.first,
+            last_name: user.last,
+            email: user.email,
+            phone: user.phone,
+            dob: {
+              day: dob_day,
+              year: dob_year,
+              month: dob_month,
+            },
+            address: {
+              city: city,
+              country: 'US',
+              line1: line1,
+              line2: line2,
+              postal_code: postal_code,
+              state: state,
+            },
+            id_number: req.body.social_security_num,
+          },
+          tos_acceptance: {
+            date: Math.floor(Date.now() / 1000),
+            ip: req.ip, // Assumes you're not using a proxy; https://stripe.com/docs/connect/updating-accounts#tos-acceptance
+          },
+          business_profile: {
+            mcc: 5969, // Direct marketing, Other from https://stripe.com/docs/connect/setting-mcc
+            url: `https://www.shopkart.com/user/${user._id}`,
+          },
+          capabilities: {
+            card_payments: { requested: true },
+            transfers: { requested: true },
+          },
+          external_account: {
+            object: 'bank_account',
+            country: 'US',
+            currency: 'usd',
+            account_holder_name: name,
+            routing_number: routing_number,
+            account_number: account_number,
+          },
+        });
+        user.stripe_id = account.id;
+        user.save();
+      } else {
+        await stripe.accounts.update(user.stripe_id, {
+          individual: {
+            address: {
+              city: city,
+              country: 'US',
+              line1: line1,
+              line2: line2,
+              postal_code: postal_code,
+              state: state,
+            },
+          },
+          external_account: {
+            object: 'bank_account',
+            country: 'US',
+            currency: 'usd',
+            account_holder_name: name,
+            routing_number: routing_number,
+            account_number: account_number,
+          },
+        });
+      }
+      console.log(user.stripe_id);
+      res.json(true);
     } catch (err) {
       console.log(err);
       res.status(500).send('Server Error');

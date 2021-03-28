@@ -109,7 +109,7 @@ const UploadForm = ({ history, addPost, setAlert }) => {
         >
           <div className='form-row'>
             <div className='form-field-wrapper'>
-              <label htmlFor='caption' className='form-row-label'>
+              <label htmlFor='product' className='form-row-label'>
                 Product*
               </label>
               <br />

@@ -47,8 +47,6 @@ const FinishRegistrationForm = ({
   useEffect(() => {
     // checkRegistrationFinished();
     //  eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log(auth.registrationFinished);
-    console.log(auth);
     if (!auth.registrationFinished) {
       setAlert('Please finish your profile before continuing', 'danger');
     } else {
