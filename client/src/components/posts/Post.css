@@ -233,17 +233,28 @@
 }
 
 .main-left-wrapper {
-  width: 35%;
+  width: 30%;
   padding-right: 4em;
 }
 
 .main-right-wrapper {
-  width: 65%;
+  width: 70%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* PostPreview.js */
 .preview-post-wrapper {
-  padding: 15px 0;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 5%);
+  -webkit-transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  margin: 0 25px 25px 0;
+}
+
+.preview-post-wrapper:hover {
+  /* cursor: pointer; */
+  transform: translateY(-10px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
 .preview-top-wrapper {
@@ -251,17 +262,12 @@
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  padding: 15px 15px 0 15px;
 }
 
 .preview-left-wrapper {
   display: flex;
   flex-direction: row;
-}
-
-.preview-post-wrapper .preview-right-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 }
 
 .preview-profile-pic {
@@ -281,11 +287,12 @@
   font-size: 16px;
 }
 
-.preview-post-wrapper #username {
+.preview-post-wrapper .username {
   color: var(--black);
+  font-size: 16px;
 }
 
-.preview-post-wrapper #username:hover {
+.preview-post-wrapper .username:hover {
   color: var(--passion);
   text-decoration: underline;
 }
@@ -315,11 +322,17 @@
   cursor: pointer;
 }
 
-.product-wrapper {
+.metadata-wrapper {
   display: flex;
   flex-direction: row;
-  padding: 5px;
   align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+}
+
+.img-text-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 
 .product-image {
@@ -413,15 +426,21 @@
   cursor: pointer;
 }
 
-.preview-post-wrapper .like-wrapper {
+.preview-post-wrapper .metadata-wrapper {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 10px;
-  color: var(--wet-rock);
+  justify-content: space-between;
 }
 
-.like-wrapper:hover {
+.preview-post-wrapper .post-stats {
+  background: var(--soft-passion);
+  color: var(--white);
+  padding: 10px 0 10px 0;
+  font-weight: 500;
+}
+
+.like-btn:hover {
   cursor: pointer;
 }
 

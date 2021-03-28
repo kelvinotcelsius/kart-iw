@@ -77,6 +77,10 @@ router.post(
       creator.amount_earned += 0.1 * price;
       await creator.save();
 
+      // Add one to product's total order count
+      product.total_purchased += 1;
+      await product.save();
+
       //respond with the client secret and id of the new paymentintent
       res.json({ secret: intent.client_secret, intent_id: intent.id });
     } catch (err) {

@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useParams, Redirect, Link } from 'react-router-dom';
 
-import ProfileVideoPreview from './ProfileVideoPreview';
+// import ProfileVideoPreview from './ProfileVideoPreview';
 import GuestSidebar from '../posts/GuestSidebar';
+import PostPreview from '../posts/PostPreview';
 
 import spinnerGIF from '../layout/spinner.gif';
 import Spinner from '../layout/Spinner';
@@ -181,16 +182,22 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
                     )}
                   </div>
                   <div className='three-video-wrapper'>
-                    {post.posts.map((post) => (
-                      <ProfileVideoPreview
-                        key={post._id}
-                        previewImageURL={post.preview}
-                        videoURL={post.video}
-                        postID={post._id}
-                        creatorID={post.creator_id}
-                        productID={post.product_id}
-                      />
-                    ))}
+                    {post.posts
+                      .slice(0)
+                      .reverse()
+                      .map((post) => (
+                        <PostPreview
+                          key={post._id}
+                          caption={post.caption}
+                          postURL={post.url}
+                          previewImageURL={post.preview}
+                          videoURL={post.video}
+                          postID={post._id}
+                          creatorID={post.creator_id}
+                          productID={post.product_id}
+                          likes={post.likes}
+                        />
+                      ))}
                     {post.posts.length === 0 ? (
                       <p style={{ marginTop: '2.5em' }}>
                         User has not posted any videos yet.

@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import './Post.css';
 
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
-  const [muted, setMute] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const videoRef = useRef(false);
+  const [muted, setMute] = useState(true);
+  const [playing, setPlaying] = useState(true);
+  const videoRef = useRef(true);
   const onVideoPress = () => {
     if (playing) {
       videoRef.current.pause();
@@ -31,16 +31,13 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             // onMouseOver={() => onVideoPress()}
             // onMouseOut={() => onVideoPress()}
             muted={muted}
+            autoPlay
           />
           <p className='hover-msg'>Click to buy</p>
         </Link>
         <div className='video-controls-wrapper'>
           <div
-            className={
-              videoRef.current.paused || videoRef.current.paused == null
-                ? 'paused'
-                : 'playing'
-            }
+            className={playing ? 'playing' : 'paused'}
             onClick={() => onVideoPress()}
           ></div>
           <div

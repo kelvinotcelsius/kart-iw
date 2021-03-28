@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import redHeart from '../../assets/images/icons/filled-red-heart.svg';
-import emptyHeart from '../../assets/images/icons/unfilled-gray-heart.svg';
+import emptyHeart from '../../assets/images/icons/unfilled-white-heart.svg';
 
 import { updateLikes } from '../../actions/post';
 import { setAlert } from '../../actions/alert';
@@ -28,7 +28,6 @@ const PostPreview = ({
   auth,
   setAlert,
 }) => {
-  let location = useLocation();
   const [authUserId, setAuthUserId] = useState('');
   const [creator, setCreator] = useState('');
   const [product, setProduct] = useState('');
@@ -77,35 +76,13 @@ const PostPreview = ({
               <div className='preview-user-metadata'>
                 <div className='preview-username'>
                   <Link to={`/user/${creatorID}`}>
-                    <span id='username'>{creator.username}</span>
+                    <span className='username'>{creator.username}</span>
                   </Link>
                 </div>
                 <div className='preview-caption'>
                   <span>{caption}</span>
                 </div>
               </div>
-            </div>
-            <div className='preview-right-wrapper'>
-              <div className='like-wrapper'>
-                <img
-                  className='like-btn'
-                  alt='like button'
-                  src={likes.includes(authUserId) ? redHeart : emptyHeart}
-                  onClick={() => handleLikes(postID)}
-                ></img>
-                <p className='likes-count'>{likes.length}</p>
-              </div>
-              <button className='deal-btn'>
-                <Link
-                  to={{
-                    pathname: `/${creatorID}/${postID}`,
-                    state: { background: location },
-                  }}
-                  className='btn-link'
-                >
-                  View deal
-                </Link>
-              </button>
             </div>
           </div>
           <VideoPreview
@@ -115,15 +92,34 @@ const PostPreview = ({
             postID={postID}
           />
           <Link to={`/product/${productID}`}>
-            <div className='product-wrapper'>
-              <img
-                className='product-image'
-                src={product.picture}
-                alt='product'
-              />
-              <p className='product-name'>{product.name}</p>
+            <div className='metadata-wrapper'>
+              <div className='img-text-wrapper'>
+                <img
+                  className='product-image'
+                  src={product.picture}
+                  alt='product'
+                />
+                <p className='product-name'>{product.name}</p>
+              </div>
+              <p className='product-price'>${product.price}</p>
             </div>
           </Link>
+          <div className='post-stats'>
+            <div className='metadata-wrapper'>
+              <div className='img-text-wrapper'>
+                <img
+                  className='like-btn'
+                  alt='like button'
+                  src={likes.includes(authUserId) ? redHeart : emptyHeart}
+                  onClick={() => handleLikes(postID)}
+                ></img>
+                <span className='likes-count'>{likes.length}</span>
+              </div>
+              <span className='purchased-count'>
+                {product.total_purchased} bought
+              </span>
+            </div>
+          </div>
         </div>
       )}
     </Fragment>

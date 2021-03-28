@@ -67,15 +67,18 @@ const Product = ({
                   </div>
                 </div>
                 <div className='three-video-wrapper'>
-                  {post.posts.map((post) => (
-                    <VideoPreview
-                      key={post._id}
-                      previewImageURL={post.preview}
-                      videoURL={post.video}
-                      postID={post._id}
-                      creatorID={post.creator_id}
-                    />
-                  ))}
+                  {post.posts
+                    .slice(0)
+                    .reverse()
+                    .map((post) => (
+                      <VideoPreview
+                        key={post._id}
+                        previewImageURL={post.preview}
+                        videoURL={post.video}
+                        postID={post._id}
+                        creatorID={post.creator_id}
+                      />
+                    ))}
                 </div>
               </Fragment>
             )}
