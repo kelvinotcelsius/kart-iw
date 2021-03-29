@@ -144,11 +144,24 @@ router.post(
 );
 
 // @route   POST api/posts/all
-// @desc    Get all posts
+// @desc    Get most recent posts
 // @access  Public
-router.get('/all', async (req, res) => {
+router.get('/most-recent', async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort('-date');
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   POST api/posts/all
+// @desc    Get most liked posts
+// @access  Public
+router.get('/most-liked', async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ likes: -1 });
     res.json(posts);
   } catch (err) {
     console.error(err.message);
@@ -183,7 +196,9 @@ router.get(
   [checkObjectId('product_id')],
   async (req, res) => {
     try {
-      const posts = await Post.find({ product_id: req.params.product_id });
+      const posts = await Post.find({ product_id: req.params.product_id }).sort(
+        '-date'
+      );
       if (!posts) {
         return res.status(404).json({ msg: 'Posts not found' });
       }
@@ -204,7 +219,9 @@ router.get(
 // @access   Public
 router.get('/user/:user_id', [checkObjectId('user_id')], async (req, res) => {
   try {
-    const posts = await Post.find({ creator_id: req.params.user_id });
+    const posts = await Post.find({ creator_id: req.params.user_id }).sort(
+      '-date'
+    );
     if (!posts) {
       return res.status(404).json({ msg: 'Posts not found' });
     }
@@ -242,7 +259,7 @@ router.delete(
       }
 
       // Remove post id from product.posts array
-      product_id = post.product;
+      var product_id = post.product;
       const product = await Product.findById(product_id);
       if (!product) {
         return res.status(404).json({ msg: 'Product not found' });

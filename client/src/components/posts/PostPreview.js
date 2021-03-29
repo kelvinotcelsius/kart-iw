@@ -27,6 +27,8 @@ const PostPreview = ({
   updateLikes,
   auth,
   setAlert,
+  showUserData,
+  showProductData,
 }) => {
   const [authUserId, setAuthUserId] = useState('');
   const [creator, setCreator] = useState('');
@@ -64,8 +66,10 @@ const PostPreview = ({
         <Spinner />
       ) : (
         <div className='preview-post-wrapper'>
-          <div className='preview-top-wrapper'>
-            <div className='preview-left-wrapper'>
+          <div
+            className={`preview-top-wrapper ${showUserData ? 'show' : 'hide'}`}
+          >
+            <div className='preview-user-wrapper'>
               <Link to={`/user/${creatorID}`}>
                 <img
                   className='preview-profile-pic'
@@ -92,7 +96,9 @@ const PostPreview = ({
             postID={postID}
           />
           <Link to={`/product/${productID}`}>
-            <div className='metadata-wrapper'>
+            <div
+              className={`product-wrapper ${showProductData ? 'show' : 'hide'}`}
+            >
               <div className='img-text-wrapper'>
                 <img
                   className='product-image'
@@ -136,6 +142,8 @@ PostPreview.propTypes = {
   productID: PropTypes.string.isRequired,
   likes: PropTypes.array.isRequired,
   auth: PropTypes.object.isRequired,
+  showUserData: PropTypes.bool.isRequired,
+  showProductData: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

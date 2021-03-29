@@ -2,12 +2,12 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import MostLikedPosts from '../posts/MostLikedPosts';
+import Home from '../posts/Home';
 
 const Landing = ({ isAuthenticated }) => {
   return (
     <Fragment>
-      <MostLikedPosts auth={isAuthenticated} />
+      <Home auth={isAuthenticated} />
     </Fragment>
   );
 };

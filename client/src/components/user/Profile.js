@@ -182,22 +182,21 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
                     )}
                   </div>
                   <div className='three-video-wrapper'>
-                    {post.posts
-                      .slice(0)
-                      .reverse()
-                      .map((post) => (
-                        <PostPreview
-                          key={post._id}
-                          caption={post.caption}
-                          postURL={post.url}
-                          previewImageURL={post.preview}
-                          videoURL={post.video}
-                          postID={post._id}
-                          creatorID={post.creator_id}
-                          productID={post.product_id}
-                          likes={post.likes}
-                        />
-                      ))}
+                    {post.posts.map((post) => (
+                      <PostPreview
+                        key={post._id}
+                        caption={post.caption}
+                        postURL={post.url}
+                        previewImageURL={post.preview}
+                        videoURL={post.video}
+                        postID={post._id}
+                        creatorID={post.creator_id}
+                        productID={post.product_id}
+                        likes={post.likes}
+                        showUserData={false}
+                        showProductData={true}
+                      />
+                    ))}
                     {post.posts.length === 0 ? (
                       <p style={{ marginTop: '2.5em' }}>
                         User has not posted any videos yet.

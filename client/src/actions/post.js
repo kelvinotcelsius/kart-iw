@@ -10,10 +10,26 @@ import {
 } from './types';
 import { loadUser } from './auth';
 
-// Get all posts
-export const getPosts = () => async (dispatch) => {
+// Get most recent posts
+export const getMostRecentPosts = () => async (dispatch) => {
   try {
-    const res = await api.get('/posts/all');
+    const res = await api.get('/posts/most-recent');
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get most liked posts
+export const getMostLikedPosts = () => async (dispatch) => {
+  try {
+    const res = await api.get('/posts/most-liked');
     dispatch({
       type: GET_POSTS,
       payload: res.data,

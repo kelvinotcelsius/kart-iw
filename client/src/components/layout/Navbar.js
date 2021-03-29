@@ -107,7 +107,7 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
             <h1 className='logo'>
               <Link to='/'>KART</Link>
             </h1>
-            <ul className='nav-items'>
+            {/* <ul className='nav-items'>
               <li className='nav-item'>
                 <Link className='nav-primary-link' to='/bingeable'>
                   BINGEABLE
@@ -156,7 +156,7 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
                   </Link>
                 </div>
               </li>
-            </ul>
+            </ul> */}
           </div>
           <div className='navbar-right-wrapper'>
             {isAuthenticated ? authLinks : guestLinks}

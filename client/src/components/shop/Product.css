@@ -3,6 +3,10 @@
   flex-wrap: wrap;
 }
 
+#product .preview-post-wrapper {
+  margin-top: 25px;
+}
+
 #product #product-image {
   height: 4em;
   width: 4em;

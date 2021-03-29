@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
-import VideoPreview from '../shop/VideoPreview';
+import PostPreview from '../posts/PostPreview';
 import GuestSidebar from '../posts/GuestSidebar';
 import Spinner from '../layout/Spinner';
 import externalURLIcon from '../../assets/images/icons/external-link.svg';
@@ -67,18 +67,21 @@ const Product = ({
                   </div>
                 </div>
                 <div className='three-video-wrapper'>
-                  {post.posts
-                    .slice(0)
-                    .reverse()
-                    .map((post) => (
-                      <VideoPreview
-                        key={post._id}
-                        previewImageURL={post.preview}
-                        videoURL={post.video}
-                        postID={post._id}
-                        creatorID={post.creator_id}
-                      />
-                    ))}
+                  {post.posts.map((post) => (
+                    <PostPreview
+                      key={post._id}
+                      caption={post.caption}
+                      postURL={post.url}
+                      previewImageURL={post.preview}
+                      videoURL={post.video}
+                      postID={post._id}
+                      creatorID={post.creator_id}
+                      productID={post.product_id}
+                      likes={post.likes}
+                      showUserData={true}
+                      showProductData={false}
+                    />
+                  ))}
                 </div>
               </Fragment>
             )}

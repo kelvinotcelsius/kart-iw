@@ -1,5 +1,14 @@
 /* Profile.js */
 
+#profile .main-right-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#profile .preview-post-wrapper {
+  margin-top: 25px;
+}
+
 #profile #user-profile-pic {
   width: 50px;
   height: 50px;
