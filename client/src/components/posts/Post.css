@@ -239,8 +239,31 @@
 
 .main-right-wrapper {
   width: 70%;
+}
+
+.main-three-videos-wrapper {
   display: flex;
   flex-wrap: wrap;
+}
+
+.filter-wrapper {
+  margin-bottom: 20px;
+}
+
+.filter-selector {
+  background-color: Transparent;
+  border: none;
+  padding: 5px 10px 5px 5px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.filter-selector:hover {
+  cursor: pointer;
+}
+
+.filter-selector.selected {
+  border-bottom: 2px solid var(--passion);
 }
 
 /* PostPreview.js */
@@ -349,6 +372,7 @@
 .img-text-wrapper {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .product-image {

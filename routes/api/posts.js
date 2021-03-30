@@ -311,7 +311,7 @@ router.put('/like/:id', [auth, checkObjectId('id')], async (req, res) => {
 
     // If post is already liked, unlike it
     if (post.likes.some((like) => like.toString() === req.user.id)) {
-      const removeIndexPost = post.likes.indexOf(req.params.id);
+      const removeIndexPost = post.likes.indexOf(req.user.id);
       post.likes.splice(removeIndexPost, 1);
 
       const removeIndexUser = user.likes.indexOf(req.params.id);

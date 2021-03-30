@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -17,11 +17,18 @@ const Home = ({
     getMostRecentPosts();
   }, [getMostRecentPosts]);
 
+  const [recent, setRecent] = useState(true);
+  const [liked, setLiked] = useState(false);
+
   const changeFilter = (filter) => {
     if (filter === 'most-recent') {
       getMostRecentPosts();
+      setLiked(false);
+      setRecent(true);
     } else {
       getMostLikedPosts();
+      setRecent(false);
+      setLiked(true);
     }
   };
 
@@ -31,31 +38,39 @@ const Home = ({
         <div className='main-wrapper'>
           <div className='main-left-wrapper'>
             {isAuthenticated ? <div>Authenticated!</div> : <GuestSidebar />}
-            <select
-              name='filters'
-              id='filter'
-              onChange={(e) => changeFilter(e.target.value)}
-            >
-              <option value='most-recent'>Most recent</option>
-              <option value='most-liked'>Most liked</option>
-            </select>
           </div>
           <div className='main-right-wrapper'>
-            {posts.map((post) => (
-              <PostPreview
-                key={post._id}
-                caption={post.caption}
-                postURL={post.url}
-                previewImageURL={post.preview}
-                videoURL={post.video}
-                postID={post._id}
-                creatorID={post.creator_id}
-                productID={post.product_id}
-                likes={post.likes}
-                showUserData={true}
-                showProductData={true}
-              />
-            ))}
+            <div className='filter-wrapper'>
+              <span
+                className={`filter-selector ${recent ? 'selected' : ''}`}
+                onClick={() => changeFilter('most-recent')}
+              >
+                Most recent
+              </span>
+              <span
+                className={`filter-selector ${liked ? 'selected' : ''}`}
+                onClick={() => changeFilter('most-liked')}
+              >
+                Most liked
+              </span>
+            </div>
+            <div className='main-three-videos-wrapper'>
+              {posts.map((post) => (
+                <PostPreview
+                  key={post._id}
+                  caption={post.caption}
+                  postURL={post.url}
+                  previewImageURL={post.preview}
+                  videoURL={post.video}
+                  postID={post._id}
+                  creatorID={post.creator_id}
+                  productID={post.product_id}
+                  likes={post.likes}
+                  showUserData={true}
+                  showProductData={true}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -78,7 +78,8 @@ router.post(
       await creator.save();
 
       // Add one to product's total order count
-      product.total_purchased += 1;
+      var oldTotal = product.total_purchased;
+      product.total_purchased = oldTotal + 1;
       await product.save();
 
       //respond with the client secret and id of the new paymentintent
