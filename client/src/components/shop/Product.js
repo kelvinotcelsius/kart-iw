@@ -57,7 +57,7 @@ const Product = ({
                     </p>
                     <a
                       id='product-url'
-                      href={`//${product.product.external_url}`}
+                      href={`${product.product.external_url}`}
                       rel='noreferrer'
                       target='_blank'
                     >

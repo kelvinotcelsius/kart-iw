@@ -4,8 +4,8 @@ import './Post.css';
 
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
   const [muted, setMute] = useState(true);
-  const [playing, setPlaying] = useState(true);
-  const videoRef = useRef(true);
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef(false);
   const onVideoPress = () => {
     if (playing) {
       videoRef.current.pause();
@@ -31,7 +31,6 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             // onMouseOver={() => onVideoPress()}
             // onMouseOut={() => onVideoPress()}
             muted={muted}
-            autoPlay
           />
           <p className='hover-msg'>Click to buy</p>
         </Link>
