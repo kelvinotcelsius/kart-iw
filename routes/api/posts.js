@@ -15,8 +15,9 @@ var multer = require('multer');
 var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
 
-// AWS
+// Utils
 var uploadS3 = require('../utils/uploadS3');
+const { createPostIndices } = require('../utils/createSearchIndices');
 
 // @route   POST api/posts/product_id
 // @desc    Create a post for a product
@@ -326,6 +327,20 @@ router.put('/like/:id', [auth, checkObjectId('id')], async (req, res) => {
     await user.save();
 
     return res.json(post.likes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/posts/search/createAlgolia
+// @desc    Save post fields as JSON object
+// @access  Private
+router.get('/search/createAlgolia', auth, async (req, res) => {
+  try {
+    const posts = await Post.find();
+    const indices = await createPostIndices(posts);
+    res.json(indices);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

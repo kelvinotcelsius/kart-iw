@@ -12,6 +12,8 @@ const User = require('../../models/User');
 const Post = require('../../models/Post');
 const Product = require('../../models/Product');
 
+const { createUserIndices } = require('../utils/createSearchIndices');
+
 // Middleware for handling multipart/form-data
 var multer = require('multer');
 var storage = multer.memoryStorage();
@@ -271,6 +273,20 @@ router.get('/my/purchased_items', auth, async (req, res) => {
     res.json(purchased_items);
   } catch (err) {
     console.log(err);
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/users/search/createAlgolia
+// @desc    Save user fields as JSON object
+// @access  Private
+router.get('/search/createAlgolia', auth, async (req, res) => {
+  try {
+    const users = await User.find();
+    const indices = await createUserIndices(users);
+    res.json(indices);
+  } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }

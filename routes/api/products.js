@@ -7,11 +7,14 @@ const checkObjectId = require('../../middleware/checkObjectId');
 const Product = require('../../models/Product');
 const Supplier = require('../../models/Supplier');
 
+const { createProductIndices } = require('../utils/createSearchIndices');
+
 // @route   POST api/products
 // @desc    Add a product
-// @access  Public
+// @access  Private
 router.post(
   '/',
+  auth,
   [
     check('name', 'A name is required').not().isEmpty(),
     check('description', 'A description is required').not().isEmpty(),
@@ -110,7 +113,20 @@ router.get('/:product_id', [checkObjectId('product_id')], async (req, res) => {
     res.json(product);
   } catch (err) {
     console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
+// @route   GET api/products/search/createAlgolia
+// @desc    Save product fields as JSON object
+// @access  Private
+router.get('/search/createAlgolia', auth, async (req, res) => {
+  try {
+    const products = await Product.find();
+    const indices = await createProductIndices(products);
+    res.json(indices);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
