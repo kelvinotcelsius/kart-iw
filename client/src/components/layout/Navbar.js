@@ -12,6 +12,8 @@ import { logout } from '../../actions/auth';
 
 import uploadIcon from '../../assets/images/icons/upload.svg';
 import Spinner from '../layout/Spinner';
+import Search from '../layout/Search';
+import searchIcon from '../../assets/images/icons/search_icon.png';
 
 const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
   const [loginModal, changeModal] = useState(true); // true = show login modal, false = show sign in modal
@@ -107,6 +109,38 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
             <h1 className='logo'>
               <Link to='/'>KART</Link>
             </h1>
+            <div className='search-wrapper'>
+              <Popup
+                modal
+                contentStyle={{
+                  borderRadius: '10px',
+                  height: '600px',
+                  overflowY: 'auto',
+                }}
+                trigger={
+                  <button
+                    type='button'
+                    style={{ cursor: 'pointer' }}
+                    className='search-searchbar'
+                  >
+                    <img
+                      src={searchIcon}
+                      alt='search_icon'
+                      width='18'
+                      style={{ marginRight: '6px' }}
+                    />
+                    Find anything
+                  </button>
+                }
+              >
+                <Search />
+              </Popup>
+            </div>
+            {/* <ul className='nav-items'>
+              <li className='nav-item'>
+                <Search />
+              </li>
+            </ul> */}
             {/* <ul className='nav-items'>
               <li className='nav-item'>
                 <Link className='nav-primary-link' to='/bingeable'>
