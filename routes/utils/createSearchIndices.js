@@ -1,5 +1,7 @@
 var fs = require('fs');
 const algoliasearch = require('algoliasearch');
+const express = require('express');
+const router = express.Router();
 
 const client = algoliasearch('G4BVIGANC0', '39f9585173a92d78545412bb14907042');
 
@@ -69,18 +71,38 @@ exports.createUserIndices = function (users) {
   return json['users'];
 };
 
-exports.createPostIndices = function (posts) {
+exports.createPostIndices = async function (posts) {
   const index = client.initIndex('posts');
   var json = {};
   json['posts'] = [];
 
-  posts.forEach((post) => {
+  for (const post of posts) {
+    // const user = await router.get(`/users/${post.creator_id}`);
+    // const product = await router.get(`/products/${post.product_id}`);
+    // console.log(user);
     var data = {
       caption: post.caption,
       preview: post.preview,
+      // creator: user.username,
+      // product: product.name,
+      url: `/${post.creator_id}/${post._id}`,
     };
     json['posts'].push(data);
-  });
+  }
+
+  // posts.forEach(async (post) => {
+  //   user = await router.get(`/users/${post.creator_id}`);
+  //   product = await router.get(`/products/${post.product_id}`);
+  //   console.log(user);
+  //   var data = {
+  //     caption: post.caption,
+  //     preview: post.preview,
+  //     creator: user.username,
+  //     product: product.name,
+  //     url: `/${post.creator_id}/${post._id}`,
+  //   };
+  //   json['posts'].push(data);
+  // });
 
   index
     .saveObjects(json['posts'], { autoGenerateObjectIDIfNotExist: true })

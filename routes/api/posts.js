@@ -144,7 +144,7 @@ router.post(
   }
 );
 
-// @route   POST api/posts/all
+// @route   POST api/posts/most-recent
 // @desc    Get most recent posts
 // @access  Public
 router.get('/most-recent', async (req, res) => {

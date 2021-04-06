@@ -17,7 +17,6 @@ const searchClient = algoliasearch(
 const MAX_LENGTH = 420;
 
 const ProductHit = ({ hit }) => {
-  console.log(hit);
   let desc = '';
   try {
     if (hit.description.length < MAX_LENGTH) desc = hit.description;
@@ -27,22 +26,58 @@ const ProductHit = ({ hit }) => {
   }
   return (
     <Fragment>
-      <div className='search-result-wrapper'>
-        <a href={hit.url}>
-          <div className='picture-wrapper'>
-            <img
-              src={hit.picture}
-              className='result-picture'
-              alt='search result picture'
-            ></img>
-          </div>
-          <div className='results-text-wrapper'>
-            <p className='result-name'>{hit.name}</p>
-            <p className='result-description'>{desc}</p>
-          </div>
-        </a>
-      </div>
+      <a href={hit.url}>
+        <div className='picture-wrapper'>
+          <img
+            src={hit.picture}
+            className='result-picture'
+            alt='search result'
+          ></img>
+        </div>
+        <div className='results-text-wrapper'>
+          <p className='result-name'>{hit.name}</p>
+          <p className='result-description'>{desc}</p>
+        </div>
+      </a>
     </Fragment>
+  );
+};
+
+const UserHit = ({ hit }) => {
+  return (
+    <a href={hit.url}>
+      <div className='picture-wrapper'>
+        <img
+          src={hit.profile_pic}
+          className='result-picture rounded'
+          alt='search result'
+        ></img>
+      </div>
+      <div className='results-text-wrapper'>
+        <p className='result-name'>@{hit.username}</p>
+        <p className='result-description'>
+          {hit.first} {hit.last}
+        </p>
+      </div>
+    </a>
+  );
+};
+
+const PostHit = ({ hit }) => {
+  return (
+    <a href={hit.url}>
+      <div className='picture-wrapper'>
+        <img
+          src={hit.preview}
+          className='result-picture'
+          alt='search result'
+        ></img>
+      </div>
+      <div className='results-text-wrapper'>
+        {/* <p className='result-name'>@{hit.creator}</p> */}
+        <p className='result-description'>{hit.caption}</p>
+      </div>
+    </a>
   );
 };
 
@@ -51,18 +86,20 @@ const Search = () => {
     <InstantSearch searchClient={searchClient} indexName='users'>
       <SearchBox autoFocus={true} />
       <Index indexName='products'>
-        <h2>Products:</h2>
+        <h3 className='hits-section-title'>Products</h3>
         <Hits hitComponent={ProductHit} />
         <Configure hitsPerPage={3} />
       </Index>
-      {/* <Index indexName='users'>
-        <Hits hitComponent={Hit} />
+      <Index indexName='users'>
+        <h3 className='hits-section-title'>Users</h3>
+        <Hits hitComponent={UserHit} />
         <Configure hitsPerPage={3} />
       </Index>
       <Index indexName='posts'>
-        <Hits hitComponent={Hit} />
+        <h3 className='hits-section-title'>Posts</h3>
+        <Hits hitComponent={PostHit} />
         <Configure hitsPerPage={3} />
-      </Index> */}
+      </Index>
     </InstantSearch>
   );
 };
