@@ -304,6 +304,8 @@ const CreditCardForm = ({
           type='address-postal_code'
           placeholder='85440'
           required={true}
+          minLength='5'
+          maxLength='5'
           autoComplete='shipping postal-code'
           value={billingDetails.address.postal_code}
           onChange={(event) => {

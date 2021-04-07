@@ -18,14 +18,11 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth');
 
-    if (res.data.username) {
-      dispatch({ type: REGISTRATION_FINISHED, payload: res.data });
-    } else {
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data,
-      });
-    }
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+    // }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
@@ -45,7 +42,6 @@ export const register = (formData) => async (dispatch) => {
 
     dispatch(loadUser()); // Load user immediately after registering
   } catch (err) {
-    console.log(err);
     const errors = err.response.data.errors; // response.data contains an error array with all the errors
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
@@ -60,14 +56,6 @@ export const register = (formData) => async (dispatch) => {
 // Finish registration
 export const finishRegistration = (formData, history) => async (dispatch) => {
   try {
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // };
-    // const body = JSON.stringify(formData);
-    // const res = await axios.post('/api/users/profile', body, config);
-
     const res = await apiFile.put('/users/profile', formData);
 
     dispatch({
@@ -99,6 +87,8 @@ export const login = ({ email, password }) => async (dispatch) => {
 
   try {
     const res = await api.post('/auth', body);
+
+    localStorage.setItem('registrationFinished', res.data.registrationFinished);
 
     dispatch({
       type: LOGIN_SUCCESS,

@@ -6,13 +6,14 @@ import PropTypes from 'prop-types';
 
 import Login from '../auth/Login';
 import Register from '../auth/Register';
+import Search from '../layout/Search';
 
 import './Layout.css';
 import { logout } from '../../actions/auth';
 
 import uploadIcon from '../../assets/images/icons/upload.svg';
+import logo from '../../assets/kart_logo_large.svg';
 import Spinner from '../layout/Spinner';
-import Search from '../layout/Search';
 import searchIcon from '../../assets/images/icons/search_icon.png';
 
 const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
@@ -107,7 +108,9 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
         <nav className='navbar'>
           <div className='navbar-left-wrapper'>
             <h1 className='logo'>
-              <Link to='/'>KART</Link>
+              <Link to='/'>
+                <img src={logo} alt='logo'></img>
+              </Link>
             </h1>
             <div className='search-wrapper'>
               <Popup

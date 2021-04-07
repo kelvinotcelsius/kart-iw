@@ -121,7 +121,7 @@ const FinishRegistrationForm = ({
                   name='username'
                   value={username}
                   onChange={(e) => onChange(e)}
-                  maxlength='16'
+                  maxLength='16'
                   required
                 />
               </div>
@@ -138,7 +138,7 @@ const FinishRegistrationForm = ({
                   name='first'
                   value={first}
                   onChange={(e) => onChange(e)}
-                  maxlength='30'
+                  maxLength='30'
                   required
                 />
               </div>
@@ -153,7 +153,7 @@ const FinishRegistrationForm = ({
                   name='last'
                   value={last}
                   onChange={(e) => onChange(e)}
-                  maxlength='30'
+                  maxLength='30'
                   required
                 />
               </div>

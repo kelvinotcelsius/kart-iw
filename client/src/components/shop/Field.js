@@ -5,7 +5,8 @@ const Field = ({
   id,
   label,
   type,
-  min,
+  minLength,
+  maxLength,
   placeholder,
   required,
   autoComplete,
@@ -23,6 +24,8 @@ const Field = ({
             type={type}
             placeholder={placeholder}
             required={required}
+            minLength={minLength}
+            maxLength={maxLength}
             autoComplete={autoComplete}
             value={value}
             onChange={onChange}
