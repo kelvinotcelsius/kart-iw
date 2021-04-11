@@ -11,14 +11,15 @@ import {
 import { loadUser } from './auth';
 
 // Get most recent posts
-export const getMostRecentPosts = () => async (dispatch) => {
+export const getMostRecentPosts = (endIndex) => async (dispatch) => {
   try {
-    const res = await api.get('/posts/most-recent');
+    const res = await api.get(`/posts/most-recent/${endIndex}`);
     dispatch({
       type: GET_POSTS,
       payload: res.data,
     });
   } catch (err) {
+    console.log(err);
     dispatch({
       type: POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
@@ -27,9 +28,9 @@ export const getMostRecentPosts = () => async (dispatch) => {
 };
 
 // Get most liked posts
-export const getMostLikedPosts = () => async (dispatch) => {
+export const getMostLikedPosts = (endIndex) => async (dispatch) => {
   try {
-    const res = await api.get('/posts/most-liked');
+    const res = await api.get(`/posts/most-liked/${endIndex}`);
     dispatch({
       type: GET_POSTS,
       payload: res.data,

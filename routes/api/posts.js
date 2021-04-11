@@ -144,26 +144,30 @@ router.post(
   }
 );
 
-// @route   POST api/posts/most-recent
+// @route   GET api/posts/most-recent/:endIndex
 // @desc    Get most recent posts
 // @access  Public
-router.get('/most-recent', async (req, res) => {
+router.get('/most-recent/:endIndex', async (req, res) => {
+  const { endIndex } = req.params;
   try {
-    const posts = await Post.find().sort('-date');
-    res.json(posts);
+    const posts = await Post.find().sort('-date').limit(30);
+    const segment = posts.slice(0, parseInt(endIndex) + 1);
+    res.json(segment);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
 
-// @route   POST api/posts/all
+// @route   GET api/posts/most-liked/:endIndex
 // @desc    Get most liked posts
 // @access  Public
-router.get('/most-liked', async (req, res) => {
+router.get('/most-liked/:endIndex', async (req, res) => {
+  const { endIndex } = req.params;
   try {
-    const posts = await Post.find().sort({ likes: -1 });
-    res.json(posts);
+    const posts = await Post.find().sort({ likes: -1 }).limit(30);
+    const segment = posts.slice(0, parseInt(endIndex) + 1);
+    res.json(segment);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

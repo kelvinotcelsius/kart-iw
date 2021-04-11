@@ -13,23 +13,30 @@ const Home = ({
   post: { posts },
   isAuthenticated,
 }) => {
+  const VIDEOS_PER_PAGE = 3;
+  const [endIndex, setEndIndex] = useState(VIDEOS_PER_PAGE - 1);
+
   useEffect(() => {
-    getMostRecentPosts();
-  }, [getMostRecentPosts]);
+    getMostRecentPosts(endIndex);
+  }, [getMostRecentPosts, endIndex]);
 
   const [recent, setRecent] = useState(true);
   const [liked, setLiked] = useState(false);
 
   const changeFilter = (filter) => {
     if (filter === 'most-recent') {
-      getMostRecentPosts();
+      getMostRecentPosts(endIndex);
       setLiked(false);
       setRecent(true);
     } else {
-      getMostLikedPosts();
+      getMostLikedPosts(endIndex);
       setRecent(false);
       setLiked(true);
     }
+  };
+
+  const showMore = () => {
+    setEndIndex(endIndex + VIDEOS_PER_PAGE - 1);
   };
 
   return (
@@ -71,6 +78,15 @@ const Home = ({
                 />
               ))}
             </div>
+            {endIndex < 31 ? (
+              <div className='show-more-wrapper'>
+                <button className='show-more-btn' onClick={() => showMore()}>
+                  Show more
+                </button>
+              </div>
+            ) : (
+              <Fragment></Fragment>
+            )}
           </div>
         </div>
       </div>

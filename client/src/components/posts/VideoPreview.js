@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Post.css';
 
 const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
-  const [muted, setMute] = useState(true);
+  const [muted, setMute] = useState(false);
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef(false);
   const onVideoPress = () => {
@@ -32,7 +32,7 @@ const VideoPreview = ({ previewImageURL, videoURL, creatorID, postID }) => {
             // onMouseOut={() => onVideoPress()}
             muted={muted}
           />
-          <p className='hover-msg'>Click to buy</p>
+          <p className='hover-msg'>Click to view</p>
         </Link>
         <div className='video-controls-wrapper'>
           <div

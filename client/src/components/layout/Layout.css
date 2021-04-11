@@ -367,3 +367,12 @@ input.ais-SearchBox-input {
   margin: 0.75em 0 0.5em 0;
   margin-block-end: 0;
 }
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+  /* Navbar.js */
+  .nav-btn {
+    width: 50px;
+    height: 25px;
+  }
+}

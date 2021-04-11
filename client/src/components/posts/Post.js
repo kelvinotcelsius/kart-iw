@@ -43,8 +43,8 @@ const Post = ({
   const [showPayment, triggerPayment] = useState(false);
 
   const [muted, setMute] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const videoRef = useRef(false);
+  const [playing, setPlaying] = useState(true);
+  const videoRef = useRef(true);
 
   const onVideoPress = () => {
     if (playing) {
@@ -72,6 +72,7 @@ const Post = ({
               onClick={() => onVideoPress()}
               poster={post.preview}
               muted={muted}
+              autoPlay
             />
             <div className='video-controls-wrapper'>
               <div

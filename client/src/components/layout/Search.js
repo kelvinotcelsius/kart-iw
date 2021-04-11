@@ -88,17 +88,17 @@ const Search = () => {
       <Index indexName='products'>
         <h3 className='hits-section-title'>Products</h3>
         <Hits hitComponent={ProductHit} />
-        <Configure hitsPerPage={3} />
+        <Configure hitsPerPage={10} />
       </Index>
       <Index indexName='users'>
         <h3 className='hits-section-title'>Users</h3>
         <Hits hitComponent={UserHit} />
-        <Configure hitsPerPage={3} />
+        <Configure hitsPerPage={10} />
       </Index>
       <Index indexName='posts'>
         <h3 className='hits-section-title'>Posts</h3>
         <Hits hitComponent={PostHit} />
-        <Configure hitsPerPage={3} />
+        <Configure hitsPerPage={10} />
       </Index>
     </InstantSearch>
   );
