@@ -19,7 +19,9 @@ const Register = ({ changeModal, closeModal, register, showGuestMenu }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     closeModal(false);
-    showGuestMenu(false);
+    if (showGuestMenu) {
+      showGuestMenu(false);
+    }
     register(formData);
   };
 
@@ -68,7 +70,6 @@ Register.propTypes = {
   changeModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  showGuestMenu: PropTypes.func.isRequired,
 };
 
 // see reducers/auth.js for isAuthenticated field in the auth redux field
