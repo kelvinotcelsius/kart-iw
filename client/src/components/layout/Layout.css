@@ -1,4 +1,4 @@
-/* NAVBAR */
+/* Navbar.js */
 
 .navbar {
   display: flex;
@@ -8,8 +8,6 @@
   position: sticky;
   z-index: 2;
 }
-
-/* Nav links */
 
 .logo a {
   text-decoration: none;
@@ -22,6 +20,7 @@
   width: 80%;
 }
 
+/*
 .nav-items {
   display: flex;
   flex-direction: row;
@@ -57,38 +56,37 @@
   top: 50%;
 }
 
-/* Show the dropdown menu on hover */
 .nav-item:hover .nav-secondary-menu {
   display: flex;
   align-items: center;
-  /* min-height: 100%; */
 }
 
-/* Change color of dropdown links on hover */
 .nav-secondary-menu a:hover {
   color: var(--passion);
   font-weight: 500;
 }
 
-/* Display red underline under hovered link */
 .nav-item:hover .nav-primary-link {
   border-bottom: 2px solid var(--passion);
   padding-bottom: 5px;
-}
+} */
 
-/* Log in */
-.navbar-right-wrapper {
+.navbar-right-wrapper.desktop {
   display: flex;
   flex-direction: row;
   width: 20%;
   text-align: right;
 }
 
-.nav-btn-wrapper {
+.navbar-right-wrapper.mobile {
+  display: none;
+}
+
+.login-btn-wrapper.desktop {
   margin: auto;
 }
 
-.nav-btn {
+.login-btn.desktop {
   padding: 10px 30px;
   width: 150px;
   height: 50px;
@@ -371,8 +369,42 @@ input.ais-SearchBox-input {
 /* Mobile */
 @media only screen and (max-width: 480px) {
   /* Navbar.js */
-  .nav-btn {
+  .login-btn {
     width: 50px;
     height: 25px;
+  }
+  .navbar-left-wrapper {
+    width: 95%;
+  }
+
+  .navbar-right-wrapper.desktop {
+    display: none;
+  }
+
+  .navbar-right-wrapper.mobile {
+    display: flex;
+    align-items: center;
+  }
+
+  /* MobileMenu.js */
+  #mobile-nav-wrapper .nav-items {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: absolute;
+    width: 40vw;
+    background: var(--white);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    list-style-type: none;
+    text-align: left;
+    right: 0%;
+    margin-top: 1.5em;
+    padding-left: 0;
+  }
+
+  #mobile-nav-wrapper .nav-item {
+    width: 100%;
+    padding: 15px 0 15px 10px;
+    box-shadow: 0 0.0625rem 0.125rem var(--moonstone);
   }
 }

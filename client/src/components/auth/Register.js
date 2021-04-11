@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import './Auth.css';
 
-const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
+const Register = ({ changeModal, closeModal, register, showGuestMenu }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,6 +19,7 @@ const Register = ({ changeModal, closeModal, register, isAuthenticated }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     closeModal(false);
+    showGuestMenu(false);
     register(formData);
   };
 
@@ -67,6 +68,7 @@ Register.propTypes = {
   changeModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  showGuestMenu: PropTypes.func.isRequired,
 };
 
 // see reducers/auth.js for isAuthenticated field in the auth redux field

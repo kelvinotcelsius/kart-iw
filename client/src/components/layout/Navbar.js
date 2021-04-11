@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import Login from '../auth/Login';
 import Register from '../auth/Register';
 import Search from '../layout/Search';
+import MobileMenu from './MobileMenu';
 
 import './Layout.css';
 import { logout } from '../../actions/auth';
@@ -36,8 +37,11 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
 
   const guestLinks = (
     <Fragment>
-      <div className='nav-btn-wrapper'>
-        <button className='nav-btn' onClick={() => showModal((o) => !o)}>
+      <div className='login-btn-wrapper desktop'>
+        <button
+          className='login-btn desktop'
+          onClick={() => showModal((o) => !o)}
+        >
           Log in
         </button>
       </div>
@@ -195,8 +199,11 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
               </li>
             </ul> */}
           </div>
-          <div className='navbar-right-wrapper'>
+          <div className='navbar-right-wrapper desktop'>
             {isAuthenticated ? authLinks : guestLinks}
+          </div>
+          <div className='navbar-right-wrapper mobile'>
+            <MobileMenu />
           </div>
         </nav>
       )}

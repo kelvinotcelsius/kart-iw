@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './Auth.css';
 import { login } from '../../actions/auth';
 
-const Login = ({ changeModal, closeModal, login }) => {
+const Login = ({ changeModal, closeModal, login, showGuestMenu }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,6 +19,7 @@ const Login = ({ changeModal, closeModal, login }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     closeModal(false);
+    showGuestMenu(false);
     login({ email, password });
   };
 
@@ -66,6 +67,7 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   changeModal: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  showGuestMenu: PropTypes.func.isRequired,
 };
 
 export default connect(null, { login })(Login);
