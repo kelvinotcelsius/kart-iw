@@ -109,7 +109,7 @@ const Navbar = ({ auth: { isAuthenticated, user, loading }, logout }) => {
       {loading ? (
         <Spinner />
       ) : (
-        <nav className='navbar'>
+        <nav id='navbar'>
           <div className='navbar-left-wrapper'>
             <h1 className='logo'>
               <Link to='/'>

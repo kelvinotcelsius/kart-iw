@@ -73,6 +73,7 @@ const Post = ({
               poster={post.preview}
               muted={muted}
               autoPlay
+              type='video/mp4'
             />
             <div className='video-controls-wrapper'>
               <div

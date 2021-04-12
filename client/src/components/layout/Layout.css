@@ -1,6 +1,6 @@
 /* Navbar.js */
 
-.navbar {
+#navbar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -211,12 +211,13 @@
   font-size: 1.25em;
 }
 
-#sidebar .toggle-wrapper {
+.toggle-wrapper {
   display: block;
   margin-top: 3em;
+  max-width: 300px;
 }
 
-#sidebar .toggle-wrapper:hover {
+.toggle-wrapper:hover {
   cursor: pointer;
 }
 

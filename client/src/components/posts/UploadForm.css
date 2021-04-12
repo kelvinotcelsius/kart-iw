@@ -55,6 +55,10 @@
   box-shadow: 0 0.0625rem 0.125rem var(--moonstone);
 }
 
+#upload-form .toggle-wrapper {
+  margin-top: 1em;
+}
+
 /* SelectSearch */
 
 #upload-form .select-search {

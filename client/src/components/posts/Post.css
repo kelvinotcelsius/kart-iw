@@ -1,4 +1,4 @@
-/* Post */
+/* Post.js */
 #post {
   width: 100%;
 }
@@ -111,7 +111,7 @@
 }
 
 #product-url {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--blue-jeans);
   text-decoration: none;
 }
@@ -124,7 +124,7 @@
 }
 
 #product-description {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--wet-rock);
   margin-block-start: 0;
 }
@@ -137,6 +137,7 @@
 .creator-data {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .creator-info {
@@ -148,8 +149,8 @@
 #creator-username {
   margin-block-start: 0;
   margin-block-end: 5px;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 18px;
   color: var(--black);
 }
 
@@ -161,7 +162,7 @@
 #post-caption {
   margin-block-start: 0;
   margin-block-end: 0;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 #post-profile-pic {
@@ -517,7 +518,7 @@
 
 /* Mobile */
 @media only screen and (max-width: 480px) {
-  /* Home */
+  /* Home.js */
   .main-wrapper {
     display: flex;
     flex-direction: column;
@@ -553,6 +554,91 @@
   /* GuestSidebar.js */
   #sidebar {
     display: none;
+  }
+
+  /* Post.js */
+  #post {
+    width: 100%;
+  }
+
+  #post .post-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #post .post-video-wrapper {
+    width: 100%;
+    background-color: var(--black);
+    display: table;
+    position: relative;
+    text-align: center;
+  }
+
+  #post .post-product-wrapper {
+    width: 100%;
+    padding: 30px 35px;
+  }
+
+  #post .post-video {
+    height: calc(550px + ((100vw - 768px) / 1152) * 100);
+    width: calc(0.56 * (550px + ((100vw - 768px) / 1152) * 100));
+  }
+
+  #post .playing {
+    background-image: url('../../assets/images/icons/play.svg');
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 18%;
+    right: 0%;
+    top: 89%;
+    bottom: 0%;
+    background-size: contain;
+    z-index: 2;
+  }
+
+  #post .paused {
+    background-image: url('../../assets/images/icons/pause.svg');
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 18%;
+    right: 0%;
+    top: 89%;
+    bottom: 0%;
+    background-size: contain;
+    z-index: 2;
+  }
+
+  #post .muted {
+    background-image: url('../../assets/images/icons/mute.svg');
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 75%;
+    right: 0%;
+    top: 89%;
+    bottom: 0%;
+    background-size: contain;
+    z-index: 2;
+  }
+
+  #post .unmuted {
+    background-image: url('../../assets/images/icons/unmute.svg');
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 75%;
+    right: 0%;
+    top: 89%;
+    bottom: 0%;
+    background-size: contain;
+    z-index: 2;
   }
 }
 

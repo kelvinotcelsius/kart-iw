@@ -175,7 +175,9 @@ const CreditCardForm = ({
 
         /* YOUR APPLICATION SPECIFIC CODE HERE: for this example all we do is render a modal */
         // setSuccess(true);
-        setAlert('Payment successful! Your order is on the way.', 'success');
+        // setAlert('Payment successful! Your order is on the way.', 'success');
+        alert('Payment successful! Your order is on the way.');
+        setProcessing(false);
         triggerPayment(false); // go back to product view
       }
     }

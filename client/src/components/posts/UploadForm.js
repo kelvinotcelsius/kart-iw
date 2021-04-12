@@ -20,6 +20,8 @@ function renameKey(obj, oldKey, newKey) {
 const UploadForm = ({ history, addPost, setAlert }) => {
   const [purchases, setPurchases] = useState([]);
   const [selectedItemID, setItem] = useState('');
+  const [displayFAQ, toggleFAQ] = useState(false);
+
   useEffect(() => {
     getPurchases();
   }, []);
@@ -175,14 +177,41 @@ const UploadForm = ({ history, addPost, setAlert }) => {
                 onChange={(e) => onFileChange(e)}
               />
             </div>
-            <input
-              type='submit'
-              id='post-upload-btn'
-              className='form-btn'
-              value='Post'
-            />
           </div>
+          <input
+            type='submit'
+            id='post-upload-btn'
+            className='form-btn'
+            value='Post'
+          />
         </form>
+        <div className='toggle-wrapper'>
+          <h4 className='toggle-header' onClick={() => toggleFAQ(!displayFAQ)}>
+            How to earn money on Kart
+            {!displayFAQ ? (
+              <i className='downToggle'></i>
+            ) : (
+              <i className='upToggle'></i>
+            )}
+          </h4>
+        </div>
+        {displayFAQ && (
+          <div className='toggle-body'>
+            <p>Kart pays you for buying food you love. 🥰</p>
+            <p>
+              To start, purchase something from a video of your choice. After
+              you receive the product, you can start creating videos for it. 📱
+            </p>
+            <p>
+              When people make purchases through your videos, you earn 10%
+              commission.
+            </p>
+            <p>
+              That means if your video for a $29.99 product leads to 100 sales,
+              you earn $300. 💰💵
+            </p>
+          </div>
+        )}
       </div>
     </Fragment>
   );
