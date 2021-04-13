@@ -14,6 +14,7 @@
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
+  margin-top: 5px;
 }
 
 #profile .product-wrapper {
@@ -22,12 +23,15 @@
 
 #profile .profile-top-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 #profile .basic-info-wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+}
+
+#profile .name-wrapper {
   margin-left: 1.25em;
 }
 
@@ -87,6 +91,11 @@
 
 #profile .stat-label {
   font-size: 12px;
+}
+
+#profile .upper-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 
 /* ProfileVideoPreview.js */
@@ -152,4 +161,35 @@
   font-size: 16px;
   color: var(--white);
   margin: 20px 20px 20px 0;
+}
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+  /* Profile.js */
+  #profile .profile-top-wrapper {
+    margin: 0 auto;
+  }
+
+  #profile .upper-wrapper {
+    flex-direction: column;
+  }
+
+  #profile .action-btn {
+    margin-left: 0;
+  }
+
+  #profile .user-stats-wrapper {
+    margin-top: 10px;
+  }
+
+  /* EditStripeAccount.js */
+  #stripe-form .form-row {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #stripe-form .form-field-wrapper {
+    margin: 15px 0;
+    width: 400px;
+  }
 }

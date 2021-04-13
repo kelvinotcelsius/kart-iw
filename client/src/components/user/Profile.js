@@ -106,80 +106,87 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
               ) : (
                 <Fragment>
                   <div className='profile-top-wrapper'>
-                    <img
-                      id='user-profile-pic'
-                      src={user.user.profile_pic}
-                      alt='Product'
-                    />
-                    <div className='basic-info-wrapper'>
-                      <p id='username'>{user.user.username}</p>
-                      <p id='name'>
-                        {user.user.first} {user.user.last}
-                      </p>
-                      <p id='bio'>{user.user.bio}</p>
-                      <div className='user-stats-wrapper'>
-                        <div className='stat-wrapper'>
-                          <span className='stat-number'>
-                            {user.user.follower_count}
-                          </span>
-                          <span className='stat-label'>followers</span>
-                        </div>
-                        <div className='stat-wrapper'>
-                          <span className='stat-number'>
-                            {user.user.likes_count}
-                          </span>
-                          <span className='stat-label'>likes</span>
-                        </div>
-                        <div className='stat-wrapper'>
-                          <span className='stat-number'>
-                            ${user.user.amount_earned}
-                          </span>
-                          <span className='stat-label'>earned</span>
+                    <div className='upper-wrapper'>
+                      <div className='basic-info-wrapper'>
+                        <img
+                          id='user-profile-pic'
+                          src={user.user.profile_pic}
+                          alt='Product'
+                        />
+                        <div className='name-wrapper'>
+                          <p id='username'>{user.user.username}</p>
+                          <p id='name'>
+                            {user.user.first} {user.user.last}
+                          </p>
+                          <p id='bio'>{user.user.bio}</p>
                         </div>
                       </div>
-                    </div>
-                    {auth.user != null && user.user._id === auth.user._id ? (
-                      <Fragment>
-                        {!paymentProcessing ? (
+                      <div className='profile-btn'>
+                        {auth.user != null &&
+                        user.user._id === auth.user._id ? (
                           <Fragment>
-                            <button
-                              className='action-btn'
-                              onClick={() => requestPayout()}
-                            >
-                              Request ${user.user.payout} payout
-                            </button>
-                            {!auth.user.stripe_id ? (
-                              <Link to='/edit-stripe'>
-                                <button className='action-btn'>
-                                  Create Stripe account
+                            {!paymentProcessing ? (
+                              <Fragment>
+                                <button
+                                  className='action-btn'
+                                  onClick={() => requestPayout()}
+                                >
+                                  Request ${user.user.payout} payout
                                 </button>
-                              </Link>
+                                {!auth.user.stripe_id ? (
+                                  <Link to='/edit-stripe'>
+                                    <button className='action-btn'>
+                                      Create Stripe account
+                                    </button>
+                                  </Link>
+                                ) : (
+                                  <Fragment></Fragment>
+                                )}
+                              </Fragment>
                             ) : (
-                              <Fragment></Fragment>
+                              <img
+                                src={spinnerGIF}
+                                style={{
+                                  width: '75px',
+                                  height: '75px',
+                                  margin: '10px 0 10px 30px',
+                                  padding: '0px',
+                                  display: 'block',
+                                }}
+                                alt='Loading...'
+                              />
                             )}
                           </Fragment>
                         ) : (
-                          <img
-                            src={spinnerGIF}
-                            style={{
-                              width: '75px',
-                              height: '75px',
-                              margin: '10px 0 10px 30px',
-                              padding: '0px',
-                              display: 'block',
-                            }}
-                            alt='Loading...'
-                          />
+                          <button
+                            className='action-btn'
+                            onClick={() => handleFollow()}
+                          >
+                            Follow
+                          </button>
                         )}
-                      </Fragment>
-                    ) : (
-                      <button
-                        className='action-btn'
-                        onClick={() => handleFollow()}
-                      >
-                        Follow
-                      </button>
-                    )}
+                      </div>
+                    </div>
+                    <div className='user-stats-wrapper'>
+                      <div className='stat-wrapper'>
+                        <span className='stat-number'>
+                          {user.user.follower_count}
+                        </span>
+                        <span className='stat-label'>followers</span>
+                      </div>
+                      <div className='stat-wrapper'>
+                        <span className='stat-number'>
+                          {user.user.likes_count}
+                        </span>
+                        <span className='stat-label'>likes</span>
+                      </div>
+                      <div className='stat-wrapper'>
+                        <span className='stat-number'>
+                          ${user.user.amount_earned}
+                        </span>
+                        <span className='stat-label'>earned</span>
+                      </div>
+                    </div>
                   </div>
                   <div className='three-video-wrapper'>
                     {post.posts.map((post) => (

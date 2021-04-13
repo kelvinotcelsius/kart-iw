@@ -51,7 +51,7 @@ const MobileMenu = ({ auth: { isAuthenticated, user }, logout }) => {
   };
 
   const guestLinks = (
-    <ul className='nav-items'>
+    <ul className={`nav-items ${guestMenuState ? 'show' : 'hide'}`}>
       <li className='nav-item' onClick={() => showModal(!modalStatus)}>
         Log in
       </li>
@@ -89,7 +89,7 @@ const MobileMenu = ({ auth: { isAuthenticated, user }, logout }) => {
   );
 
   const authLinks = (
-    <ul className='nav-items'>
+    <ul className={`nav-items ${authMenuState ? 'show' : 'hide'}`}>
       <li className='nav-item'>
         <Link to='/upload'>
           {/* <img id='upload-icon' src={uploadIcon} alt='upload icon'></img> */}
@@ -114,12 +114,12 @@ const MobileMenu = ({ auth: { isAuthenticated, user }, logout }) => {
         <img
           className='profile-pic'
           alt='profile pic'
-          src={profPicURL}
+          src={!authMenuState && !guestMenuState ? profPicURL : closeIcon}
           onClick={() => showMenu('auth')}
         />
       ) : (
         <img
-          className='menu-pic'
+          className='mobile-menu-toggle'
           alt='menu pic'
           src={!authMenuState && !guestMenuState ? menuIcon : closeIcon}
           onClick={() => showMenu('guest')}

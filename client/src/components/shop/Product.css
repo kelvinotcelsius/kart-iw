@@ -7,7 +7,45 @@
   margin-top: 25px;
 }
 
+#product #product-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-block-start: 0;
+  margin-block-end: 10px;
+}
+
+#product #product-description {
+  font-size: 16px;
+}
+
 #product #product-image {
   height: 4em;
   width: 4em;
+}
+
+#product-url {
+  font-size: 14px;
+  color: var(--blue-jeans);
+  text-decoration: none;
+}
+
+#product-url > img {
+  vertical-align: middle;
+  margin: 0 0 2px 3px;
+  width: 10px;
+  height: 10px;
+}
+
+#product-description {
+  font-size: 13px;
+  color: var(--wet-rock);
+  margin-block-start: 0;
+}
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+  /* Product.js */
+  #product .product-data {
+    margin: 0 auto;
+  }
 }
