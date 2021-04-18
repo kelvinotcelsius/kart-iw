@@ -220,7 +220,7 @@ router.get('/all', async (req, res) => {
 router.get('/:user_id', async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.user_id }).select(
-      'bio profile_pic follower_count likes_count amount_earned followers following first last username payout'
+      'bio profile_pic follower_count likes amount_earned followers following first last username payout'
     );
 
     if (!user) return res.status(400).json({ msg: 'User not found' });
@@ -291,5 +291,58 @@ router.get('/search/createAlgolia', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+// @route   PUT api/users/follow/:user_id
+// @desc    Follow or unfollow the provided user
+// @access  Private
+router.put('/follow/:user_id', auth, async (req, res) => {
+  try {
+    const userToFollow = await User.findById(req.params.user_id);
+
+    const user = await User.findById(req.user.id);
+
+    if (req.user.id === req.params.user_id) {
+      return res.status(400).json({ msg: 'You cannot follow yourself' });
+    }
+
+    if (!user || !userToFollow) {
+      return res.status(400).json({ msg: 'User not found' });
+    }
+
+    // If user is already followed, unfollow
+    if (
+      user.following.some((userID) => userID.toString() === req.params.user_id)
+    ) {
+      const removeIndexFollower = userToFollow.followers.indexOf(req.user.id);
+      userToFollow.followers.splice(removeIndexFollower, 1);
+      userToFollow.follower_count--;
+
+      const removeIndexFollowing = user.following.indexOf(req.params.user_id);
+      user.following.splice(removeIndexFollowing, 1);
+    } else {
+      // else, follow
+      userToFollow.followers.unshift(req.user.id);
+      user.following.unshift(req.params.user_id);
+    }
+    await user.save();
+    await userToFollow.save();
+    res.json(userToFollow);
+  } catch (err) {
+    console.error(err.message);
+
+    // if the userid doesn't exist, but is still a valid userid (i.e. same length), we want to return a more specific error msg). kind is a property of mongoose errors that is the validator's type, e.g. 'required' or 'regexp'
+    if (err.kind == 'ObjectId') {
+      return res.status(400).json({ msg: 'User not found' });
+    }
+    res.status(500).send('Server error');
+  }
+});
+
+// @route   GET api/users/followers
+// @desc    Get all followers
+// @access  Private
+// router.put('/follow/:user_id', auth, async (req, res) => {
+
+// }
 
 module.exports = router;

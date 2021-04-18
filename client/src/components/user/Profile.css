@@ -71,6 +71,11 @@
   font-size: 15px;
 }
 
+#profile .action-btn.filled {
+  background-color: var(--passion);
+  color: white;
+}
+
 #profile .user-stats-wrapper {
   display: flex;
   flex-direction: row;

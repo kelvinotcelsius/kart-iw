@@ -40,16 +40,6 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
-  follower_count: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  likes_count: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
   amount_earned: {
     type: Number,
     required: true,

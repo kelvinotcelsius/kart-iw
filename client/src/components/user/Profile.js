@@ -12,13 +12,22 @@ import Spinner from '../layout/Spinner';
 
 import { getPostsbyUserID } from '../../actions/post';
 import { getUser } from '../../actions/user';
+import { followUser } from '../../actions/user';
 import { setAlert } from '../../actions/alert';
 
 import api from '../../utils/api';
 
 import './Profile.css';
 
-const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
+const Profile = ({
+  getPostsbyUserID,
+  getUser,
+  user,
+  post,
+  auth,
+  setAlert,
+  followUser,
+}) => {
   let { user_id } = useParams();
 
   useEffect(() => {
@@ -35,6 +44,8 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
     if (auth.user === null) {
       setAlert('Please sign in to follow users', 'danger');
       return;
+    } else {
+      followUser(user_id);
     }
   };
 
@@ -158,25 +169,44 @@ const Profile = ({ getPostsbyUserID, getUser, user, post, auth, setAlert }) => {
                             )}
                           </Fragment>
                         ) : (
-                          <button
-                            className='action-btn'
-                            onClick={() => handleFollow()}
-                          >
-                            Follow
-                          </button>
+                          <Fragment>
+                            {auth.user &&
+                            auth.user.following.includes(user.user._id) &&
+                            user.user.followers.includes(auth.user._id) ? (
+                              <button
+                                className='action-btn filled'
+                                onClick={() => handleFollow()}
+                              >
+                                Following
+                              </button>
+                            ) : (
+                              <button
+                                className='action-btn'
+                                onClick={() => handleFollow()}
+                              >
+                                Follow
+                              </button>
+                            )}
+                          </Fragment>
                         )}
                       </div>
                     </div>
                     <div className='user-stats-wrapper'>
                       <div className='stat-wrapper'>
                         <span className='stat-number'>
-                          {user.user.follower_count}
+                          {user.user.followers.length}
                         </span>
                         <span className='stat-label'>followers</span>
                       </div>
                       <div className='stat-wrapper'>
                         <span className='stat-number'>
-                          {user.user.likes_count}
+                          {user.user.following.length}
+                        </span>
+                        <span className='stat-label'>following</span>
+                      </div>
+                      <div className='stat-wrapper'>
+                        <span className='stat-number'>
+                          {user.user.likes.length}
                         </span>
                         <span className='stat-label'>likes</span>
                       </div>
@@ -229,6 +259,7 @@ Profile.propTypes = {
   post: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
+  followUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -241,4 +272,5 @@ export default connect(mapStateToProps, {
   getPostsbyUserID,
   getUser,
   setAlert,
+  followUser,
 })(Profile);

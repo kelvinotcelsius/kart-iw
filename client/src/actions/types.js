@@ -26,3 +26,4 @@ export const PRODUCT_ERROR = 'GET_PRODUCT';
 
 // Users
 export const GET_USER = 'GET_USER';
+export const FOLLOW = 'FOLLOW';
