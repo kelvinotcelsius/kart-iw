@@ -1,8 +1,8 @@
 {
   "mongoURI": "mongodb+srv://kelvinotcelsius:grQA0sHwVniB4g2F@kart.0tc4x.mongodb.net/<dbname>?retryWrites=true&w=majority",
   "jwtSecret": "UpFqdPwkRg28rcPwmAC4",
-  "AWSaccessKeyId": "AKIAIRQ4MJ4UZKWWI3TA",
-  "AWSsecretAccessKey": "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",
+  "AWSaccessKeyId": "AKIAXLYBNI76I55TGZXJ",
+  "AWSsecretAccessKey": "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",
   "expressSecret": ":-O4Ni1KFqxEq:9",
   "StripeTestKey": "sk_test_51IJgQfH8gVlzmKACEcZfehO6sM6RpqIkvQ6EIPX6x2JUn9O05BzmcL4W9eCjZBtmzEKskAumcCZria8TOYgw1JhL00gmur2frc"
 }
