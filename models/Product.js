@@ -14,18 +14,6 @@ const ProductSchema = new Schema({
     type: Number,
     required: true,
   },
-  team_price: {
-    type: Number,
-    required: true,
-  },
-  collections: {
-    type: [String],
-    required: true,
-  },
-  categories: {
-    type: [String],
-    required: true,
-  },
   picture: {
     type: String,
     required: true,

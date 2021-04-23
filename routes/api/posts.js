@@ -77,10 +77,10 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: 'Please upload a video' }] });
       }
-      if (!videoFile.mimetype.startsWith('video')) {
+      if (!videoFile.mimetype.startsWith('video/mp4')) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Only video file types accepted' }] });
+          .json({ errors: [{ msg: 'Only mp4 files are accepted' }] });
       }
 
       // See if they uploaded a valid cover iamge

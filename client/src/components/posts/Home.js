@@ -36,7 +36,7 @@ const Home = ({
   };
 
   const showMore = () => {
-    setEndIndex(endIndex + VIDEOS_PER_PAGE - 1);
+    setEndIndex(endIndex + VIDEOS_PER_PAGE);
   };
 
   return (

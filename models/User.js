@@ -71,7 +71,6 @@ const UserSchema = new Schema({
   purchased_items: [{ type: Schema.Types.ObjectId, ref: 'product' }],
   orders: [{ type: Schema.Types.ObjectId, ref: 'order' }],
   posts: [{ type: Schema.Types.ObjectId, ref: 'post' }],
-  bookmarks: [{ type: Schema.Types.ObjectId, ref: 'post' }],
   likes: [{ type: Schema.Types.ObjectId, ref: 'post' }],
   transfers: [{ type: Schema.Types.String }],
 });

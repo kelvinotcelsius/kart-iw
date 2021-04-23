@@ -40,6 +40,7 @@ const Login = ({ changeModal, closeModal, login, showGuestMenu }) => {
             name='email'
             value={email}
             onChange={(e) => onChange(e)}
+            required
           />
         </div>
         <div className='form-field-wrapper'>
@@ -51,6 +52,7 @@ const Login = ({ changeModal, closeModal, login, showGuestMenu }) => {
             value={password}
             onChange={(e) => onChange(e)}
             minLength='8'
+            required
           />
         </div>
         <input type='submit' className='form-btn' value='Login' />

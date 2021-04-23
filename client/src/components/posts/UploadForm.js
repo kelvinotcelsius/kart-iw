@@ -48,21 +48,8 @@ const UploadForm = ({ history, addPost, setAlert }) => {
     setItem(String(e));
   };
 
-  const onFileChange = (e) => {
+  const onImageChange = (e) => {
     try {
-      // If file is a video
-      if (e.target.files[0].type.includes('video')) {
-        // Check file size, can't be over 200MB
-        if (e.target.files[0].size > 209715200) {
-          setAlert('File is too big!', 'danger');
-          e.target.value = '';
-          return;
-        } else {
-          setFormData({ ...formData, [e.target.name]: e.target.files[0] });
-        }
-      }
-
-      // If file is an image
       if (e.target.files[0].type.includes('image')) {
         // Check file size, can't be over 5MB
         if (e.target.files[0].size > 5242880) {
@@ -72,6 +59,30 @@ const UploadForm = ({ history, addPost, setAlert }) => {
         } else {
           setFormData({ ...formData, [e.target.name]: e.target.files[0] });
         }
+      } else {
+        setAlert('Only image files are allowed!', 'danger');
+        e.target.value = '';
+      }
+    } catch (err) {
+      setAlert('An error occured. Please refresh and try again', 'danger');
+      console.log(err);
+    }
+  };
+
+  const onVideoChange = (e) => {
+    try {
+      if (e.target.files[0].type.includes('image')) {
+        // Check file size, can't be over 5MB
+        if (e.target.files[0].size > 5242880) {
+          setAlert('File is too big!', 'danger');
+          e.target.value = '';
+          return;
+        } else {
+          setFormData({ ...formData, [e.target.name]: e.target.files[0] });
+        }
+      } else {
+        setAlert('Only image files are allowed!', 'danger');
+        e.target.value = '';
       }
     } catch (err) {
       setAlert('An error occured. Please refresh and try again', 'danger');
@@ -81,6 +92,11 @@ const UploadForm = ({ history, addPost, setAlert }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (!selectedItemID) {
+      setAlert('Must select a product', 'danger');
+      return;
+    }
+
     var form_data = new FormData();
 
     for (var key in formData) {
@@ -145,6 +161,7 @@ const UploadForm = ({ history, addPost, setAlert }) => {
                 value={caption}
                 onChange={(e) => onChange(e)}
                 maxLength='75'
+                required
               />
             </div>
           </div>
@@ -159,14 +176,15 @@ const UploadForm = ({ history, addPost, setAlert }) => {
                 id='preview'
                 name='preview'
                 className='inputFile'
-                onChange={(e) => onFileChange(e)}
+                onChange={(e) => onImageChange(e)}
+                required
               />
             </div>
           </div>
           <div className='form-row'>
             <div className='form-field-wrapper'>
               <label htmlFor='video' className='form-row-label'>
-                Video* (200MB max)
+                Video* (200MB max and .mp4 only)
               </label>
               <br />
               <input
@@ -174,7 +192,9 @@ const UploadForm = ({ history, addPost, setAlert }) => {
                 id='video'
                 name='video'
                 className='inputFile'
-                onChange={(e) => onFileChange(e)}
+                accept='video/mp4'
+                onChange={(e) => onVideoChange(e)}
+                required
               />
             </div>
           </div>
