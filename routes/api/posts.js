@@ -55,18 +55,16 @@ router.post(
       }
 
       // Check if the user has purchased the item
-      // if (!user.purchased_items.includes(req.params.product_id)) {
-      //   return res
-      //     .status(400)
-      //     .json({
-      //       errors: [
-      //         {
-      //           msg:
-      //             'You cannot create videos for this item because you have not purchased it.',
-      //         },
-      //       ],
-      //     });
-      // }
+      if (!user.purchased_items.includes(req.params.product_id)) {
+        return res.status(400).json({
+          errors: [
+            {
+              msg:
+                'You cannot create videos for this item because you have not purchased it.',
+            },
+          ],
+        });
+      }
 
       const videoFile = req.files.video[0];
       const previewFile = req.files.preview[0];
@@ -96,19 +94,17 @@ router.post(
       }
 
       // Delete all special characters from file names when adding to path
-      const videoFilePath = `video_${req.user.id}${path
-        .parse(videoFile.originalname)
-        .name.replace(/[^a-zA-Z]/g, '')}${
-        path.parse(videoFile.originalname).ext
-      }`;
-      const previewFilePath = `preview_${req.user.id}${path
-        .parse(previewFile.originalname)
-        .name.replace(/[^a-zA-Z]/g, '')}${
-        path.parse(previewFile.originalname).ext
-      }`;
+      const videoFilePath = `video_${req.user.id}${Math.random()
+        .toString(36)
+        .substring(7)}${path.parse(videoFile.originalname).ext}`;
+      const previewFilePath = `preview_${req.user.id}${Math.random()
+        .toString(36)
+        .substring(7)}${path.parse(previewFile.originalname).ext}`;
 
       uploadS3(videoFile, videoFilePath);
       uploadS3(previewFile, previewFilePath);
+
+      console.log(previewFilePath);
 
       awsVideoPath = `https://kart-iw.s3.amazonaws.com/${videoFilePath}`;
       awsPreviewPath = `https://kart-iw.s3.amazonaws.com/${previewFilePath}`;

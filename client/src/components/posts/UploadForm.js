@@ -52,8 +52,8 @@ const UploadForm = ({ history, addPost, setAlert }) => {
     try {
       if (e.target.files[0].type.includes('image')) {
         // Check file size, can't be over 5MB
-        if (e.target.files[0].size > 5242880) {
-          setAlert('File is too big!', 'danger');
+        if (e.target.files[0].size / 1024 / 1024 > 5) {
+          setAlert('Image must be less than 5MB!', 'danger');
           e.target.value = '';
           return;
         } else {
@@ -71,10 +71,10 @@ const UploadForm = ({ history, addPost, setAlert }) => {
 
   const onVideoChange = (e) => {
     try {
-      if (e.target.files[0].type.includes('image')) {
-        // Check file size, can't be over 5MB
-        if (e.target.files[0].size > 5242880) {
-          setAlert('File is too big!', 'danger');
+      if (e.target.files[0].type.includes('video')) {
+        // Check file size, can't be over 200MB
+        if (e.target.files[0].size / 1024 / 1024 > 200) {
+          setAlert('Video must be under 200MB!', 'danger');
           e.target.value = '';
           return;
         } else {

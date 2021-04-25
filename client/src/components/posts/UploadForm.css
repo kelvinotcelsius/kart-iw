@@ -131,7 +131,8 @@
 #upload-form .select-search__option,
 #upload-form .select-search__not-found {
   display: block;
-  height: 36px;
+  height: 50px;
+  line-height: 1.5;
   width: 100%;
   padding: 0 16px;
   background: #fff;
@@ -144,7 +145,7 @@
 }
 
 #upload-form .select-search--multiple .select-search__option {
-  height: 48px;
+  height: 55px;
 }
 
 #upload-form .select-search__option.is-selected {

@@ -29,6 +29,7 @@ module.exports = function (file, path) {
     // console.log(err, data);
     if (err) {
       console.log('Error occured, please try again later');
+      console.log(err.message);
       return false;
     }
   });

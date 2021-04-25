@@ -69,7 +69,9 @@ router.post(
 
       // Add order to user.orders array and product_id to user.purchased_items
       user.orders.unshift(order._id);
-      user.purchased_items.unshift(order.product_id);
+      if (!user.purchased_items.includes(order.product_id)) {
+        user.purchased_items.unshift(order.product_id);
+      }
       await user.save();
 
       // Add commission to creator account and total_earned amount

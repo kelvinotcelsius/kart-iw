@@ -16,6 +16,8 @@ import api from '../../utils/api';
 
 import './Post.css';
 
+const MAX_LENGTH = 18;
+
 const PostPreview = ({
   caption,
   postID,
@@ -84,7 +86,11 @@ const PostPreview = ({
                   </Link>
                 </div>
                 <div className='preview-caption'>
-                  <span>{caption}</span>
+                  <span>
+                    {caption.length > MAX_LENGTH
+                      ? caption.substring(0, MAX_LENGTH).concat('...')
+                      : caption}
+                  </span>
                 </div>
               </div>
             </div>
@@ -105,7 +111,11 @@ const PostPreview = ({
                   src={product.picture}
                   alt='product'
                 />
-                <p className='product-name'>{product.name}</p>
+                <p className='product-name'>
+                  {product.name.length > MAX_LENGTH
+                    ? product.name.substring(0, MAX_LENGTH).concat('...')
+                    : product.name}
+                </p>
               </div>
               <p className='product-price'>${product.price}</p>
             </div>
