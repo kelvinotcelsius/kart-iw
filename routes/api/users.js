@@ -185,6 +185,9 @@ router.put(
 
       uploadS3(file, profPicPath);
 
+      user.finishedRegistration = true;
+      await user.save();
+
       user = await User.findOneAndUpdate(
         { _id: req.user.id },
         { $set: userFields },

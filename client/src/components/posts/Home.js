@@ -13,8 +13,9 @@ const Home = ({
   post: { posts },
   isAuthenticated,
 }) => {
-  const VIDEOS_PER_PAGE = 3;
-  const [endIndex, setEndIndex] = useState(VIDEOS_PER_PAGE - 1);
+  const VIDEOS_PER_LOAD = 3;
+  const MAX_VIDEOS_PER_PAGE = 9;
+  const [endIndex, setEndIndex] = useState(VIDEOS_PER_LOAD - 1);
 
   useEffect(() => {
     getMostRecentPosts(endIndex);
@@ -36,7 +37,7 @@ const Home = ({
   };
 
   const showMore = () => {
-    setEndIndex(endIndex + VIDEOS_PER_PAGE);
+    setEndIndex(endIndex + VIDEOS_PER_LOAD);
   };
 
   return (
@@ -78,7 +79,7 @@ const Home = ({
                 />
               ))}
             </div>
-            {endIndex < 31 ? (
+            {endIndex + 1 <= MAX_VIDEOS_PER_PAGE ? (
               <div className='show-more-wrapper'>
                 <button className='show-more-btn' onClick={() => showMore()}>
                   Show more

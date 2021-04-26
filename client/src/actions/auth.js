@@ -88,8 +88,6 @@ export const login = ({ email, password }) => async (dispatch) => {
   try {
     const res = await api.post('/auth', body);
 
-    localStorage.setItem('registrationFinished', res.data.registrationFinished);
-
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data, // res.data in this case is the JWT token that is returned from a successful login

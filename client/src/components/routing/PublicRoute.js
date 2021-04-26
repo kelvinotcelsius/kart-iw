@@ -3,13 +3,12 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-// import FinishRegistrationForm from '../auth/FinishRegistrationForm';
 
 // This component is necessary in order to redirect user to finish registration form if not done
 
 const PublicRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading, registrationFinished },
+  auth: { isAuthenticated, loading, user },
   ...rest
 }) => (
   <Route
@@ -17,7 +16,7 @@ const PublicRoute = ({
     render={(props) =>
       loading ? (
         <Spinner />
-      ) : !registrationFinished && isAuthenticated ? (
+      ) : user && !user.finishedRegistration && isAuthenticated ? (
         <Redirect exact to='/finish-registration' />
       ) : (
         <Component {...props} />

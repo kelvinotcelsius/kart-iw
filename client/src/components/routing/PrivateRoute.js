@@ -7,7 +7,7 @@ import FinishRegistrationForm from '../auth/FinishRegistrationForm';
 
 const PrivateRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading, registrationFinished },
+  auth: { isAuthenticated, loading, user },
   ...rest
 }) => (
   <Route
@@ -15,7 +15,7 @@ const PrivateRoute = ({
     render={(props) =>
       loading ? (
         <Spinner />
-      ) : !registrationFinished && isAuthenticated ? (
+      ) : user && !user.finishedRegistration && isAuthenticated ? (
         <Redirect exact to='/finish-registration' /> && (
           <FinishRegistrationForm {...props} />
         )

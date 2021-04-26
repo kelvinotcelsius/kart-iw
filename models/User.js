@@ -66,6 +66,11 @@ const UserSchema = new Schema({
     postal_code: String,
     state: String,
   },
+  finishedRegistration: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   followers: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   following: [{ type: Schema.Types.ObjectId, ref: 'user' }],
   purchased_items: [{ type: Schema.Types.ObjectId, ref: 'product' }],

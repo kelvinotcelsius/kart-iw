@@ -57,11 +57,6 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: 'Invalid credentials' }] });
       }
-
-      var registrationFinished = 'false';
-      if (user.username) {
-        registrationFinished = 'true';
-      }
       // Return JWT
       const payload = {
         user: {
@@ -75,7 +70,7 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token, registrationFinished }); // sends token back to client
+          res.json({ token }); // sends token back to client
         }
       );
     } catch (err) {

@@ -36,18 +36,9 @@ const FinishRegistrationForm = ({
     setFormData({ ...formData, [e.target.name]: e.target.files[0] });
   };
 
-  // const checkRegistrationFinished = () => {
-  //   if (!auth.registrationFinished) {
-  //     setAlert('Please finish your profile before continuing', 'danger');
-  //   } else {
-  //     return;
-  //   }
-  // };
-
   useEffect(() => {
-    // checkRegistrationFinished();
     //  eslint-disable-next-line react-hooks/exhaustive-deps
-    if (!auth.registrationFinished) {
+    if (!auth.user.finishedRegistration) {
       setAlert('Please finish your profile before continuing', 'danger');
     } else {
       return;

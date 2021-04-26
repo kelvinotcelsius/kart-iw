@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 // import { Link } from 'react-router-dom';
+import { algoliaSecret } from '../../config';
 import algoliasearch from 'algoliasearch';
 import {
   InstantSearch,
@@ -9,10 +10,7 @@ import {
   Configure,
 } from 'react-instantsearch-dom';
 
-const searchClient = algoliasearch(
-  'G4BVIGANC0',
-  '39f9585173a92d78545412bb14907042'
-);
+const searchClient = algoliasearch('G4BVIGANC0', algoliaSecret);
 
 const MAX_LENGTH = 420;
 
