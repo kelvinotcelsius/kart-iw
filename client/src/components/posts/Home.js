@@ -6,6 +6,7 @@ import PostPreview from './PostPreview';
 import { getMostRecentPosts } from '../../actions/post';
 import { getMostLikedPosts } from '../../actions/post';
 import GuestSidebar from './GuestSidebar';
+import AuthSidebar from './AuthSidebar';
 
 const Home = ({
   getMostRecentPosts,
@@ -45,7 +46,7 @@ const Home = ({
       <div id='home'>
         <div className='main-wrapper'>
           <div className='main-left-wrapper'>
-            {isAuthenticated ? <div>Authenticated!</div> : <GuestSidebar />}
+            {isAuthenticated ? <AuthSidebar /> : <GuestSidebar />}
           </div>
           <div className='main-right-wrapper'>
             <div className='filter-wrapper'>

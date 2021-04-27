@@ -237,6 +237,25 @@ router.get('/user/:user_id', [checkObjectId('user_id')], async (req, res) => {
   }
 });
 
+// @route    GET api/posts/following
+// @desc     Get all posts from creators that the authenticated user is following
+// @access   Private
+router.get('/my/following', [auth], async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const following = user.following;
+
+    const posts = await Post.find({ creator_id: { $in: following } }).sort(
+      '-date'
+    );
+    // ['hi', 'hello']
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route   DELETE api/posts/:id
 // @desc    Delete post by id
 // @access  Private

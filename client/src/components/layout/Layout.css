@@ -198,7 +198,28 @@
   color: #fff;
 }
 
-/* Left sidebar */
+/* AuthSidebar */
+.video-option-wrapper {
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.video-option-wrapper.selected {
+  background-color: var(--soft-passion);
+}
+
+.video-option-wrapper:hover {
+  cursor: pointer;
+}
+
+.video-option-label {
+  font-size: 20px;
+  margin-left: 0.75em;
+}
+
+/* GuestSidebar */
 #sidebar p {
   line-height: 1.5;
 }

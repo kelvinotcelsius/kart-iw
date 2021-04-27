@@ -81,7 +81,7 @@ const UploadForm = ({ history, addPost, setAlert }) => {
           setFormData({ ...formData, [e.target.name]: e.target.files[0] });
         }
       } else {
-        setAlert('Only image files are allowed!', 'danger');
+        setAlert('Only video files are allowed!', 'danger');
         e.target.value = '';
       }
     } catch (err) {
