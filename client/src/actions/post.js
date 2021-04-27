@@ -10,10 +10,10 @@ import {
 } from './types';
 import { loadUser } from './auth';
 
-// Get most recent posts
-export const getMostRecentPosts = (endIndex) => async (dispatch) => {
+// Get most recent posts from all posts
+export const getMostRecentPostsAll = () => async (dispatch) => {
   try {
-    const res = await api.get(`/posts/most-recent/${endIndex}`);
+    const res = await api.get('/posts/all/most-recent');
     dispatch({
       type: GET_POSTS,
       payload: res.data,
@@ -27,10 +27,40 @@ export const getMostRecentPosts = (endIndex) => async (dispatch) => {
   }
 };
 
-// Get most liked posts
-export const getMostLikedPosts = (endIndex) => async (dispatch) => {
+// Get most liked posts from all posts
+export const getMostLikedPostsAll = () => async (dispatch) => {
   try {
-    const res = await api.get(`/posts/most-liked/${endIndex}`);
+    const res = await api.get('/posts/all/most-liked');
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const getMostRecentPostsFollowing = () => async (dispatch) => {
+  try {
+    const res = await api.get('/posts/following/most-recent');
+    dispatch({
+      type: GET_POSTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const getMostLikedPostsFollowing = () => async (dispatch) => {
+  try {
+    const res = await api.get('/posts/following/most-liked');
     dispatch({
       type: GET_POSTS,
       payload: res.data,

@@ -104,13 +104,7 @@ const Profile = ({
       ) : (
         <div id='profile'>
           <div className='main-wrapper'>
-            <div className='main-left-wrapper'>
-              {auth.isAuthenticated ? (
-                <div>Authenticated!</div>
-              ) : (
-                <GuestSidebar />
-              )}
-            </div>
+            <div className='main-left-wrapper'>{<GuestSidebar />}</div>
             <div className='main-right-wrapper'>
               {post.loading || user.loading || auth.loading ? (
                 <Spinner />

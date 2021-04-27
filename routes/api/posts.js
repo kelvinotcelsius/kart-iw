@@ -140,33 +140,67 @@ router.post(
   }
 );
 
-// @route   GET api/posts/most-recent/:endIndex
+// @route   GET api/posts/all/most-recent
 // @desc    Get most recent posts
 // @access  Public
-router.get('/most-recent/:endIndex', async (req, res) => {
-  const { endIndex } = req.params;
+router.get('/all/most-recent', async (req, res) => {
   try {
-    const posts = await Post.find().sort('-date').limit(30);
-    const segment = posts.slice(0, parseInt(endIndex) + 1);
-    res.json(segment);
+    const posts = await Post.find().sort('-date').limit(12);
+    res.json(posts);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
   }
 });
 
-// @route   GET api/posts/most-liked/:endIndex
+// @route   GET api/posts/all/most-liked/
 // @desc    Get most liked posts
 // @access  Public
-router.get('/most-liked/:endIndex', async (req, res) => {
-  const { endIndex } = req.params;
+router.get('/all/most-liked', async (req, res) => {
   try {
-    const posts = await Post.find().sort({ likes: -1 }).limit(30);
-    const segment = posts.slice(0, parseInt(endIndex) + 1);
-    res.json(segment);
+    const posts = await Post.find().sort({ likes: -1 }).limit(12);
+    res.json(posts);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
+  }
+});
+
+// @route    GET api/posts/following/most-recent
+// @desc     Get top 12 most recent posts from creators that the authenticated user is following
+// @access   Private
+router.get('/following/most-recent', [auth], async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const following = user.following;
+
+    const posts = await Post.find({ creator_id: { $in: following } })
+      .sort('-date')
+      .limit(12);
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    GET api/posts/following/most-recent
+// @desc     Get top 12 most liked posts from creators that the authenticated user is following
+// @access   Private
+router.get('/following/most-liked', [auth], async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    const following = user.following;
+
+    const posts = await Post.find({ creator_id: { $in: following } })
+      .sort({ likes: -1 })
+      .limit(12);
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 });
 
@@ -233,25 +267,6 @@ router.get('/user/:user_id', [checkObjectId('user_id')], async (req, res) => {
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Posts not found' });
     }
-    res.status(500).send('Server Error');
-  }
-});
-
-// @route    GET api/posts/following
-// @desc     Get all posts from creators that the authenticated user is following
-// @access   Private
-router.get('/my/following', [auth], async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    const following = user.following;
-
-    const posts = await Post.find({ creator_id: { $in: following } }).sort(
-      '-date'
-    );
-    // ['hi', 'hello']
-    res.json(posts);
-  } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });

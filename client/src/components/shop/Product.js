@@ -14,13 +14,7 @@ import { getProduct } from '../../actions/product';
 import './Product.css';
 import '../posts/Post.css';
 
-const Product = ({
-  getPostsbyProductID,
-  post,
-  product,
-  isAuthenticated,
-  getProduct,
-}) => {
+const Product = ({ getPostsbyProductID, post, product, getProduct }) => {
   let { product_id } = useParams();
   useEffect(() => {
     async function fetchData() {
@@ -34,9 +28,7 @@ const Product = ({
     <Fragment>
       <div id='product'>
         <div className='main-wrapper'>
-          <div className='main-left-wrapper'>
-            {isAuthenticated ? <div>Authenticated!</div> : <GuestSidebar />}
-          </div>
+          <div className='main-left-wrapper'>{<GuestSidebar />}</div>
           <div className='main-right-wrapper'>
             {post.loading || product.loading ? (
               <Spinner />
@@ -94,7 +86,6 @@ const Product = ({
 
 Product.propTypes = {
   getPostsbyProductID: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   getProduct: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
@@ -103,7 +94,6 @@ Product.propTypes = {
 const mapStateToProps = (state) => ({
   post: state.post,
   product: state.product,
-  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { getPostsbyProductID, getProduct })(
