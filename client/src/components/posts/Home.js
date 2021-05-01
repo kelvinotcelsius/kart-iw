@@ -89,8 +89,6 @@ const Home = ({
   }, [loadVideos]);
 
   const showMore = () => {
-    console.log(posts.length);
-    console.log(endIndex);
     setEndIndex(endIndex + VIDEOS_PER_LOAD);
   };
 
