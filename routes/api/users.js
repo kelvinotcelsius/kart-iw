@@ -281,20 +281,6 @@ router.get('/my/purchased_items', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/users/search/createAlgolia
-// @desc    Save user fields as JSON object
-// @access  Private
-router.get('/search/createAlgolia', auth, async (req, res) => {
-  try {
-    const users = await User.find();
-    const indices = await createUserIndices(users);
-    res.json(indices);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
-  }
-});
-
 // @route   PUT api/users/follow/:user_id
 // @desc    Follow or unfollow the provided user
 // @access  Private
@@ -341,11 +327,18 @@ router.put('/follow/:user_id', auth, async (req, res) => {
   }
 });
 
-// @route   GET api/users/followers
-// @desc    Get all followers
+// @route   GET api/users/search/createAlgolia
+// @desc    Save user fields as JSON object
 // @access  Private
-// router.put('/follow/:user_id', auth, async (req, res) => {
-
-// }
+router.get('/search/createAlgolia', auth, async (req, res) => {
+  try {
+    const users = await User.find();
+    const indices = await createUserIndices(users);
+    res.json(indices);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

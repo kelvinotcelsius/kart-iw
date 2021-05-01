@@ -104,8 +104,6 @@ router.post(
       uploadS3(videoFile, videoFilePath);
       uploadS3(previewFile, previewFilePath);
 
-      console.log(previewFilePath);
-
       awsVideoPath = `https://kart-iw.s3.amazonaws.com/${videoFilePath}`;
       awsPreviewPath = `https://kart-iw.s3.amazonaws.com/${previewFilePath}`;
 
